@@ -1,0 +1,17 @@
+{
+  "name": "xaixo-home",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node build.mjs",
+    "preview": "vite preview",
+    "generate:assets": "node scripts/generate-assets.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.4",
+    "vite": "^7.1.5",
+    "wawoff2": "^2.0.1"
+  }
+}
