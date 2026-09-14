@@ -27,6 +27,16 @@ const MENU_HTML = extractBetween(
   "<!-- SHARED-MENU:START (kept in sync across pages by scripts/generate-pages.mjs) -->",
   "<!-- SHARED-MENU:END -->",
 );
+const FOOTER_HTML = extractBetween(
+  indexHtml,
+  "<!-- SHARED-FOOTER:START (kept in sync across pages by scripts/generate-pages.mjs) -->",
+  "<!-- SHARED-FOOTER:END -->",
+);
+const WHATSAPP_HTML = extractBetween(
+  indexHtml,
+  "<!-- SHARED-WHATSAPP:START (kept in sync across pages by scripts/generate-pages.mjs) -->",
+  "<!-- SHARED-WHATSAPP:END -->",
+);
 
 const PROCESS_STEPS = [
   "Visita y medición en tu casa o en el showroom",
@@ -219,9 +229,91 @@ ${galleryItems}
 <a class="page-cta-button" href="#contacto">PIDE TU PRESUPUESTO <span>↗</span></a>
 </div>
 </section>
-<div class="page-footer"><span>XAIXO HOME · GANDÍA</span><a href="#inicio">VOLVER ARRIBA ↑</a></div>
 </main>
+${FOOTER_HTML}
 ${MENU_HTML}
+${WHATSAPP_HTML}
+</body>
+</html>
+`;
+}
+
+const LEGAL_PAGES = [
+  {
+    slug: "aviso-legal",
+    title: "Aviso Legal | Xaixo Home",
+    description: "Condiciones de uso y datos identificativos del titular del sitio web de Xaixo Home.",
+    heading: "AVISO LEGAL",
+    bodyHtml: `<h2 class="reveal">1. Datos identificativos</h2>
+<p class="reveal">En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de los siguientes datos: el titular de este sitio web es <!-- TODO: nombre fiscal --> (Xaixo Home), con CIF <!-- TODO: CIF -->, y domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia).</p>
+<h2 class="reveal">2. Objeto</h2>
+<p class="reveal">El presente sitio web tiene por objeto ofrecer información sobre los servicios de reforma, cocinas, baños e interiorismo de Xaixo Home.</p>
+<h2 class="reveal">3. Condiciones de uso</h2>
+<p class="reveal">El acceso a este sitio web es gratuito y su uso implica la aceptación plena de las condiciones aquí recogidas. El usuario se compromete a hacer un uso adecuado de los contenidos y a no emplearlos para incurrir en actividades ilícitas o contrarias a la buena fe.</p>
+<h2 class="reveal">4. Propiedad intelectual e industrial</h2>
+<p class="reveal">Los contenidos de este sitio web (textos, imágenes, diseño y código) son propiedad de Xaixo Home o de terceros que han autorizado su uso, y están protegidos por la normativa de propiedad intelectual e industrial. Queda prohibida su reproducción total o parcial sin autorización expresa.</p>
+<h2 class="reveal">5. Responsabilidad</h2>
+<p class="reveal">Xaixo Home no se hace responsable de los daños derivados de un uso inadecuado de este sitio web, ni garantiza la ausencia de interrupciones o errores en el acceso al mismo.</p>
+<h2 class="reveal">6. Legislación aplicable</h2>
+<p class="reveal">Las presentes condiciones se rigen por la legislación española. Para cualquier controversia serán competentes los juzgados y tribunales del domicilio del titular, salvo que la normativa de consumidores establezca otro fuero.</p>`,
+  },
+  {
+    slug: "politica-privacidad",
+    title: "Política de Privacidad | Xaixo Home",
+    description: "Cómo trata Xaixo Home los datos personales de las personas usuarias del sitio web.",
+    heading: "POLÍTICA DE PRIVACIDAD",
+    bodyHtml: `<h2 class="reveal">1. Responsable del tratamiento</h2>
+<p class="reveal">El responsable del tratamiento de los datos personales recabados a través de este sitio web es <!-- TODO: nombre fiscal --> (Xaixo Home), con CIF <!-- TODO: CIF -->, domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia), teléfono 615 439 842.</p>
+<h2 class="reveal">2. Finalidad del tratamiento</h2>
+<p class="reveal">Los datos facilitados a través de los formularios de contacto o WhatsApp se utilizan para atender consultas, elaborar presupuestos y gestionar la relación comercial con la persona usuaria.</p>
+<h2 class="reveal">3. Legitimación</h2>
+<p class="reveal">La base legal para el tratamiento es el consentimiento de la persona interesada, prestado al facilitar sus datos y contactar con Xaixo Home.</p>
+<h2 class="reveal">4. Destinatarios</h2>
+<p class="reveal">Los datos no se cederán a terceros salvo obligación legal. Podrán tratarse a través de proveedores de servicios (por ejemplo, alojamiento web o mensajería) que actúan como encargados del tratamiento.</p>
+<h2 class="reveal">5. Derechos de las personas interesadas</h2>
+<p class="reveal">Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad enviando un correo o escribiendo al domicilio indicado, adjuntando copia de un documento que acredite tu identidad.</p>
+<h2 class="reveal">6. Conservación de los datos</h2>
+<p class="reveal">Los datos se conservarán mientras sean necesarios para la finalidad para la que se recabaron y, posteriormente, durante los plazos legalmente exigibles.</p>`,
+  },
+  {
+    slug: "cookies",
+    title: "Política de Cookies | Xaixo Home",
+    description: "Qué cookies utiliza el sitio web de Xaixo Home y cómo puedes gestionarlas.",
+    heading: "POLÍTICA DE COOKIES",
+    bodyHtml: `<h2 class="reveal">1. Qué son las cookies</h2>
+<p class="reveal">Las cookies son pequeños archivos que se almacenan en tu navegador al visitar un sitio web. Se utilizan para recordar tus preferencias y mejorar el funcionamiento del sitio.</p>
+<h2 class="reveal">2. Cookies utilizadas en este sitio</h2>
+<p class="reveal">Este sitio web utiliza únicamente cookies técnicas necesarias para su correcto funcionamiento. <!-- TODO: actualizar este apartado si se incorporan cookies de análisis, personalización o publicidad --></p>
+<h2 class="reveal">3. Cómo gestionar las cookies</h2>
+<p class="reveal">Puedes permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la configuración de las opciones del navegador que utilices. Consulta la ayuda de tu navegador para más información.</p>`,
+  },
+];
+
+function renderLegalPage(page) {
+  return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eeeae3"><title>${page.title}</title>
+<meta name="description" content="${page.description}">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/manrope.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#legal-content">Saltar al contenido</a>
+${HEADER_HTML}
+<main>
+<section class="legal-page section-pad" id="legal-content">
+<h1 class="reveal">${page.heading}</h1>
+${page.bodyHtml}
+</section>
+</main>
+${FOOTER_HTML}
+${MENU_HTML}
+${WHATSAPP_HTML}
 </body>
 </html>
 `;
@@ -229,6 +321,12 @@ ${MENU_HTML}
 
 for (const page of PAGES) {
   const html = renderPage(page);
+  await writeFile(`${page.slug}.html`, html);
+  console.log(`${page.slug}.html`);
+}
+
+for (const page of LEGAL_PAGES) {
+  const html = renderLegalPage(page);
   await writeFile(`${page.slug}.html`, html);
   console.log(`${page.slug}.html`);
 }

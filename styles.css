@@ -593,15 +593,6 @@ p {
   grid-row: 1;
   aspect-ratio: 1.25;
 }
-.end-line {
-  border-top: 1px solid #bcb8b0;
-  display: flex;
-  justify-content: space-between;
-  padding-top: 25px;
-  font-size: 11px;
-  letter-spacing: 0.055em;
-}
-
 /* --- Category pages (cocinas/banos/salon/exterior/vivienda-completa) --- */
 .page-hero {
   position: relative;
@@ -744,19 +735,165 @@ p {
 .page-cta-button span {
   font-size: 20px;
 }
-.page-footer {
-  border-top: 1px solid #bcb8b0;
-  display: flex;
-  justify-content: space-between;
-  padding: 25px var(--gutter) 45px;
-  font-size: 11px;
-  letter-spacing: 0.055em;
-}
 @media (hover: hover) and (pointer: fine) {
   .page-cta-button:hover {
     background: var(--ink);
     color: var(--paper);
   }
+}
+
+/* --- Shared site footer (id="contacto") --- */
+.site-footer {
+  background: var(--ink);
+  color: var(--paper);
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 60px;
+  padding-top: 70px;
+  padding-bottom: 50px;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.footer-address {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #c8c4ba;
+}
+.footer-maps-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 0.055em;
+}
+.footer-maps-link span {
+  font-size: 19px;
+}
+.footer-maps-link:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.footer-maps-link:hover:after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.footer-col-title {
+  margin-bottom: 6px;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  color: #94907f;
+}
+.footer-col a {
+  width: fit-content;
+  font-size: 14px;
+}
+.footer-col p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #c8c4ba;
+}
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  border-top: 1px solid #46443c;
+  padding-top: 24px;
+  padding-bottom: 34px;
+}
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.footer-legal a,
+.footer-copyright {
+  font-size: 11px;
+  letter-spacing: 0.055em;
+  color: #94907f;
+}
+@media (hover: hover) and (pointer: fine) {
+  .footer-col a:hover,
+  .footer-legal a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+/* --- Floating WhatsApp button (all pages) --- */
+.whatsapp-float {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 6px 20px #00000030;
+  transition:
+    transform 0.25s var(--ease),
+    background 0.25s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .whatsapp-float:hover {
+    background: #3a3830;
+    transform: scale(1.06);
+  }
+}
+
+/* --- Legal pages (aviso-legal, politica-privacidad, cookies) --- */
+.legal-page {
+  max-width: 760px;
+  padding-top: 70px;
+  padding-bottom: 90px;
+}
+.legal-page h1 {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  margin-bottom: 40px;
+}
+.legal-page h2 {
+  margin-top: 40px;
+  margin-bottom: 14px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.legal-page h2:first-of-type {
+  margin-top: 0;
+}
+.legal-page p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
 }
 .reveal {
   opacity: 1;
@@ -1187,9 +1324,6 @@ dialog::backdrop {
     right: 16px;
     bottom: 16px;
   }
-  .end-line {
-    font-size: 9px;
-  }
   .page-hero {
     height: 56svh;
     min-height: 340px;
@@ -1225,8 +1359,24 @@ dialog::backdrop {
     padding-top: 60px;
     padding-bottom: 60px;
   }
-  .page-footer {
-    font-size: 9px;
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-top: 50px;
+    padding-bottom: 30px;
+  }
+  .footer-bottom {
+    padding-bottom: 90px;
+  }
+  .whatsapp-float {
+    right: 14px;
+    bottom: 14px;
+    width: 46px;
+    height: 46px;
+  }
+  .legal-page {
+    padding-top: 40px;
+    padding-bottom: 60px;
   }
   .menu-dialog {
     padding-top: 20px;

@@ -6,7 +6,7 @@ https://xaixo-home-espacios.javixaixo.chatgpt.site/
 
 La web es un proyecto estático estándar (HTML, CSS y JavaScript) multipágina, preparado con Vite para poder ejecutarlo y alojarlo fuera de `chatgpt.site`. No depende de ninguna función propietaria de ChatGPT Sites.
 
-Páginas: `index.html` (home) y 5 páginas de espacio — `cocinas.html`, `banos.html`, `salon.html`, `exterior.html`, `vivienda-completa.html` —, cada una con su propio `<title>`/meta description pensados para SEO local.
+Páginas: `index.html` (home), 5 páginas de espacio — `cocinas.html`, `banos.html`, `salon.html`, `exterior.html`, `vivienda-completa.html` — y 3 páginas legales — `aviso-legal.html`, `politica-privacidad.html`, `cookies.html` —, cada una con su propio `<title>`/meta description. Todas comparten cabecera, pie con datos de contacto (`id="contacto"`) y botón flotante de WhatsApp. La home además incluye un JSON-LD `HomeAndConstructionBusiness` en el `<head>`.
 
 ## Requisitos
 
@@ -52,14 +52,17 @@ xaixo-home-codigo-completo/
 │   ├── generate-assets.mjs
 │   └── generate-pages.mjs
 ├── app.js
+├── aviso-legal.html
 ├── banos.html
 ├── build.mjs
 ├── cocinas.html
+├── cookies.html
 ├── exterior.html
 ├── image-sources.json
 ├── index.html
 ├── package.json
 ├── package-lock.json
+├── politica-privacidad.html
 ├── README.md
 ├── salon.html
 ├── styles.css
@@ -69,14 +72,15 @@ xaixo-home-codigo-completo/
 
 ## Archivos principales
 
-- `index.html`: estructura completa de la HOME.
+- `index.html`: estructura completa de la HOME, incluye el JSON-LD `HomeAndConstructionBusiness` en el `<head>`.
 - `cocinas.html`, `banos.html`, `salon.html`, `exterior.html`, `vivienda-completa.html`: páginas de cada espacio (hero, intro, qué incluye, cómo trabajamos, galería y CTA). `cocinas.html` incluye además el contenedor `#simulador`, pendiente del simulador de presupuesto.
-- `vite.config.js`: declara las 6 páginas como entradas de `build.rollupOptions.input` para que `vite build` las genere todas.
-- `styles.css`: diseño, responsive, animaciones, menú, hero y estados interactivos.
-- `app.js`: animación del hero ligada al scroll, selector de ambientes, swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual. Se carga como módulo de Vite; las funciones específicas de la home se autodetectan y no se ejecutan en las páginas de espacio.
+- `aviso-legal.html`, `politica-privacidad.html`, `cookies.html`: páginas legales con texto base estándar. Marcadas con `<!-- TODO -->` donde falta el nombre fiscal y el CIF reales.
+- `vite.config.js`: declara las 9 páginas como entradas de `build.rollupOptions.input` para que `vite build` las genere todas.
+- `styles.css`: diseño, responsive, animaciones, menú, hero, footer, botón de WhatsApp y estados interactivos.
+- `app.js`: animación del hero ligada al scroll, selector de ambientes, swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual. Se carga como módulo de Vite; las funciones específicas de la home se autodetectan y no se ejecutan en el resto de páginas.
 - `build.mjs`: genera la versión de producción con Vite y copia `image-sources.json` a `dist/`.
 - `scripts/generate-assets.mjs`: regenera `manrope.woff2`, las variantes responsive de las imágenes y `assets/logo.png` (`npm run generate:assets`) cuando cambian los archivos fuente en `assets/`.
-- `scripts/generate-pages.mjs`: regenera las 5 páginas de espacio (`npm run generate:pages`) a partir del header y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-HEADER`/`SHARED-MENU`, fuente única de verdad) y de los textos definidos en el propio script.
+- `scripts/generate-pages.mjs`: regenera las 5 páginas de espacio y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script.
 - `assets/`: fotografías optimizadas (con variantes de 800/1200/1600px para `srcset`), logo y fuente Manrope (WOFF2 con fallback TTF) usados por la web.
 - `image-sources.json`: procedencia y situación de derechos de las imágenes de inspiración.
 
