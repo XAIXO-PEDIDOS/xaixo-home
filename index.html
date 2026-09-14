@@ -13,14 +13,16 @@
 </head>
 <body>
 <a class="skip" href="#manifiesto">Saltar al contenido</a>
+<!-- SHARED-HEADER:START (kept in sync across pages by scripts/generate-pages.mjs) -->
 <header class="header" id="header">
 <a class="wordmark" href="#inicio" aria-label="Xaixo Home, inicio"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></a>
 <nav class="desktop-nav" aria-label="Navegación principal">
-<a href="#proyectos">PROYECTOS</a><a href="#transformar" data-space="0">COCINAS</a><a href="#transformar" data-space="1">BAÑOS</a><a href="https://www.xaixohome.com/azulejos" target="_blank" rel="noopener" aria-label="Superficies, consultar web actual en otra pestaña">SUPERFICIES</a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener" aria-label="Reforma y servicios, consultar web actual en otra pestaña">REFORMA / SERVICIOS</a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener" aria-label="Showroom, consultar web actual en otra pestaña">SHOWROOM</a>
+<a href="index.html#proyectos">PROYECTOS</a><a href="cocinas.html">COCINAS</a><a href="banos.html">BAÑOS</a><a href="https://www.xaixohome.com/azulejos" target="_blank" rel="noopener" aria-label="Superficies, consultar web actual en otra pestaña">SUPERFICIES</a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener" aria-label="Reforma y servicios, consultar web actual en otra pestaña">REFORMA / SERVICIOS</a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener" aria-label="Showroom, consultar web actual en otra pestaña">SHOWROOM</a>
 </nav>
 <a class="header-cta" href="https://www.xaixohome.com/cocinas" target="_blank" rel="noopener">INICIAR PROYECTO <span>↗</span></a>
 <button class="menu-toggle" aria-label="Abrir menú" aria-haspopup="dialog" aria-controls="menu"><span></span><span></span></button>
 </header>
+<!-- SHARED-HEADER:END -->
 <main>
 <section class="hero-stage" id="inicio" aria-label="Espacios para vivirlos">
 <div class="hero-sticky">
@@ -44,11 +46,11 @@
 <h2 class="section-title reveal">¿QUÉ QUIERES<br><span>TRANSFORMAR?</span></h2>
 <div class="transform-layout">
 <div class="space-tabs" role="tablist" aria-label="Elige el espacio que quieres transformar" aria-orientation="vertical">
-<button id="tab-0" role="tab" aria-selected="true" aria-controls="scene-panel" tabindex="0" data-scene="0"><span class="option-num">01</span><span>COCINA</span><span class="option-arrow">↗</span></button>
-<button id="tab-1" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="1"><span class="option-num">02</span><span>BAÑO</span><span class="option-arrow">↗</span></button>
-<button id="tab-2" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="2"><span class="option-num">03</span><span>SALÓN</span><span class="option-arrow">↗</span></button>
-<button id="tab-3" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="3"><span class="option-num">04</span><span>EXTERIOR</span><span class="option-arrow">↗</span></button>
-<button id="tab-4" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="4"><span class="option-num">05</span><span>VIVIENDA<br class="desktop-break"> COMPLETA</span><span class="option-arrow">↗</span></button>
+<div class="space-tab"><button id="tab-0" role="tab" aria-selected="true" aria-controls="scene-panel" tabindex="0" data-scene="0"><span class="option-num">01</span><span>COCINA</span></button><a class="option-arrow" href="cocinas.html" tabindex="0" aria-label="Ver más sobre cocinas">↗</a></div>
+<div class="space-tab"><button id="tab-1" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="1"><span class="option-num">02</span><span>BAÑO</span></button><a class="option-arrow" href="banos.html" tabindex="-1" aria-label="Ver más sobre baños">↗</a></div>
+<div class="space-tab"><button id="tab-2" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="2"><span class="option-num">03</span><span>SALÓN</span></button><a class="option-arrow" href="salon.html" tabindex="-1" aria-label="Ver más sobre salón">↗</a></div>
+<div class="space-tab"><button id="tab-3" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="3"><span class="option-num">04</span><span>EXTERIOR</span></button><a class="option-arrow" href="exterior.html" tabindex="-1" aria-label="Ver más sobre exterior">↗</a></div>
+<div class="space-tab"><button id="tab-4" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="4"><span class="option-num">05</span><span>VIVIENDA<br class="desktop-break"> COMPLETA</span></button><a class="option-arrow" href="vivienda-completa.html" tabindex="-1" aria-label="Ver más sobre vivienda completa">↗</a></div>
 </div>
 <div class="scene-panel" id="scene-panel" role="tabpanel" aria-labelledby="tab-0" tabindex="0" aria-label="Ambiente de cocina; desliza para cambiar de espacio">
 <div class="scene-images" data-cursor="EXPLORAR">
@@ -60,7 +62,7 @@
 <span class="image-note">AMBIENTE DE INSPIRACIÓN</span>
 <div class="scene-controls"><button class="scene-prev" aria-label="Ver espacio anterior">←</button><button class="scene-next" aria-label="Ver siguiente espacio">→</button></div>
 </div>
-<div class="scene-caption"><p id="scene-description" aria-live="polite">El lugar donde todo se encuentra.</p><span class="scene-count">01 / 05</span></div>
+<div class="scene-caption"><p id="scene-description" aria-live="polite">El lugar donde todo se encuentra.</p><div class="scene-caption-meta"><a class="text-link scene-more" id="scene-more" href="cocinas.html" aria-label="Ver más sobre cocinas">VER MÁS <span>↗</span></a><span class="scene-count">01 / 05</span></div></div>
 </div>
 </div>
 </section>
@@ -78,7 +80,9 @@
 <p class="photo-credit">Imágenes de inspiración: Costa Brava House · <a href="https://dom-arquitectura.com/en/costa-brava-house/" target="_blank" rel="noopener">Dom Arquitectura</a> · Fotografía © Jordi Anguera. Referencias temporales para esta propuesta.</p><div class="end-line"><span>XAIXO HOME · GANDÍA</span><a href="#inicio">VOLVER ARRIBA ↑</a></div>
 </section>
 </main>
-<dialog id="menu" class="menu-dialog" aria-label="Menú principal"><div class="menu-head"><span class="wordmark"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></span><button class="close-menu" aria-label="Cerrar menú">CERRAR <span>×</span></button></div><nav aria-label="Navegación móvil"><a href="#proyectos">PROYECTOS <span>01</span></a><a href="#transformar" data-space="0">COCINAS <span>02</span></a><a href="#transformar" data-space="1">BAÑOS <span>03</span></a><a href="https://www.xaixohome.com/azulejos" target="_blank" rel="noopener">SUPERFICIES <span>↗</span></a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener">REFORMA / SERVICIOS <span>↗</span></a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener">SHOWROOM <span>↗</span></a></nav><a class="menu-cta" href="https://www.xaixohome.com/cocinas" target="_blank" rel="noopener">INICIAR PROYECTO ↗</a><p class="menu-location">GANDÍA, VALENCIA · ESPAÑA</p></dialog>
+<!-- SHARED-MENU:START (kept in sync across pages by scripts/generate-pages.mjs) -->
+<dialog id="menu" class="menu-dialog" aria-label="Menú principal"><div class="menu-head"><span class="wordmark"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></span><button class="close-menu" aria-label="Cerrar menú">CERRAR <span>×</span></button></div><nav aria-label="Navegación móvil"><a href="index.html#proyectos">PROYECTOS <span>01</span></a><a href="cocinas.html">COCINAS <span>02</span></a><a href="banos.html">BAÑOS <span>03</span></a><a href="https://www.xaixohome.com/azulejos" target="_blank" rel="noopener">SUPERFICIES <span>↗</span></a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener">REFORMA / SERVICIOS <span>↗</span></a><a href="https://www.xaixohome.com/conocenos" target="_blank" rel="noopener">SHOWROOM <span>↗</span></a></nav><a class="menu-cta" href="https://www.xaixohome.com/cocinas" target="_blank" rel="noopener">INICIAR PROYECTO ↗</a><p class="menu-location">GANDÍA, VALENCIA · ESPAÑA</p></dialog>
+<!-- SHARED-MENU:END -->
 <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title"><div class="lightbox-header"><div><h2 id="project-dialog-title">Estudio de luz</h2><p>Imagen de referencia · No es una obra de Xaixo Home</p></div><button class="close-project" aria-label="Cerrar imagen">CERRAR <span>×</span></button></div><img id="project-dialog-image" alt="" width="1600" height="1067"><p class="lightbox-note">Este espacio se sustituirá por un proyecto real documentado.</p></dialog>
 <div class="context-cursor" aria-hidden="true">VER</div>
 </body>

@@ -4,7 +4,9 @@ Exportación de la versión publicada en:
 
 https://xaixo-home-espacios.javixaixo.chatgpt.site/
 
-La web es un proyecto estático estándar (HTML, CSS y JavaScript), preparado con Vite para poder ejecutarlo y alojarlo fuera de `chatgpt.site`. No depende de ninguna función propietaria de ChatGPT Sites.
+La web es un proyecto estático estándar (HTML, CSS y JavaScript) multipágina, preparado con Vite para poder ejecutarlo y alojarlo fuera de `chatgpt.site`. No depende de ninguna función propietaria de ChatGPT Sites.
+
+Páginas: `index.html` (home) y 5 páginas de espacio — `cocinas.html`, `banos.html`, `salon.html`, `exterior.html`, `vivienda-completa.html` —, cada una con su propio `<title>`/meta description pensados para SEO local.
 
 ## Requisitos
 
@@ -43,28 +45,39 @@ xaixo-home-codigo-completo/
 │   ├── house.webp (+ variantes -800/-1200.webp)
 │   ├── kitchen.webp (+ variantes -800/-1200.webp)
 │   ├── living.webp (+ variantes -800/-1200.webp)
+│   ├── logo.png (+ logo-source.png)
 │   ├── manrope.ttf
 │   └── manrope.woff2
 ├── scripts/
-│   └── generate-assets.mjs
+│   ├── generate-assets.mjs
+│   └── generate-pages.mjs
 ├── app.js
+├── banos.html
 ├── build.mjs
+├── cocinas.html
+├── exterior.html
 ├── image-sources.json
 ├── index.html
 ├── package.json
 ├── package-lock.json
 ├── README.md
-└── styles.css
+├── salon.html
+├── styles.css
+├── vite.config.js
+└── vivienda-completa.html
 ```
 
 ## Archivos principales
 
 - `index.html`: estructura completa de la HOME.
+- `cocinas.html`, `banos.html`, `salon.html`, `exterior.html`, `vivienda-completa.html`: páginas de cada espacio (hero, intro, qué incluye, cómo trabajamos, galería y CTA). `cocinas.html` incluye además el contenedor `#simulador`, pendiente del simulador de presupuesto.
+- `vite.config.js`: declara las 6 páginas como entradas de `build.rollupOptions.input` para que `vite build` las genere todas.
 - `styles.css`: diseño, responsive, animaciones, menú, hero y estados interactivos.
-- `app.js`: animación del hero ligada al scroll, selector de ambientes, swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual. Se carga como módulo de Vite.
+- `app.js`: animación del hero ligada al scroll, selector de ambientes, swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual. Se carga como módulo de Vite; las funciones específicas de la home se autodetectan y no se ejecutan en las páginas de espacio.
 - `build.mjs`: genera la versión de producción con Vite y copia `image-sources.json` a `dist/`.
-- `scripts/generate-assets.mjs`: regenera `manrope.woff2` y las variantes responsive de las imágenes (`npm run generate:assets`) cuando cambian los archivos fuente en `assets/`.
-- `assets/`: fotografías optimizadas (con variantes de 800/1200/1600px para `srcset`) y fuente Manrope (WOFF2 con fallback TTF) usada por la web.
+- `scripts/generate-assets.mjs`: regenera `manrope.woff2`, las variantes responsive de las imágenes y `assets/logo.png` (`npm run generate:assets`) cuando cambian los archivos fuente en `assets/`.
+- `scripts/generate-pages.mjs`: regenera las 5 páginas de espacio (`npm run generate:pages`) a partir del header y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-HEADER`/`SHARED-MENU`, fuente única de verdad) y de los textos definidos en el propio script.
+- `assets/`: fotografías optimizadas (con variantes de 800/1200/1600px para `srcset`), logo y fuente Manrope (WOFF2 con fallback TTF) usados por la web.
 - `image-sources.json`: procedencia y situación de derechos de las imágenes de inspiración.
 
 ## Imágenes y derechos
