@@ -47,6 +47,7 @@ xaixo-home-codigo-completo/
 ├── assets/
 │   ├── home-hero.webp (+ variantes -800/-1200/-1600.webp)
 │   ├── logo.png (+ logo-source.png)
+│   ├── logos/ (logos de marca, ver el README de esa carpeta)
 │   ├── manrope-variable.woff2
 │   └── manrope-OFL.txt
 ├── scripts/
@@ -74,15 +75,15 @@ xaixo-home-codigo-completo/
 
 - `index.html`: estructura completa de la HOME (plantilla oscura, ver arriba), incluye el JSON-LD `HomeAndConstructionBusiness` en el `<head>`.
 - `azulejos.html`, `cocinas.html`, `banos.html`, `ventanas.html`: las 4 páginas de categoría, todas con la plantilla oscura editorial (ver arriba).
-- `aviso-legal.html`, `politica-privacidad.html`, `cookies.html`: páginas legales con texto base estándar y plantilla oscura. Marcadas con `<!-- TODO -->` donde falta el nombre fiscal y el CIF reales.
+- `aviso-legal.html`, `politica-privacidad.html`, `cookies.html`: páginas legales con texto base estándar y plantilla oscura, con los datos identificativos de Materiales Xaixo Home S.L. ya rellenos.
 - `vite.config.js`: declara las 8 páginas como entradas de `build.rollupOptions.input` para que `vite build` las genere todas.
 - `styles.css`: diseño, responsive, animaciones, cabecera, menú, footer, botón de WhatsApp, estados interactivos y el sistema `.reveal`/`.motion` (scroll reveal). También el CSS propio de la home (hero con parallax, manifiesto, selector de espacios, proyectos) y de las páginas legales, en su capa de layout; los colores del tema oscuro de estos elementos viven en `dark.css`.
 - `dark.css`: el tema oscuro de todo el sitio (clase `body.dark-page`) — los componentes de la plantilla editorial de las páginas de categoría (hero a pantalla completa, bloques de producto con foto sticky, cinta de marcas, proceso, simulador y CTA con foto de fondo) y los colores oscuros de la home, el menú móvil, el pie y las páginas legales. Se carga junto a `styles.css`, que sigue aportando la cabecera, el menú, el pie y el botón de WhatsApp compartidos.
 - `app.js`: animación del hero ligada al scroll, selector de ambientes, parallax genérico (`data-px`, usado por la plantilla oscura), swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual (`data-cursor`). Se carga como módulo de Vite; las funciones específicas de cada página se autodetectan y no se ejecutan en el resto.
 - `build.mjs`: genera la versión de producción con Vite.
-- `scripts/generate-assets.mjs`: regenera las variantes responsive de las imágenes (`npm run generate:assets`); convierte automáticamente a WebP cualquier fuente `.png`/`.jpg` que aún no tenga su `.webp` **comprobando el contenido real del archivo con `sharp`, no la extensión** (alguna fuente ha llegado con extensión `.webp` conteniendo en realidad un PNG). No toca la fuente: `assets/manrope-variable.woff2` es la fuente variable (subset latin, pesos 200-800) copiada tal cual del paquete `@fontsource-variable/manrope` — ver el comentario al inicio del script para cómo actualizarla.
-- `scripts/generate-pages.mjs`: regenera las 4 páginas de categoría (array `DARK_PAGES`) y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script. Cada entrada de `DARK_PAGES` puede marcar una imagen con `aiImage: true` para que el HTML generado incluya el TODO de "imagen generada por IA".
-- `assets/`: fotografías optimizadas (con variantes responsive para `srcset`), logo y la fuente variable Manrope (`manrope-variable.woff2`, pesos 200-800, con su licencia OFL en `manrope-OFL.txt`) usados por la web.
+- `scripts/generate-assets.mjs`: regenera las variantes responsive de las imágenes (`npm run generate:assets`); convierte automáticamente a WebP cualquier fuente `.png`/`.jpg` que aún no tenga su `.webp` **comprobando el contenido real del archivo con `sharp`, no la extensión** (alguna fuente ha llegado con extensión `.webp` conteniendo en realidad un PNG). No toca la fuente: `assets/manrope-variable.woff2` es la fuente variable (subset latin, pesos 200-800) copiada tal cual del paquete `@fontsource-variable/manrope` — ver el comentario al inicio del script para cómo actualizarla. También procesa `assets/logos/`: cualquier logo de marca que se deje ahí (en sus colores y fondo originales) se convierte en un recorte blanco sobre transparente (`<marca>-mono.png`), leyendo los píxeles reales en vez de asumir un filtro CSS — ver `assets/logos/README.md`.
+- `scripts/generate-pages.mjs`: regenera las 4 páginas de categoría (array `DARK_PAGES`) y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script. Cada entrada de `DARK_PAGES` puede marcar una imagen con `aiImage: true` para que el HTML generado incluya el TODO de "imagen generada por IA". Las marcas de la cinta y de las etiquetas de cada bloque de producto (`brands`/`brandsTicker`) se resuelven con el logo de `assets/logos/` si existe, o como texto si no.
+- `assets/`: fotografías optimizadas (con variantes responsive para `srcset`), logo, logos de marca (`logos/`) y la fuente variable Manrope (`manrope-variable.woff2`, pesos 200-800, con su licencia OFL en `manrope-OFL.txt`) usados por la web.
 
 ## Imágenes y derechos
 

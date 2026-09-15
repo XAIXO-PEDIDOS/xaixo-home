@@ -50,10 +50,6 @@ body.dark-page {
   right: var(--gutter);
   bottom: clamp(40px, 8vh, 90px);
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 32px;
 }
 .dk-hero-txt h1 {
   font-weight: 300;
@@ -67,21 +63,6 @@ body.dark-page {
   color: var(--bone);
   opacity: 0.85;
   margin-top: 20px;
-}
-.dk-hero-fig {
-  text-align: right;
-}
-.dk-fig {
-  font-weight: 300;
-  font-size: clamp(56px, 7vw, 112px);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-}
-.dk-fig-l {
-  font-size: 14px;
-  color: var(--stone);
-  margin-top: 10px;
-  max-width: 22ch;
 }
 .dk-scroll-hint {
   position: absolute;
@@ -153,13 +134,6 @@ body.dark-page {
   background: linear-gradient(180deg, rgba(28, 24, 21, 0) 55%, rgba(28, 24, 21, 0.7) 100%);
   pointer-events: none;
 }
-.dk-fig-box {
-  position: absolute;
-  left: 32px;
-  bottom: 32px;
-  z-index: 2;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
-}
 .dk-txt {
   padding: clamp(80px, 16vh, 160px) var(--gutter);
   display: flex;
@@ -193,6 +167,25 @@ body.dark-page {
   padding: 5px 12px;
   margin: 0 6px 6px 0;
   color: var(--stone);
+}
+/* Brand logos (ticker + product tags): assets/logos/<brand>-mono.png is
+   already a flat white cutout on a transparent background (whatever the
+   original logo's colors — scripts/generate-assets.mjs does the actual
+   pixel work), so this only needs to size it and mute it to the same
+   --stone tone as the plain-text version. Falls back to that plain-text
+   span when the file isn't there yet (scripts/generate-pages.mjs checks at
+   generation time, not in the browser). */
+.dk-brand-logo {
+  line-height: 0;
+  vertical-align: middle;
+}
+.dk-brand-logo img {
+  display: inline-block;
+  opacity: 0.8;
+}
+.dk-brands .dk-brand-logo img {
+  height: 14px;
+  width: auto;
 }
 .dk-more {
   margin-top: 40px;
@@ -233,12 +226,17 @@ body.dark-page {
 }
 .dk-marcas .dk-row {
   display: inline-flex;
+  align-items: center;
   gap: 64px;
   font-size: 22px;
   font-weight: 500;
   letter-spacing: -0.01em;
   padding-right: 64px;
   animation: dk-marquee 34s linear infinite;
+}
+.dk-marcas .dk-brand-logo img {
+  height: 26px;
+  width: auto;
 }
 .dk-marcas .dk-row span::before {
   content: "";
@@ -405,12 +403,6 @@ body.dark-page {
 }
 
 @media (max-width: 820px) {
-  .dk-hero-txt {
-    grid-template-columns: 1fr;
-  }
-  .dk-hero-fig {
-    text-align: left;
-  }
   .dk-prod {
     grid-template-columns: 1fr;
   }

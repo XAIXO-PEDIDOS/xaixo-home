@@ -6,7 +6,7 @@
 // from the @fontsource-variable/manrope npm package — see assets/manrope-OFL.txt
 // for its license. To update it: `npm pack @fontsource-variable/manrope`,
 // extract, and copy files/manrope-latin-wght-normal.woff2 over it.
-import { access } from "node:fs/promises";
+import { access, readdir } from "node:fs/promises";
 import sharp from "sharp";
 
 async function fileExists(path) {
@@ -89,3 +89,60 @@ await sharp("assets/logo-source.png")
   .png({ palette: true, compressionLevel: 9 })
   .toFile("assets/logo.png");
 console.log("assets/logo.png");
+
+// Brand logos (assets/logos/, see the README there): each raw file the user
+// drops in — svg/png/jpg/webp, any colors, with or without a transparent
+// background — is turned into assets/logos/<slug>-mono.png, a flat white
+// cutout on a transparent background. That's what dark.css's screen-reader-
+// free grayscale/invert trick can't reliably do by itself: a real logo is
+// rarely a clean black-mark-on-white bitmap, so this reads the actual
+// pixels instead of guessing from CSS. scripts/generate-pages.mjs looks for
+// this exact "-mono.png" file per brand.
+const logosDir = "assets/logos";
+let logoFiles;
+try {
+  logoFiles = await readdir(logosDir);
+} catch {
+  logoFiles = [];
+}
+for (const file of logoFiles) {
+  const match = file.match(/^(.+)\.(svg|png|jpe?g|webp)$/i);
+  if (!match || match[1].endsWith("-mono")) continue;
+  const slug = match[1];
+  const src = `${logosDir}/${file}`;
+  const out = `${logosDir}/${slug}-mono.png`;
+  const { data, info } = await sharp(src).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  const pixelCount = width * height;
+  let hasTransparency = false;
+  let totalLuminance = 0;
+  for (let i = 0; i < pixelCount; i++) {
+    const o = i * channels;
+    const a = data[o + 3];
+    if (a < 250) hasTransparency = true;
+    totalLuminance += (0.299 * data[o] + 0.587 * data[o + 1] + 0.114 * data[o + 2]) * (a / 255);
+  }
+  const avgLuminance = totalLuminance / pixelCount;
+  const monoPixels = Buffer.alloc(pixelCount * 4);
+  for (let i = 0; i < pixelCount; i++) {
+    const o = i * channels;
+    const a = data[o + 3];
+    let alpha;
+    if (hasTransparency) {
+      // Real transparency: keep it as-is. The mark is painted pure white
+      // below regardless of its original color, so this alone is enough.
+      alpha = a;
+    } else {
+      const luminance = 0.299 * data[o] + 0.587 * data[o + 1] + 0.114 * data[o + 2];
+      // Opaque source: figure out ink vs. background from the page's own
+      // average brightness, then turn the ink into alpha (dark-on-light
+      // logos need inverting; light-on-dark ones already read correctly).
+      alpha = Math.round(avgLuminance >= 128 ? 255 - luminance : luminance);
+    }
+    const oo = i * 4;
+    monoPixels[oo] = monoPixels[oo + 1] = monoPixels[oo + 2] = 255;
+    monoPixels[oo + 3] = alpha;
+  }
+  await sharp(monoPixels, { raw: { width, height, channels: 4 } }).png().toFile(out);
+  console.log(out);
+}

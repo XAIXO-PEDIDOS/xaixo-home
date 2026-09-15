@@ -7,6 +7,7 @@
 // Run with `npm run generate:pages` after editing this file, or after
 // changing the header/menu in index.html so the new pages pick it up.
 import { readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 
 const indexHtml = await readFile("index.html", "utf8");
 
@@ -55,8 +56,28 @@ const HOURS_LINE = "Lunes a viernes, 7:00 a 19:00";
 const PHONE_DISPLAY = "615 439 842";
 const PHONE_TEL = "+34615439842";
 
-const SAMPLE_FIGURE_NOTE = "<!-- TODO: cifra de muestra, sustituir por un dato real de Xaixo Home -->";
 const AI_IMAGE_NOTE = "<!-- TODO: imagen generada por IA, sustituir por una fotografía real de un proyecto de Xaixo Home -->";
+const CONTACT_EMAIL = "javierxaixo@gmail.com";
+
+// Brand tags (ticker + per-product pills): looks for assets/logos/<slug>-mono.png
+// — the flat white-on-transparent cutout scripts/generate-assets.mjs derives
+// from whatever raw logo the user drops into assets/logos/ — and falls back
+// to the brand name as plain text when it isn't there yet. Run
+// `npm run generate:assets` after adding a raw logo, then `npm run generate:pages`
+// so this check (done at generation time, not in the browser) picks it up.
+function slugifyBrand(name) {
+  return name
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+function brandMarkup(name) {
+  const logo = `assets/logos/${slugifyBrand(name)}-mono.png`;
+  if (!existsSync(logo)) return `<span>${name}</span>`;
+  return `<span class="dk-brand-logo"><img src="${logo}" alt="${name}" loading="lazy"></span>`;
+}
 
 // width/height per source photo, from assets/*.webp real dimensions
 const IMAGE_DIMS = {
@@ -105,8 +126,6 @@ const DARK_PAGES = [
       aiImage: true,
       title: "Azulejos",
       subtitle: "Suelos, revestimientos y grandes formatos de los mejores fabricantes. Los ves en el showroom de Gandia; te los servimos en obra.",
-      figureValue: "+600",
-      figureLabel: "referencias de pavimento y revestimiento en exposición permanente",
     },
     intro: {
       html: "Un azulejo se elige con luz natural. <b>Ven, compara piezas reales</b> y llévate el metro cuadrado calculado.",
@@ -116,46 +135,38 @@ const DARK_PAGES = [
       {
         title: "Suelos porcelánicos",
         desc: "Gran formato y formato tradicional, antideslizante para baño y cocina. Rectificado para junta mínima.",
-        brands: ["Marca", "Marca", "Marca"],
+        brands: ["Halcón Cerámicas", "KTL", "Vilar Albaro"],
         image: "azulejos-suelos",
         imageAlt: "Detalle de suelo porcelánico rectificado, vista a ras de suelo, imagen de referencia",
         aiImage: true,
-        figureValue: "180",
-        figureLabel: "referencias de suelo porcelánico",
       },
       {
         title: "Revestimientos",
         desc: "Pasta blanca y porcelánico para pared, en mate, brillo y relieve. Formatos desde 20 × 20 cm hasta gran formato.",
-        brands: ["Marca", "Marca"],
+        brands: ["Alaplana", "Tercocer"],
         image: "azulejos-revestimientos",
         imageAlt: "Revestimiento cerámico acanalado en tono madera con balda y jarrón, imagen de referencia",
         imagePosition: "center 55%",
         aiImage: true,
-        figureValue: "220",
-        figureLabel: "referencias de revestimiento",
       },
       {
         title: "Exterior y piscina",
         desc: "Antideslizante clase C3, apto para playa de piscina y terraza. Resistente a heladas y a la sal.",
-        brands: ["Marca", "Marca"],
+        brands: ["Navarti", "Benesol"],
         image: "azulejos-exterior",
         imageAlt: "Terraza con pavimento porcelánico antideslizante junto a una piscina, imagen de referencia",
         aiImage: true,
-        figureValue: "60",
-        figureLabel: "referencias para exterior y piscina",
       },
       {
         title: "Grandes formatos",
         desc: "Piezas de hasta 320 × 160 cm para suelo continuo o revestimiento sin apenas juntas. Cortadas a medida en el showroom.",
-        brands: ["Marca", "Marca"],
+        brands: ["Tercocer", "Alaplana"],
         image: "azulejos-formatos",
         imageAlt: "Ducha revestida con una lámina de porcelánico de gran formato efecto mármol, imagen de referencia",
         aiImage: true,
-        figureValue: "40",
-        figureLabel: "referencias en gran formato",
       },
     ],
-    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
+    brandsTicker: ["Navarti", "Halcón Cerámicas", "KTL", "Vilar Albaro", "Tercocer", "Alaplana", "Benesol"],
     steps: [
       { title: "Nos cuentas tu proyecto", desc: "Por WhatsApp o en el showroom. Con metros aproximados o un plano, mejor; sin ellos, también." },
       { title: "Elegimos juntos el material", desc: "Ves y tocas piezas reales, comparas con luz natural. Sales con un presupuesto cerrado." },
@@ -183,8 +194,6 @@ const DARK_PAGES = [
       aiImage: true,
       title: "Cocinas",
       subtitle: "Diseñadas en 3D contigo e instaladas por nuestro equipo. Del plano a la última bisagra.",
-      figureValue: "+120",
-      figureLabel: "cocinas instaladas en la Safor",
     },
     intro: {
       html: "Una cocina no se compra por catálogo. <b>Se mide, se dibuja contigo</b> y se instala sin sorpresas.",
@@ -193,14 +202,12 @@ const DARK_PAGES = [
     products: [
       {
         title: "Mobiliario",
-        desc: "Módulos a medida en melamina, laminado o lacado, con herrajes de cierre suave. Despensas y columnas hasta el techo.",
-        brands: ["Marca", "Marca", "Marca"],
+        desc: "Módulos a medida en melamina, laminado o lacado, con herrajes de cierre suave. Despensas y columnas hasta el techo. Cocinas Nobilia, fabricadas en Alemania.",
+        brands: ["Nobilia"],
         image: "cocinas-mobiliario",
         imageAlt: "Armario despensa extraíble abierto junto a estantería de madera, imagen de referencia",
         imagePosition: "72% center",
         aiImage: true,
-        figureValue: "40",
-        figureLabel: "acabados de mobiliario en exposición",
       },
       {
         title: "Encimeras",
@@ -209,8 +216,6 @@ const DARK_PAGES = [
         image: "cocinas-encimeras",
         imageAlt: "Encimera de cuarzo blanco con canto a inglete y fregadero integrado, imagen de referencia",
         aiImage: true,
-        figureValue: "25",
-        figureLabel: "acabados de encimera en exposición",
       },
       {
         title: "Electrodomésticos",
@@ -219,8 +224,6 @@ const DARK_PAGES = [
         image: "cocinas-electrodomesticos",
         imageAlt: "Horno y microondas integrados junto a placa de inducción con campana extractora, imagen de referencia",
         aiImage: true,
-        figureValue: "15",
-        figureLabel: "marcas de electrodomésticos",
       },
       {
         title: "Instalación propia",
@@ -230,11 +233,9 @@ const DARK_PAGES = [
         imageAlt: "Instalador montando muebles altos de cocina con nivel y taladro, imagen de referencia",
         imagePosition: "center 35%",
         aiImage: true,
-        figureValue: "100%",
-        figureLabel: "instalación con equipo propio, sin subcontratar",
       },
     ],
-    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
+    brandsTicker: ["Nobilia"],
     steps: [
       { title: "Medimos en tu casa", desc: "Visitamos tu cocina actual y tomamos medidas reales, sin compromiso." },
       { title: "La diseñamos en 3D y cerramos presupuesto", desc: "Ves el resultado antes de decidir y sales con un precio cerrado." },
@@ -265,8 +266,6 @@ const DARK_PAGES = [
       aiImage: true,
       title: "Ventanas",
       subtitle: "PVC y aluminio, medidas e instaladas por nosotros. Más aislamiento, más silencio, menos factura.",
-      figureValue: "+300",
-      figureLabel: "ventanas instaladas al año",
     },
     intro: {
       html: "Cambiar las ventanas <b>es la reforma que más se nota</b> y menos se ve.",
@@ -276,32 +275,26 @@ const DARK_PAGES = [
       {
         title: "Ventanas de PVC",
         desc: "Perfiles multicámara con refuerzo interior. El mejor aislamiento térmico y acústico al mejor precio.",
-        brands: ["Marca", "Marca"],
+        brands: ["Replus"],
         image: "ventanas-pvc",
         imageAlt: "Detalle de ventana de PVC oscilobatiente abierta, con manivela y perfil multicámara, imagen de referencia",
         aiImage: true,
-        figureValue: "12",
-        figureLabel: "sistemas de PVC en showroom",
       },
       {
         title: "Ventanas de aluminio",
         desc: "Perfil con rotura de puente térmico, esbelto y resistente. Ideal para grandes paños y diseño minimalista.",
-        brands: ["Marca", "Marca"],
+        brands: ["Replus"],
         image: "ventanas-aluminio",
         imageAlt: "Gran ventanal fijo de aluminio con vistas a un jardín de olivos, imagen de referencia",
         aiImage: true,
-        figureValue: "10",
-        figureLabel: "sistemas de aluminio en showroom",
       },
       {
         title: "Correderas y cerramientos",
         desc: "Correderas elevables y cerramientos de terraza con grandes paños de vidrio. Máxima apertura, mínimo perfil visto.",
-        brands: ["Marca", "Marca", "Marca"],
+        brands: ["Replus"],
         image: "ventanas-correderas",
         imageAlt: "Cerramiento corredero de aluminio negro abierto en un dormitorio con vistas al mar y terraza con tumbona, imagen de referencia",
         aiImage: true,
-        figureValue: "8",
-        figureLabel: "sistemas de corredera en showroom",
       },
       {
         title: "Instalación propia",
@@ -310,11 +303,9 @@ const DARK_PAGES = [
         image: "ventanas-instalacion",
         imageAlt: "Instalador comprobando con un nivel una ventana de aluminio recién colocada en un hueco de obra, con vistas al mar",
         aiImage: true,
-        figureValue: "100%",
-        figureLabel: "instalación con equipo propio, sin subcontratar",
       },
     ],
-    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
+    brandsTicker: ["Replus"],
     steps: [
       { title: "Medimos en tu casa", desc: "Comprobamos huecos y el estado del cerramiento actual, sin compromiso." },
       { title: "Elegimos sistema, vidrio y color", desc: "PVC o aluminio, vidrio de control solar o acústico, y el color que combine con tu fachada." },
@@ -341,8 +332,6 @@ const DARK_PAGES = [
       position: "center 30%",
       title: "Baños",
       subtitle: "Platos, mamparas, muebles, grifería y cerámica. Los eliges en el showroom de Gandia; te los servimos en obra.",
-      figureValue: "+400",
-      figureLabel: "referencias de baño en exposición permanente",
     },
     intro: {
       html: "Un baño se elige tocando. <b>Ven, compara materiales reales</b> y sal con el presupuesto cerrado.",
@@ -355,8 +344,6 @@ const DARK_PAGES = [
         brands: ["Marca", "Marca", "Marca"],
         image: "banos-platos",
         imageAlt: "Plato de ducha antracita con mampara de vidrio y marco negro, en ducha con revestimiento cerámico y hornacina para toallas",
-        figureValue: "120",
-        figureLabel: "platos de ducha",
       },
       {
         title: "Muebles y lavabos",
@@ -364,8 +351,6 @@ const DARK_PAGES = [
         brands: ["Marca", "Marca"],
         image: "banos-muebles",
         imageAlt: "Mueble de baño suspendido en roble con espejo redondo retroiluminado",
-        figureValue: "35",
-        figureLabel: "muebles en exposición",
       },
       {
         title: "Grifería y sanitarios",
@@ -374,8 +359,6 @@ const DARK_PAGES = [
         image: "banos-griferia",
         imageAlt: "Grifería de lavabo en negro mate sobre encimera de piedra clara",
         imagePosition: "center 42%",
-        figureValue: "18",
-        figureLabel: "acabados de grifería",
       },
       {
         title: "Cerámica y porcelánico",
@@ -383,8 +366,6 @@ const DARK_PAGES = [
         brands: ["Marca", "Marca"],
         image: "banos-ceramica",
         imageAlt: "Revestimiento cerámico tipo travertino en ducha con hornacina para toallas",
-        figureValue: "300",
-        figureLabel: "modelos de cerámica",
       },
     ],
     brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
@@ -431,13 +412,11 @@ function darkProductMarkup(product) {
     sizes: "(max-width: 820px) 100vw, 50vw",
     position: product.imagePosition,
   });
-  const brands = product.brands.map((brand) => `<span>${brand}</span>`).join("");
+  const brands = product.brands.map(brandMarkup).join("");
   const imageNote = product.aiImage ? `${AI_IMAGE_NOTE}\n` : "";
   return `<article class="dk-prod">
 <div class="dk-pic" data-cursor="VER">
 ${imageNote}<div class="dk-ph" data-px="0.12">${image}</div>
-${SAMPLE_FIGURE_NOTE}
-<div class="dk-fig-box"><div class="dk-fig">${product.figureValue}</div><div class="dk-fig-l">${product.figureLabel}</div></div>
 </div>
 <div class="dk-txt">
 <h2 class="reveal">${product.title}</h2>
@@ -449,7 +428,7 @@ ${SAMPLE_FIGURE_NOTE}
 }
 
 function darkBrandsTickerMarkup(brands) {
-  const spans = brands.map((brand) => `<span>${brand}</span>`).join("");
+  const spans = brands.map(brandMarkup).join("");
   return `<div class="dk-marcas" aria-label="Marcas con las que trabajamos">
 <div class="dk-row">${spans}</div><div class="dk-row" aria-hidden="true">${spans}</div>
 </div>`;
@@ -535,15 +514,8 @@ ${HEADER_HTML_OTHER}
 <section class="dk-hero" id="inicio" aria-label="${page.hero.title}">
 ${heroImageNote}<div class="dk-ph" data-px="0.18">${heroImage}</div>
 <div class="dk-hero-txt">
-<div>
 <h1>${page.hero.title}</h1>
 <p class="dk-hero-sub">${page.hero.subtitle}</p>
-</div>
-<div class="dk-hero-fig reveal">
-${SAMPLE_FIGURE_NOTE}
-<div class="dk-fig">${page.hero.figureValue}</div>
-<div class="dk-fig-l">${page.hero.figureLabel}</div>
-</div>
 </div>
 <div class="dk-scroll-hint" aria-hidden="true"></div>
 </section>
@@ -579,7 +551,7 @@ const LEGAL_PAGES = [
     description: "Condiciones de uso y datos identificativos del titular del sitio web de Xaixo Home.",
     heading: "AVISO LEGAL",
     bodyHtml: `<h2 class="reveal">1. Datos identificativos</h2>
-<p class="reveal">En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de los siguientes datos: el titular de este sitio web es <!-- TODO: nombre fiscal --> (Xaixo Home), con CIF <!-- TODO: CIF -->, y domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia).</p>
+<p class="reveal">En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de los siguientes datos: el titular de este sitio web es MATERIALES XAIXO HOME S.L. (Xaixo Home), con CIF B10533552, y domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia). Puedes contactar en ${CONTACT_EMAIL}.</p>
 <h2 class="reveal">2. Objeto</h2>
 <p class="reveal">El presente sitio web tiene por objeto ofrecer información sobre los materiales y servicios de azulejos, cocinas, baños y ventanas de Xaixo Home.</p>
 <h2 class="reveal">3. Condiciones de uso</h2>
@@ -597,7 +569,7 @@ const LEGAL_PAGES = [
     description: "Cómo trata Xaixo Home los datos personales de las personas usuarias del sitio web.",
     heading: "POLÍTICA DE PRIVACIDAD",
     bodyHtml: `<h2 class="reveal">1. Responsable del tratamiento</h2>
-<p class="reveal">El responsable del tratamiento de los datos personales recabados a través de este sitio web es <!-- TODO: nombre fiscal --> (Xaixo Home), con CIF <!-- TODO: CIF -->, domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia), teléfono 615 439 842.</p>
+<p class="reveal">El responsable del tratamiento de los datos personales recabados a través de este sitio web es MATERIALES XAIXO HOME S.L. (Xaixo Home), con CIF B10533552, domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia), teléfono 615 439 842 y correo ${CONTACT_EMAIL}.</p>
 <h2 class="reveal">2. Finalidad del tratamiento</h2>
 <p class="reveal">Los datos facilitados a través de los formularios de contacto o WhatsApp se utilizan para atender consultas, elaborar presupuestos y gestionar la relación comercial con la persona usuaria.</p>
 <h2 class="reveal">3. Legitimación</h2>
