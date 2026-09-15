@@ -1,6 +1,7 @@
-/* Dark editorial template for product category pages.
-   Currently used by banos.html; reuse for azulejos/cocinas/ventanas once
-   they have their own photography (scripts/generate-pages.mjs DARK_PAGES).
+/* Dark editorial template, shared by every page on the site: the 4 product
+   category pages (scripts/generate-pages.mjs DARK_PAGES), the home
+   (index.html, which keeps its own hero/manifesto/selector layout in
+   styles.css and only gets color overrides here) and the 3 legal pages.
    Loaded alongside styles.css, which still provides the shared header,
    mobile menu, footer, WhatsApp button, @font-face and the reveal-on-scroll
    (.reveal/.motion) system — none of that is duplicated here. */
@@ -437,6 +438,83 @@ body.dark-page {
   }
   .dk-cta-in {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Shared chrome across every dark page: mobile menu, footer, WhatsApp button,
+   legal pages (aviso-legal/politica-privacidad/cookies). The header needs no
+   override here: it's always white-on-transparent, already legible over any
+   hero photo or dark background. */
+.dark-page .menu-dialog {
+  background: var(--umber);
+  color: var(--bone);
+}
+.dark-page .menu-head .logo {
+  filter: none;
+}
+.dark-page .menu-dialog nav a {
+  border-bottom-color: var(--dark-line);
+}
+.dark-page .site-footer {
+  background: var(--umber);
+}
+.dark-page .footer-bottom {
+  border-top-color: var(--dark-line);
+}
+.dark-page .whatsapp-float {
+  background: var(--umber);
+  color: var(--bone);
+}
+@media (hover: hover) and (pointer: fine) {
+  .dark-page .whatsapp-float:hover {
+    background: var(--umber-2);
+  }
+}
+.dark-page .legal-page p {
+  color: var(--stone);
+}
+
+/* Home page (index.html): hero parallax, manifesto and "¿Qué necesitas?"
+   selector reuse the layout rules in styles.css — these are color-only
+   overrides for the dark background. */
+.dark-page .manifesto-title > span {
+  color: var(--stone);
+}
+.dark-page .asterisk {
+  color: var(--stone);
+}
+.dark-page .transform {
+  border-top-color: var(--dark-line);
+}
+.dark-page .section-title > span:not(.title-dot) {
+  color: var(--stone);
+}
+.dark-page .space-tabs > .space-tab:first-child > button {
+  border-top-color: var(--dark-line);
+}
+.dark-page .space-tabs button {
+  color: var(--stone);
+  border-bottom-color: var(--dark-line);
+}
+.dark-page .space-tabs button[aria-selected="true"] {
+  color: var(--bone);
+}
+.dark-page .option-arrow {
+  color: var(--bone);
+}
+.dark-page .scene-images {
+  background: var(--umber-2);
+}
+.dark-page .scene-controls button {
+  background: rgba(28, 24, 21, 0.72);
+  color: var(--bone);
+}
+@media (hover: hover) and (pointer: fine) {
+  .dark-page .space-tabs button:hover {
+    color: var(--bone);
+  }
+  .dark-page .scene-controls button:hover {
+    background: rgba(28, 24, 21, 0.9);
   }
 }
 

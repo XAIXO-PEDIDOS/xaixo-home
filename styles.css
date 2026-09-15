@@ -177,7 +177,7 @@ p {
   transform-origin: center;
   overflow: hidden;
   will-change: transform;
-  background: #746955;
+  background: #1c1815;
 }
 .hero-image {
   width: 100%;
@@ -188,13 +188,7 @@ p {
 .hero-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    #14161252 0%,
-    transparent 30%,
-    #0e100b2b 47%,
-    #14161265 100%
-  );
+  background: linear-gradient(180deg, rgba(28, 24, 21, 0.15) 0%, rgba(28, 24, 21, 0) 40%, rgba(28, 24, 21, 0.85) 100%);
 }
 .hero-copy {
   position: absolute;

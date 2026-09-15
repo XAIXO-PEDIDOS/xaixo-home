@@ -618,15 +618,16 @@ function renderLegalPage(page) {
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#eeeae3"><title>${page.title}</title>
+<meta name="theme-color" content="#1c1815"><title>${page.title}</title>
 <meta name="description" content="${page.description}">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="dark.css">
 <script type="module" src="/app.js"></script>
 </head>
-<body>
+<body class="dark-page">
 <a class="skip" href="#legal-content">Saltar al contenido</a>
 ${HEADER_HTML}
 <main>

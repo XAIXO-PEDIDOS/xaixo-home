@@ -25,12 +25,7 @@ async function fileExists(path) {
 // low-res source simply yields fewer (or no) variants rather than upscaling.
 const widths = [800, 1200, 1600];
 const images = [
-  "hero",
-  "kitchen",
-  "bathroom",
-  "living",
-  "exterior",
-  "house",
+  "home-hero",
   "banos-hero",
   "banos-platos",
   "banos-muebles",
