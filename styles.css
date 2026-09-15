@@ -704,6 +704,65 @@ p {
   aspect-ratio: 1;
   object-fit: cover;
 }
+/* --- Product cards ("tarjetas") reused for QUÉ INCLUYE on category pages --- */
+.cards-grid {
+  list-style: none;
+  margin: 50px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.cards-grid li {
+  background: var(--paper);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cards-num {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.cards-grid li strong {
+  font-size: clamp(20px, 2.2vw, 28px);
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.card-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+/* --- Brand placeholder strip --- */
+.brands {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+.brands-grid {
+  list-style: none;
+  margin: 50px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.brands-grid li {
+  background: var(--paper);
+  padding: 28px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
 .page-cta {
   background: #e4e0d8;
   padding-top: 90px;
@@ -720,6 +779,12 @@ p {
   letter-spacing: -0.045em;
   margin-bottom: 36px;
 }
+.page-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
 .page-cta-button {
   display: inline-flex;
   align-items: center;
@@ -735,9 +800,17 @@ p {
 .page-cta-button span {
   font-size: 20px;
 }
+.page-cta-button--ghost {
+  border-color: var(--muted);
+  color: var(--muted);
+}
 @media (hover: hover) and (pointer: fine) {
   .page-cta-button:hover {
     background: var(--ink);
+    color: var(--paper);
+  }
+  .page-cta-button--ghost:hover {
+    background: var(--muted);
     color: var(--paper);
   }
 }
@@ -1340,11 +1413,13 @@ dialog::backdrop {
   .includes,
   .process,
   .gallery,
-  .simulator {
+  .simulator,
+  .brands {
     padding-top: 36px;
     padding-bottom: 36px;
   }
-  .includes-grid {
+  .includes-grid,
+  .cards-grid {
     grid-template-columns: 1fr;
   }
   .process-steps {
@@ -1354,6 +1429,9 @@ dialog::backdrop {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+  }
+  .brands-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
   .page-cta {
     padding-top: 60px;

@@ -44,8 +44,8 @@ if (tabs.length) {
  const arrows=[...document.querySelectorAll('.option-arrow')];
  const sceneMore=document.querySelector('#scene-more');
  const scenePanel=document.querySelector('#scene-panel');
- const descriptions=['El lugar donde todo se encuentra.','Una pausa. Un espacio para ti.','La vida, a tu manera.','El interior continúa fuera.','Todo empieza por imaginarlo.'];
- const spaceLabels=['cocina','baño','salón','exterior','vivienda completa'];
+ const descriptions=['El suelo y la pared, la base de todo.','El lugar donde todo se encuentra.','Una pausa. Un espacio para ti.','Luz que entra, frío que se queda fuera.'];
+ const spaceLabels=['azulejos','cocinas','baños','ventanas'];
  let current=0;
  function selectScene(index,focus=false){
   current=(index+tabs.length)%tabs.length;
@@ -55,7 +55,7 @@ if (tabs.length) {
   scenePanel.setAttribute('aria-labelledby',`tab-${current}`);
   scenePanel.setAttribute('aria-label',`Ambiente de ${spaceLabels[current]}; desliza para cambiar de espacio`);
   document.querySelector('#scene-description').textContent=descriptions[current];
-  document.querySelectorAll('.scene-count').forEach(el=>el.textContent=`0${current+1} / 05`);
+  document.querySelectorAll('.scene-count').forEach(el=>el.textContent=`0${current+1} / 04`);
   if(sceneMore){sceneMore.href=arrows[current].href;sceneMore.setAttribute('aria-label',`Ver más sobre ${spaceLabels[current]}`);}
   if(innerWidth<=700){const holder=document.querySelector('.space-tabs');holder.scrollTo({left:tabs[current].offsetLeft-holder.offsetLeft-12,behavior:reduced.matches?'instant':'smooth'});}
   if(focus)tabs[current].focus({preventScroll:true});

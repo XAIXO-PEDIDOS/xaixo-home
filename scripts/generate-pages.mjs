@@ -1,8 +1,8 @@
-// Generates the 5 category pages (cocinas.html, banos.html, salon.html,
-// exterior.html, vivienda-completa.html) from shared header/menu markup
-// lifted straight out of index.html (the single source of truth for those
-// blocks, delimited by the SHARED-HEADER/SHARED-MENU comment markers) plus
-// per-page content defined below.
+// Generates the 4 category pages (azulejos.html, cocinas.html, banos.html,
+// ventanas.html) from shared header/menu markup lifted straight out of
+// index.html (the single source of truth for those blocks, delimited by the
+// SHARED-HEADER/SHARED-MENU comment markers) plus per-page content defined
+// below.
 //
 // Run with `npm run generate:pages` after editing this file, or after
 // changing the header/menu in index.html so the new pages pick it up.
@@ -38,11 +38,20 @@ const WHATSAPP_HTML = extractBetween(
   "<!-- SHARED-WHATSAPP:END -->",
 );
 
-const PROCESS_STEPS = [
-  "Visita y medición en tu casa o en el showroom",
-  "Diseño 3D y presupuesto cerrado",
-  "Instalación con nuestro equipo",
+const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Gran+Via+Castell+de+Bair%C3%A9n+20%2C+Gandia";
+
+// Xaixo Home only installs kitchens and windows; azulejos and baños are
+// materials sold and advised on, fitted by the client's own installer.
+const PROCESS_STEPS_INSTALL = ["Visita y medición", "Diseño 3D y presupuesto cerrado", "Instalación con nuestro equipo"];
+const PROCESS_STEPS_MATERIALS = [
+  "Nos cuentas tu proyecto",
+  "Te asesoramos y elegimos juntos los materiales en el showroom",
+  "Te lo servimos en obra listo para tu instalador",
 ];
+
+// Generic brand placeholders shown on every category page until real logos
+// from the brands Xaixo Home works with are available.
+const BRAND_PLACEHOLDERS = ["MARCA 01", "MARCA 02", "MARCA 03", "MARCA 04", "MARCA 05", "MARCA 06"];
 
 // width/height per source photo, from assets/*.webp real dimensions
 const IMAGE_DIMS = {
@@ -55,77 +64,83 @@ const IMAGE_DIMS = {
 
 const PAGES = [
   {
+    slug: "azulejos",
+    title: "Azulejos y porcelánico en Gandía | Xaixo Home",
+    description:
+      "Suelos porcelánicos, revestimientos y grandes formatos para toda la casa en Gandía. Asesoramiento y materiales de las mejores marcas en nuestro showroom.",
+    heroEyebrow: "XAIXO HOME — GANDÍA",
+    heroTitle: "AZULEJOS Y PORCELÁNICO PARA TODA LA CASA",
+    heroImage: "living",
+    heroAlt: "Suelos y revestimientos de porcelánico, imagen temporal de referencia",
+    heroPlaceholderNote:
+      "TODO: foto de referencia temporal (salón) a falta de una fotografía real de azulejos/porcelánico de Xaixo Home",
+    intro:
+      "Suelos, revestimientos y grandes formatos de los mejores fabricantes. Los ves en nuestro showroom de Gandia y te los servimos en obra.",
+    cards: [
+      { title: "Suelos porcelánicos", desc: "Gran resistencia y acabados que imitan piedra, madera o cemento." },
+      { title: "Revestimientos", desc: "Paredes con carácter, en formato clásico o gran formato." },
+      { title: "Exterior y piscina", desc: "Antideslizante y resistente a la intemperie." },
+      { title: "Grandes formatos", desc: "Superficies continuas de hasta 320 × 160 cm." },
+    ],
+    gallery: ["exterior", "house", "kitchen"],
+  },
+  {
     slug: "cocinas",
-    navNumber: "01",
     title: "Cocinas a medida en Gandía | Xaixo Home",
     description:
       "Diseño 3D, mobiliario a medida e instalación completa de cocinas en Gandía y la Safor. Un mismo equipo del plano al montaje.",
     heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "COCINAS",
+    heroTitle: "COCINAS A MEDIDA, DISEÑADAS E INSTALADAS POR NOSOTROS",
     heroImage: "kitchen",
     heroAlt: "Cocina contemporánea de materiales naturales, referencia de inspiración",
-    intro:
-      "Cocinas a medida diseñadas contigo. Del plano en 3D a la instalación, todo con el mismo equipo.",
-    incluye: ["Diseño 3D personalizado", "Mobiliario a medida", "Encimeras y electrodomésticos", "Instalación completa"],
+    intro: "Del diseño en 3D a la instalación, con el mismo equipo.",
+    cards: [
+      { title: "Mobiliario", desc: "Diseño a medida, con los acabados y la distribución que necesitas." },
+      { title: "Encimeras", desc: "Cuarzo, compacto o piedra natural, a la medida de tu cocina." },
+      { title: "Electrodomésticos", desc: "Integrados o de libre instalación, de las mejores marcas." },
+    ],
     gallery: ["living", "exterior", "house"],
     simulator: true,
+    installs: true,
   },
   {
     slug: "banos",
-    navNumber: "02",
     title: "Baños a medida en Gandía | Xaixo Home",
     description:
-      "Platos de ducha, mamparas, muebles y cerámica para tu baño en Gandía. Elegidos e instalados por el mismo equipo.",
+      "Sanitarios, muebles de baño, platos de ducha, mamparas y cerámica en Gandía. Asesoramiento y materiales de las mejores marcas en nuestro showroom.",
     heroEyebrow: "XAIXO HOME — GANDÍA",
     heroTitle: "BAÑOS",
     heroImage: "bathroom",
     heroAlt: "Baño de piedra clara y luz suave, referencia de inspiración",
     intro:
-      "Baños que se disfrutan cada día. Platos de ducha, mamparas, muebles y cerámica, elegidos y colocados por nosotros.",
-    incluye: ["Sanitarios y grifería", "Muebles de baño", "Cerámica y porcelánico", "Instalación y albañilería"],
+      "Todo lo que necesita tu baño, elegido con criterio. Platos de ducha, mamparas, muebles, grifería y cerámica de las mejores marcas.",
+    cards: [
+      { title: "Sanitarios y grifería", desc: "Inodoros, lavabos y grifería de diseño y bajo consumo." },
+      { title: "Muebles de baño", desc: "Muebles a medida y de catálogo, con encimeras a juego." },
+      { title: "Platos de ducha y mamparas", desc: "Resina, mampara de vidrio templado y sistemas antical." },
+      { title: "Cerámica y porcelánico", desc: "Pavimento y revestimiento de las mejores marcas." },
+    ],
     gallery: ["kitchen", "living", "house"],
   },
   {
-    slug: "salon",
-    navNumber: "03",
-    title: "Reforma de salones en Gandía | Xaixo Home",
+    slug: "ventanas",
+    title: "Ventanas de PVC y aluminio en Gandía | Xaixo Home",
     description:
-      "Pavimentos, revestimientos, iluminación y mobiliario a medida para tu salón en Gandía. Diseño e instalación con un mismo equipo.",
+      "Ventanas de PVC y aluminio medidas e instaladas por Xaixo Home en Gandía. Aislamiento, seguridad y ahorro energético.",
     heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "SALÓN",
-    heroImage: "living",
-    heroAlt: "Salón cálido y abierto, referencia de inspiración",
-    intro: "El espacio donde pasa la vida. Suelos, revestimientos y mobiliario para que el salón sea tuyo.",
-    incluye: ["Pavimentos y porcelánicos", "Revestimientos de pared", "Iluminación", "Mobiliario a medida"],
-    gallery: ["kitchen", "exterior", "house"],
-  },
-  {
-    slug: "exterior",
-    navNumber: "04",
-    title: "Terrazas y exteriores en Gandía | Xaixo Home",
-    description:
-      "Porcelánico antideslizante, tarima, cerámica de piscina y cerramientos para tu terraza o exterior en Gandía.",
-    heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "EXTERIOR",
+    heroTitle: "VENTANAS DE PVC Y ALUMINIO, MEDIDAS E INSTALADAS",
     heroImage: "exterior",
-    heroAlt: "Exterior de arquitectura mediterránea, referencia de inspiración",
-    intro: "Terrazas y exteriores para vivir fuera. Porcelánico antideslizante, tarima y cerramientos.",
-    incluye: ["Pavimento exterior", "Tarima y composite", "Cerámica para piscina", "Pérgolas y cerramientos"],
-    gallery: ["living", "house", "kitchen"],
-  },
-  {
-    slug: "vivienda-completa",
-    navNumber: "05",
-    title: "Reforma integral de vivienda en Gandía | Xaixo Home",
-    description:
-      "Proyecto integral de reforma con un solo interlocutor: diseño, materiales e instalación coordinados de principio a fin en Gandía.",
-    heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "VIVIENDA COMPLETA",
-    heroImage: "house",
-    heroAlt: "Vivienda contemporánea, referencia de inspiración",
-    intro: "Toda la casa con un solo interlocutor. Coordinamos diseño, materiales e instalación de principio a fin.",
-    incluye: ["Proyecto integral", "Un solo presupuesto", "Coordinación de gremios", "Plazos cerrados"],
-    gallery: ["kitchen", "bathroom", "living"],
+    heroAlt: "Cerramientos y ventanas de aluminio, imagen temporal de referencia",
+    heroPlaceholderNote:
+      "TODO: foto de referencia temporal (exterior) a falta de una fotografía real de ventanas instaladas por Xaixo Home",
+    intro: "Aislamiento, seguridad y ahorro energético para tu casa.",
+    cards: [
+      { title: "Ventanas de PVC", desc: "Máximo aislamiento térmico y acústico." },
+      { title: "Ventanas de aluminio", desc: "Perfiles esbeltos con rotura de puente térmico." },
+      { title: "Correderas y cerramientos", desc: "Grandes paños de vidrio y cerramientos de terraza." },
+    ],
+    gallery: ["house", "living", "kitchen"],
+    installs: true,
   },
 ];
 
@@ -156,25 +171,39 @@ function galleryImageMarkup(image) {
   return `<img class="reveal" src="assets/${image}.webp" srcset="${srcset}" sizes="(max-width: 700px) 45vw, 30vw" alt="Referencia visual, imagen temporal" width="${w}" height="${h}" loading="lazy" decoding="async">`;
 }
 
-function renderPage(page) {
-  const incluyeItems = page.incluye
-    .map((item, i) => `<li class="reveal"><span class="includes-num">0${i + 1}</span><span>${item}</span></li>`)
+function cardsMarkup(cards) {
+  return cards
+    .map(
+      (card, i) =>
+        `<li class="reveal"><span class="cards-num">0${i + 1}</span><strong>${card.title}</strong><span class="card-desc">${card.desc}</span></li>`,
+    )
     .join("");
-  const processItems = PROCESS_STEPS.map(
-    (step, i) => `<li class="reveal"><span class="process-num">0${i + 1}</span><p>${step}</p></li>`,
-  ).join("");
+}
+
+function brandsMarkup(brands) {
+  return brands.map((brand) => `<li class="reveal">${brand}</li>`).join("");
+}
+
+function renderPage(page) {
+  const cardsItems = cardsMarkup(page.cards);
+  const brandsItems = brandsMarkup(BRAND_PLACEHOLDERS);
+  const steps = page.installs ? PROCESS_STEPS_INSTALL : PROCESS_STEPS_MATERIALS;
+  const processItems = steps
+    .map((step, i) => `<li class="reveal"><span class="process-num">0${i + 1}</span><p>${step}</p></li>`)
+    .join("");
   const galleryItems = page.gallery.map(galleryImageMarkup).join("");
 
   const simulatorSection = page.simulator
     ? `<section class="simulator section-pad" id="simulador">
-<div class="section-kicker reveal"><span>03 — PRESUPUESTO</span><span>SIMULADOR</span></div>
+<div class="section-kicker reveal"><span>04 — PRESUPUESTO</span><span>SIMULADOR</span></div>
 <h2 class="section-title reveal">CALCULA TU<br><span>PRESUPUESTO ORIENTATIVO</span></h2>
 <!-- TODO: simulador interactivo de presupuesto (próxima iteración) -->
 <p class="simulator-placeholder reveal">Muy pronto podrás calcular aquí un presupuesto orientativo.</p>
 </section>
 `
     : "";
-  const galleryNumber = page.simulator ? "04" : "03";
+  const galleryNumber = page.simulator ? "05" : "04";
+  const heroImageComment = page.heroPlaceholderNote ? `<!-- ${page.heroPlaceholderNote} -->\n` : "";
 
   return `<!doctype html>
 <html lang="es">
@@ -194,7 +223,7 @@ ${heroPreloadMarkup(page.heroImage)}
 ${HEADER_HTML}
 <main>
 <section class="page-hero" id="inicio" aria-label="${page.heroTitle}">
-${heroPictureMarkup(page.heroImage, page.heroAlt)}
+${heroImageComment}${heroPictureMarkup(page.heroImage, page.heroAlt)}
 <div class="hero-shade"></div>
 <div class="page-hero-copy"><div class="hero-eyebrow">${page.heroEyebrow}</div><h1>${page.heroTitle}</h1></div>
 </section>
@@ -204,20 +233,28 @@ ${heroPictureMarkup(page.heroImage, page.heroAlt)}
 <section class="includes section-pad" id="incluye">
 <div class="section-kicker reveal"><span>01 — QUÉ INCLUYE</span><span>SERVICIO COMPLETO</span></div>
 <h2 class="section-title reveal">QUÉ INCLUYE<span class="title-dot">.</span></h2>
-<ul class="includes-grid">
-${incluyeItems}
+<ul class="cards-grid">
+${cardsItems}
+</ul>
+</section>
+<section class="brands section-pad" id="marcas">
+<div class="section-kicker reveal"><span>02 — MARCAS</span><span>CON LAS QUE TRABAJAMOS</span></div>
+<h2 class="section-title reveal">MARCAS<span class="title-dot">.</span></h2>
+<!-- TODO: sustituir estos placeholders por los logotipos reales de las marcas con las que trabaja Xaixo Home -->
+<ul class="brands-grid">
+${brandsItems}
 </ul>
 </section>
 <section class="process section-pad" id="como-trabajamos">
-<div class="section-kicker reveal"><span>02 — CÓMO TRABAJAMOS</span><span>3 PASOS</span></div>
+<div class="section-kicker reveal"><span>03 — CÓMO TRABAJAMOS</span><span>3 PASOS</span></div>
 <h2 class="section-title reveal">CÓMO<br><span>TRABAJAMOS</span></h2>
 <ol class="process-steps">
 ${processItems}
 </ol>
 </section>
-${simulatorSection}<section class="gallery section-pad" id="galeria">
-<div class="section-kicker reveal"><span>${galleryNumber} — GALERÍA</span><span>REFERENCIAS VISUALES</span></div>
-<h2 class="section-title reveal">GALERÍA<span class="title-dot">.</span></h2>
+${simulatorSection}<section class="gallery section-pad" id="inspiracion">
+<div class="section-kicker reveal"><span>${galleryNumber} — INSPIRACIÓN</span><span>REFERENCIAS VISUALES</span></div>
+<h2 class="section-title reveal">INSPIRACIÓN<span class="title-dot">.</span></h2>
 <!-- TODO: sustituir estas imágenes de assets/ (fotos de referencia) por fotografías reales de proyectos de Xaixo Home -->
 <div class="gallery-grid">
 ${galleryItems}
@@ -226,7 +263,10 @@ ${galleryItems}
 <section class="page-cta section-pad" aria-label="Pide tu presupuesto">
 <div class="page-cta-inner reveal">
 <h2>¿EMPEZAMOS?</h2>
+<div class="page-cta-actions">
 <a class="page-cta-button" href="#contacto">PIDE TU PRESUPUESTO <span>↗</span></a>
+<a class="page-cta-button page-cta-button--ghost" href="${MAPS_URL}" target="_blank" rel="noopener">VISITA EL SHOWROOM <span>↗</span></a>
+</div>
 </div>
 </section>
 </main>
@@ -247,7 +287,7 @@ const LEGAL_PAGES = [
     bodyHtml: `<h2 class="reveal">1. Datos identificativos</h2>
 <p class="reveal">En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de los siguientes datos: el titular de este sitio web es <!-- TODO: nombre fiscal --> (Xaixo Home), con CIF <!-- TODO: CIF -->, y domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia).</p>
 <h2 class="reveal">2. Objeto</h2>
-<p class="reveal">El presente sitio web tiene por objeto ofrecer información sobre los servicios de reforma, cocinas, baños e interiorismo de Xaixo Home.</p>
+<p class="reveal">El presente sitio web tiene por objeto ofrecer información sobre los materiales y servicios de azulejos, cocinas, baños y ventanas de Xaixo Home.</p>
 <h2 class="reveal">3. Condiciones de uso</h2>
 <p class="reveal">El acceso a este sitio web es gratuito y su uso implica la aceptación plena de las condiciones aquí recogidas. El usuario se compromete a hacer un uso adecuado de los contenidos y a no emplearlos para incurrir en actividades ilícitas o contrarias a la buena fe.</p>
 <h2 class="reveal">4. Propiedad intelectual e industrial</h2>

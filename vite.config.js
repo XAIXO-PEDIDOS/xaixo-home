@@ -10,11 +10,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: page("index"),
+        azulejos: page("azulejos"),
         cocinas: page("cocinas"),
         banos: page("banos"),
-        salon: page("salon"),
-        exterior: page("exterior"),
-        viviendaCompleta: page("vivienda-completa"),
+        ventanas: page("ventanas"),
         avisoLegal: page("aviso-legal"),
         politicaPrivacidad: page("politica-privacidad"),
         cookies: page("cookies"),
