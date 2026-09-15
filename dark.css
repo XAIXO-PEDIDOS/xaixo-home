@@ -489,14 +489,14 @@ body.dark-page {
 .dark-page .section-title > span:not(.title-dot) {
   color: var(--stone);
 }
-.dark-page .space-tabs > .space-tab:first-child > button {
+.dark-page .space-tabs > .space-tab:first-child {
   border-top-color: var(--dark-line);
 }
-.dark-page .space-tabs button {
+.dark-page .space-tab {
   color: var(--stone);
   border-bottom-color: var(--dark-line);
 }
-.dark-page .space-tabs button[aria-selected="true"] {
+.dark-page .space-tab.active {
   color: var(--bone);
 }
 .dark-page .option-arrow {
@@ -510,7 +510,7 @@ body.dark-page {
   color: var(--bone);
 }
 @media (hover: hover) and (pointer: fine) {
-  .dark-page .space-tabs button:hover {
+  .dark-page .space-tab:hover {
     color: var(--bone);
   }
   .dark-page .scene-controls button:hover {

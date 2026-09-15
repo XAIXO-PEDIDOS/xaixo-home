@@ -55,41 +55,47 @@ if(!reduced.matches && 'IntersectionObserver' in window){
  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 }
 
-// --- "¿Qué quieres transformar?" scene tabs (only present on index.html) ---
+// --- "¿Qué necesitas?" preview selector (only present on index.html) ---
+// The tabs are plain links to each category page: hovering (mouse only) or
+// focusing one swaps the preview photo/caption; clicking, tapping or
+// pressing Enter navigates there directly, no JS involved.
 const tabs=[...document.querySelectorAll('[data-scene]')];
 if (tabs.length) {
- function orientTabs(){document.querySelector('.space-tabs').setAttribute('aria-orientation',innerWidth<=700?'horizontal':'vertical')} orientTabs(); addEventListener('resize',orientTabs);
  const images=[...document.querySelectorAll('[data-image]')];
- const arrows=[...document.querySelectorAll('.option-arrow')];
  const sceneMore=document.querySelector('#scene-more');
  const scenePanel=document.querySelector('#scene-panel');
  const descriptions=['El suelo y la pared, la base de todo.','El lugar donde todo se encuentra.','Una pausa. Un espacio para ti.','Luz que entra, frío que se queda fuera.'];
  const spaceLabels=['azulejos','cocinas','baños','ventanas'];
  let current=0;
- function selectScene(index,focus=false){
+ function showPreview(index){
   current=(index+tabs.length)%tabs.length;
-  tabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===current));tab.tabIndex=i===current?0:-1;});
-  arrows.forEach((a,i)=>{a.tabIndex=i===current?0:-1;});
+  tabs.forEach((tab,i)=>tab.classList.toggle('active',i===current));
   images.forEach((img,i)=>{img.classList.toggle('active',i===current);img.setAttribute('aria-hidden',String(i!==current))});
-  scenePanel.setAttribute('aria-labelledby',`tab-${current}`);
   scenePanel.setAttribute('aria-label',`Ambiente de ${spaceLabels[current]}; desliza para cambiar de espacio`);
   document.querySelector('#scene-description').textContent=descriptions[current];
   document.querySelectorAll('.scene-count').forEach(el=>el.textContent=`0${current+1} / 04`);
-  if(sceneMore){sceneMore.href=arrows[current].href;sceneMore.setAttribute('aria-label',`Ver más sobre ${spaceLabels[current]}`);}
+  if(sceneMore){sceneMore.href=tabs[current].href;sceneMore.setAttribute('aria-label',`Ver más sobre ${spaceLabels[current]}`);}
   if(innerWidth<=700){const holder=document.querySelector('.space-tabs');holder.scrollTo({left:tabs[current].offsetLeft-holder.offsetLeft-12,behavior:reduced.matches?'instant':'smooth'});}
-  if(focus)tabs[current].focus({preventScroll:true});
  }
  tabs.forEach((tab,i)=>{
-  tab.addEventListener('click',()=>selectScene(i));
-  tab.addEventListener('keydown',e=>{let target;if(['ArrowDown','ArrowRight'].includes(e.key))target=current+1;else if(['ArrowUp','ArrowLeft'].includes(e.key))target=current-1;else if(e.key==='Home')target=0;else if(e.key==='End')target=tabs.length-1;if(target!==undefined){e.preventDefault();selectScene(target,true)}});
+  tab.addEventListener('pointerenter',e=>{if(fine.matches&&e.pointerType==='mouse')showPreview(i);});
+  tab.addEventListener('focus',()=>showPreview(i));
  });
- selectScene(0);
- document.querySelector('.scene-prev').addEventListener('click',()=>selectScene(current-1));document.querySelector('.scene-next').addEventListener('click',()=>selectScene(current+1));
+ document.querySelector('.scene-prev').addEventListener('click',()=>showPreview(current-1));document.querySelector('.scene-next').addEventListener('click',()=>showPreview(current+1));
  let touchStart=null;
  scenePanel.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'&&!e.target.closest('button'))touchStart={x:e.clientX,y:e.clientY}});
- scenePanel.addEventListener('pointerup',e=>{if(!touchStart)return;const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3)selectScene(current+(dx<0?1:-1));touchStart=null});
+ scenePanel.addEventListener('pointerup',e=>{if(!touchStart)return;const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3)showPreview(current+(dx<0?1:-1));touchStart=null});
  scenePanel.addEventListener('pointercancel',()=>touchStart=null);
 }
+
+// --- Wordmark (logo): on the home page, smooth-scroll to top instead of
+// reloading "/"; on every other page it's a plain link to index.html. ---
+document.querySelectorAll('a.wordmark[href="/"]').forEach(link=>{
+ link.addEventListener('click',e=>{
+  e.preventDefault();
+  scrollTo({top:0,behavior:reduced.matches?'auto':'smooth'});
+ });
+});
 
 // --- Mobile menu dialog (shared header, present on every page) ---
 const menu=document.querySelector('#menu');

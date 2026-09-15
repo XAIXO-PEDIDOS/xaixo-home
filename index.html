@@ -35,7 +35,7 @@
 <a class="skip" href="#manifiesto">Saltar al contenido</a>
 <!-- SHARED-HEADER:START (kept in sync across pages by scripts/generate-pages.mjs) -->
 <header class="header" id="header">
-<a class="wordmark" href="#inicio" aria-label="Xaixo Home, inicio"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></a>
+<a class="wordmark" href="/" aria-label="Xaixo Home, inicio"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></a>
 <nav class="desktop-nav" aria-label="Navegación principal">
 <a href="index.html#proyectos">PROYECTOS</a><a href="azulejos.html">AZULEJOS</a><a href="cocinas.html">COCINAS</a><a href="banos.html">BAÑOS</a><a href="ventanas.html">VENTANAS</a><a href="#contacto">SHOWROOM</a>
 </nav>
@@ -66,13 +66,13 @@
 <div class="section-kicker reveal"><span>02 — UN ESPACIO, TU FORMA DE VIVIR</span><span class="scene-count">01 / 04</span></div>
 <h2 class="section-title reveal">¿QUÉ<br><span>NECESITAS?</span></h2>
 <div class="transform-layout">
-<div class="space-tabs" role="tablist" aria-label="Elige lo que necesitas" aria-orientation="vertical">
-<div class="space-tab"><button id="tab-0" role="tab" aria-selected="true" aria-controls="scene-panel" tabindex="0" data-scene="0"><span class="option-num">01</span><span>AZULEJOS</span></button><a class="option-arrow" href="azulejos.html" tabindex="0" aria-label="Ver más sobre azulejos">↗</a></div>
-<div class="space-tab"><button id="tab-1" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="1"><span class="option-num">02</span><span>COCINAS</span></button><a class="option-arrow" href="cocinas.html" tabindex="-1" aria-label="Ver más sobre cocinas">↗</a></div>
-<div class="space-tab"><button id="tab-2" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="2"><span class="option-num">03</span><span>BAÑOS</span></button><a class="option-arrow" href="banos.html" tabindex="-1" aria-label="Ver más sobre baños">↗</a></div>
-<div class="space-tab"><button id="tab-3" role="tab" aria-selected="false" aria-controls="scene-panel" tabindex="-1" data-scene="3"><span class="option-num">04</span><span>VENTANAS</span></button><a class="option-arrow" href="ventanas.html" tabindex="-1" aria-label="Ver más sobre ventanas">↗</a></div>
-</div>
-<div class="scene-panel" id="scene-panel" role="tabpanel" aria-labelledby="tab-0" tabindex="0" aria-label="Ambiente de azulejos; desliza para cambiar de espacio">
+<nav class="space-tabs" aria-label="Elige lo que necesitas">
+<a class="space-tab active" href="azulejos.html" data-scene="0" aria-label="Ver más sobre azulejos"><span class="option-num">01</span><span class="option-name">AZULEJOS</span><span class="option-arrow" aria-hidden="true">↗</span></a>
+<a class="space-tab" href="cocinas.html" data-scene="1" aria-label="Ver más sobre cocinas"><span class="option-num">02</span><span class="option-name">COCINAS</span><span class="option-arrow" aria-hidden="true">↗</span></a>
+<a class="space-tab" href="banos.html" data-scene="2" aria-label="Ver más sobre baños"><span class="option-num">03</span><span class="option-name">BAÑOS</span><span class="option-arrow" aria-hidden="true">↗</span></a>
+<a class="space-tab" href="ventanas.html" data-scene="3" aria-label="Ver más sobre ventanas"><span class="option-num">04</span><span class="option-name">VENTANAS</span><span class="option-arrow" aria-hidden="true">↗</span></a>
+</nav>
+<div class="scene-panel" id="scene-panel" tabindex="0" aria-label="Ambiente de azulejos; desliza para cambiar de espacio">
 <div class="scene-images" data-cursor="EXPLORAR">
 <!-- TODO: imágenes generadas por IA (las mismas de la cabecera de cada página de categoría), sustituir por fotografías reales de proyectos de Xaixo Home -->
 <img class="scene-image active" data-image="0" src="assets/azulejos-hero.webp" srcset="assets/azulejos-hero-800.webp 800w, assets/azulejos-hero-1200.webp 1200w, assets/azulejos-hero.webp 1376w" sizes="(max-width: 700px) 88vw, (max-width: 1250px) 62vw, 54vw" alt="Ambiente de azulejos: salón con suelo de porcelánico travertino y vista al mar a través de una puerta corredera, imagen de referencia" width="1376" height="768" loading="lazy" decoding="async" style="object-position: center 58%;">
@@ -106,7 +106,7 @@
 <footer class="site-footer" id="contacto">
 <div class="footer-top section-pad">
 <div class="footer-brand">
-<a class="wordmark" href="#inicio" aria-label="Xaixo Home, inicio"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></a>
+<a class="wordmark" href="/" aria-label="Xaixo Home, inicio"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></a>
 <p class="footer-address">Showroom: Gran Via Castell de Bairén, 20 · Gandia</p>
 <a class="footer-maps-link" href="https://www.google.com/maps/search/?api=1&amp;query=Gran+Via+Castell+de+Bair%C3%A9n+20%2C+Gandia" target="_blank" rel="noopener">VER EN GOOGLE MAPS <span>↗</span></a>
 </div>
@@ -131,7 +131,7 @@
 </footer>
 <!-- SHARED-FOOTER:END -->
 <!-- SHARED-MENU:START (kept in sync across pages by scripts/generate-pages.mjs) -->
-<dialog id="menu" class="menu-dialog" aria-label="Menú principal"><div class="menu-head"><span class="wordmark"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></span><button class="close-menu" aria-label="Cerrar menú">CERRAR <span>×</span></button></div><nav aria-label="Navegación móvil"><a href="index.html#proyectos">PROYECTOS <span>01</span></a><a href="azulejos.html">AZULEJOS <span>02</span></a><a href="cocinas.html">COCINAS <span>03</span></a><a href="banos.html">BAÑOS <span>04</span></a><a href="ventanas.html">VENTANAS <span>05</span></a><a href="#contacto">SHOWROOM <span>06</span></a></nav><a class="menu-cta" href="#contacto">INICIAR PROYECTO ↗</a><p class="menu-location">GANDÍA, VALENCIA · ESPAÑA</p></dialog>
+<dialog id="menu" class="menu-dialog" aria-label="Menú principal"><div class="menu-head"><a class="wordmark" href="/" aria-label="Xaixo Home, inicio"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></a><button class="close-menu" aria-label="Cerrar menú">CERRAR <span>×</span></button></div><nav aria-label="Navegación móvil"><a href="index.html#proyectos">PROYECTOS <span>01</span></a><a href="azulejos.html">AZULEJOS <span>02</span></a><a href="cocinas.html">COCINAS <span>03</span></a><a href="banos.html">BAÑOS <span>04</span></a><a href="ventanas.html">VENTANAS <span>05</span></a><a href="#contacto">SHOWROOM <span>06</span></a></nav><a class="menu-cta" href="#contacto">INICIAR PROYECTO ↗</a><p class="menu-location">GANDÍA, VALENCIA · ESPAÑA</p></dialog>
 <!-- SHARED-MENU:END -->
 <!-- TODO: diálogo de ampliación de la sección Proyectos, oculta más arriba; recuperar junto con ella.
 <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title"><div class="lightbox-header"><div><h2 id="project-dialog-title">Estudio de luz</h2><p>Imagen de referencia · No es una obra de Xaixo Home</p></div><button class="close-project" aria-label="Cerrar imagen">CERRAR <span>×</span></button></div><img id="project-dialog-image" alt="" width="1600" height="1067"><p class="lightbox-note">Este espacio se sustituirá por un proyecto real documentado.</p></dialog>

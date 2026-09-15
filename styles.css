@@ -335,11 +335,6 @@ p {
 }
 .space-tab {
   position: relative;
-}
-.space-tabs > .space-tab:first-child > button {
-  border-top: 1px solid var(--line);
-}
-.space-tabs button {
   width: 100%;
   padding: 25px 37px 25px 0;
   display: grid;
@@ -347,9 +342,7 @@ p {
   align-items: center;
   gap: 12px;
   text-align: left;
-  border: 0;
   border-bottom: 1px solid var(--line);
-  background: none;
   font-size: clamp(26px, 2.9vw, 49px);
   letter-spacing: -0.045em;
   font-weight: 400;
@@ -357,6 +350,9 @@ p {
   transition:
     color 0.35s,
     padding 0.45s var(--ease);
+}
+.space-tabs > .space-tab:first-child {
+  border-top: 1px solid var(--line);
 }
 .option-num {
   font-size: 12px;
@@ -370,21 +366,18 @@ p {
   right: 0;
   font-size: 29px;
   color: var(--ink);
-  text-decoration: none;
   opacity: 0;
-  pointer-events: none;
   transform: translate(-8px, calc(-50% + 8px));
   transition:
     opacity 0.35s,
     transform 0.4s;
 }
-.space-tabs button[aria-selected="true"] {
+.space-tab.active {
   color: var(--ink);
   padding-left: 10px;
 }
-.space-tabs button[aria-selected="true"] ~ .option-arrow {
+.space-tab.active .option-arrow {
   opacity: 1;
-  pointer-events: auto;
   transform: translate(0, -50%);
 }
 .scene-panel {
@@ -877,7 +870,7 @@ dialog::backdrop {
   .context-cursor {
     display: flex;
   }
-  .space-tabs button:hover {
+  .space-tab:hover {
     color: var(--ink);
   }
 }
@@ -905,7 +898,7 @@ dialog::backdrop {
     grid-column: 2;
     justify-self: start;
   }
-  .space-tabs button {
+  .space-tab {
     font-size: 31px;
     padding-top: 22px;
     padding-bottom: 22px;
@@ -1051,13 +1044,13 @@ dialog::backdrop {
   .space-tabs::-webkit-scrollbar {
     display: none;
   }
-  .space-tabs button {
+  .space-tab {
     display: flex;
     flex: none;
     gap: 7px;
     width: auto;
     padding: 10px 0 !important;
-    border: 0 !important;
+    border-bottom: 0 !important;
     font-size: 18px;
     white-space: nowrap;
     letter-spacing: -0.035em;
@@ -1072,7 +1065,7 @@ dialog::backdrop {
   .desktop-break {
     display: none;
   }
-  .space-tabs button[aria-selected="true"] {
+  .space-tab.active {
     border-bottom: 1px solid var(--ink) !important;
   }
   .scene-panel {
