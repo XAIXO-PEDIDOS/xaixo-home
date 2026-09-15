@@ -54,8 +54,8 @@ xaixo-home-codigo-completo/
 │   ├── kitchen.webp (+ variantes -800/-1200.webp)
 │   ├── living.webp (+ variantes -800/-1200.webp)
 │   ├── logo.png (+ logo-source.png)
-│   ├── manrope.ttf
-│   └── manrope.woff2
+│   ├── manrope-variable.woff2
+│   └── manrope-OFL.txt
 ├── scripts/
 │   ├── generate-assets.mjs
 │   └── generate-pages.mjs
@@ -89,9 +89,9 @@ xaixo-home-codigo-completo/
 - `dark.css`: componentes de la plantilla oscura editorial (hero a pantalla completa, bloques de producto con foto sticky, cinta de marcas, proceso y CTA con foto de fondo). Se carga junto a `styles.css`, que sigue aportando la cabecera, el menú, el pie y el botón de WhatsApp compartidos.
 - `app.js`: animación del hero ligada al scroll, selector de ambientes, parallax genérico (`data-px`, usado por la plantilla oscura), swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual (`data-cursor`). Se carga como módulo de Vite; las funciones específicas de cada página se autodetectan y no se ejecutan en el resto.
 - `build.mjs`: genera la versión de producción con Vite y copia `image-sources.json` a `dist/`.
-- `scripts/generate-assets.mjs`: regenera `manrope.woff2` y las variantes responsive de las imágenes (`npm run generate:assets`); convierte automáticamente a WebP cualquier fuente `.png`/`.jpg` que aún no tenga su `.webp`.
+- `scripts/generate-assets.mjs`: regenera las variantes responsive de las imágenes (`npm run generate:assets`); convierte automáticamente a WebP cualquier fuente `.png`/`.jpg` que aún no tenga su `.webp`. No toca la fuente: `assets/manrope-variable.woff2` es la fuente variable (subset latin, pesos 200-800) copiada tal cual del paquete `@fontsource-variable/manrope` — ver el comentario al inicio del script para cómo actualizarla.
 - `scripts/generate-pages.mjs`: regenera las 4 páginas de categoría (arrays `PAGES` y `DARK_PAGES`, una plantilla cada uno) y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script.
-- `assets/`: fotografías optimizadas (con variantes responsive para `srcset`), logo y fuente Manrope (WOFF2 con fallback TTF) usados por la web.
+- `assets/`: fotografías optimizadas (con variantes responsive para `srcset`), logo y la fuente variable Manrope (`manrope-variable.woff2`, pesos 200-800, con su licencia OFL en `manrope-OFL.txt`) usados por la web.
 - `image-sources.json`: procedencia y situación de derechos de las imágenes de inspiración de stock (no aplica a las fotografías propias de `banos-*`).
 
 ## Imágenes y derechos

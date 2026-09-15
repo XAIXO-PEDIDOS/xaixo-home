@@ -1,13 +1,13 @@
-// One-off/regenerable pipeline for derived assets: WOFF2 font + responsive image variants.
-// Run with `npm run generate:assets` whenever assets/manrope.ttf or the source photos change.
-import { access, readFile, writeFile } from "node:fs/promises";
+// One-off/regenerable pipeline for derived assets: responsive image variants.
+// Run with `npm run generate:assets` whenever the source photos change.
+//
+// The Manrope font (assets/manrope-variable.woff2) is not derived here: it's
+// the variable-weight WOFF2 (latin subset, weights 200-800) copied straight
+// from the @fontsource-variable/manrope npm package — see assets/manrope-OFL.txt
+// for its license. To update it: `npm pack @fontsource-variable/manrope`,
+// extract, and copy files/manrope-latin-wght-normal.woff2 over it.
+import { access } from "node:fs/promises";
 import sharp from "sharp";
-import { compress } from "wawoff2";
-
-const ttf = await readFile("assets/manrope.ttf");
-const woff2 = await compress(ttf);
-await writeFile("assets/manrope.woff2", woff2);
-console.log(`assets/manrope.woff2 (${woff2.length} bytes)`);
 
 async function fileExists(path) {
   try {

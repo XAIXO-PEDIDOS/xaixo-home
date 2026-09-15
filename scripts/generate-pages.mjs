@@ -250,7 +250,7 @@ function renderPage(page) {
 <meta name="description" content="${page.description}">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
-<link rel="preload" href="assets/manrope.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 ${heroPreloadMarkup(page.heroImage)}
 <link rel="stylesheet" href="styles.css">
 <script type="module" src="/app.js"></script>
@@ -486,7 +486,7 @@ function renderDarkCategoryPage(page) {
 <meta name="description" content="${page.description}">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
-<link rel="preload" href="assets/manrope.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 ${darkHeroPreloadMarkup(page.hero.image)}
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="dark.css">
@@ -596,7 +596,7 @@ function renderLegalPage(page) {
 <meta name="description" content="${page.description}">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
-<link rel="preload" href="assets/manrope.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 <script type="module" src="/app.js"></script>
 </head>
