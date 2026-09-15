@@ -247,6 +247,23 @@ body.dark-page {
   }
 }
 
+/* simulador (cocinas only, empty placeholder for now) */
+.dk-sim {
+  padding: clamp(60px, 10vh, 120px) var(--gutter);
+  border-top: 1px solid var(--dark-line);
+}
+.dk-sim h3 {
+  font-weight: 300;
+  font-size: clamp(28px, 3vw, 44px);
+  letter-spacing: -0.03em;
+}
+.dk-sim p {
+  margin-top: 16px;
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 480px;
+}
+
 /* proceso */
 .dk-proc {
   padding: clamp(90px, 14vh, 170px) var(--gutter);

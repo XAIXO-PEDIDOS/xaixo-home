@@ -37,9 +37,29 @@ const images = [
   "banos-griferia",
   "banos-ceramica",
   "banos-showroom",
+  "azulejos-hero",
+  "azulejos-suelos",
+  "azulejos-revestimientos",
+  "azulejos-exterior",
+  "azulejos-formatos",
+  "cocinas-hero",
+  "cocinas-mobiliario",
+  "cocinas-encimeras",
+  "cocinas-electrodomesticos",
+  "cocinas-montaje",
+  "ventanas-hero",
+  "ventanas-pvc",
+  "ventanas-aluminio",
+  "ventanas-correderas",
+  "ventanas-instalacion",
 ];
 // Full-bleed hero-style images get an extra, larger variant for big screens.
-const extraWidths = { "banos-hero": [2400] };
+const extraWidths = {
+  "banos-hero": [2400],
+  "azulejos-hero": [2400],
+  "cocinas-hero": [2400],
+  "ventanas-hero": [2400],
+};
 const rawExtensions = ["png", "jpg", "jpeg"];
 
 for (const name of images) {

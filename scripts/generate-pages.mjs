@@ -1,8 +1,8 @@
 // Generates the 4 category pages (azulejos.html, cocinas.html, banos.html,
-// ventanas.html) from shared header/menu markup lifted straight out of
-// index.html (the single source of truth for those blocks, delimited by the
-// SHARED-HEADER/SHARED-MENU comment markers) plus per-page content defined
-// below.
+// ventanas.html) — all on the dark editorial template, DARK_PAGES below —
+// from shared header/menu markup lifted straight out of index.html (the
+// single source of truth for those blocks, delimited by the
+// SHARED-HEADER/SHARED-MENU comment markers) plus the 3 legal pages.
 //
 // Run with `npm run generate:pages` after editing this file, or after
 // changing the header/menu in index.html so the new pages pick it up.
@@ -45,18 +45,8 @@ const HOURS_LINE = "Lunes a viernes, 7:00 a 19:00";
 const PHONE_DISPLAY = "615 439 842";
 const PHONE_TEL = "+34615439842";
 
-// Xaixo Home only installs kitchens and windows; azulejos and baños are
-// materials sold and advised on, fitted by the client's own installer.
-const PROCESS_STEPS_INSTALL = ["Visita y medición", "Diseño 3D y presupuesto cerrado", "Instalación con nuestro equipo"];
-const PROCESS_STEPS_MATERIALS = [
-  "Nos cuentas tu proyecto",
-  "Te asesoramos y elegimos juntos los materiales en el showroom",
-  "Te lo servimos en obra listo para tu instalador",
-];
-
-// Generic brand placeholders shown on every category page until real logos
-// from the brands Xaixo Home works with are available.
-const BRAND_PLACEHOLDERS = ["MARCA 01", "MARCA 02", "MARCA 03", "MARCA 04", "MARCA 05", "MARCA 06"];
+const SAMPLE_FIGURE_NOTE = "<!-- TODO: cifra de muestra, sustituir por un dato real de Xaixo Home -->";
+const AI_IMAGE_NOTE = "<!-- TODO: imagen generada por IA, sustituir por una fotografía real de un proyecto de Xaixo Home -->";
 
 // width/height per source photo, from assets/*.webp real dimensions
 const IMAGE_DIMS = {
@@ -71,247 +61,264 @@ const IMAGE_DIMS = {
   "banos-griferia": [896, 1200],
   "banos-ceramica": [1200, 896],
   "banos-showroom": [1920, 1080],
+  "azulejos-hero": [1376, 768],
+  "azulejos-suelos": [1200, 896],
+  "azulejos-revestimientos": [896, 1200],
+  "azulejos-exterior": [2336, 1744],
+  "azulejos-formatos": [1744, 2336],
+  "cocinas-hero": [2688, 1520],
+  "cocinas-mobiliario": [1168, 880],
+  "cocinas-encimeras": [1168, 880],
+  "cocinas-electrodomesticos": [1168, 880],
+  "cocinas-montaje": [880, 1168],
+  "ventanas-hero": [1344, 752],
+  "ventanas-pvc": [1344, 752],
+  "ventanas-aluminio": [1168, 880],
+  "ventanas-correderas": [1168, 880],
+  "ventanas-instalacion": [1168, 880],
 };
 
-const PAGES = [
+// --- Dark editorial template, shared by all 4 category pages. CSS lives in
+// dark.css, loaded alongside styles.css for the shared header/menu/footer/
+// WhatsApp button, @font-face and reveal-on-scroll system.
+const DARK_PAGES = [
   {
     slug: "azulejos",
     title: "Azulejos y porcelánico en Gandía | Xaixo Home",
     description:
-      "Suelos porcelánicos, revestimientos y grandes formatos para toda la casa en Gandía. Asesoramiento y materiales de las mejores marcas en nuestro showroom.",
-    heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "AZULEJOS Y PORCELÁNICO PARA TODA LA CASA",
-    heroImage: "living",
-    heroAlt: "Suelos y revestimientos de porcelánico, imagen temporal de referencia",
-    heroPlaceholderNote:
-      "TODO: foto de referencia temporal (salón) a falta de una fotografía real de azulejos/porcelánico de Xaixo Home",
-    intro:
-      "Suelos, revestimientos y grandes formatos de los mejores fabricantes. Los ves en nuestro showroom de Gandia y te los servimos en obra.",
-    cards: [
-      { title: "Suelos porcelánicos", desc: "Gran resistencia y acabados que imitan piedra, madera o cemento." },
-      { title: "Revestimientos", desc: "Paredes con carácter, en formato clásico o gran formato." },
-      { title: "Exterior y piscina", desc: "Antideslizante y resistente a la intemperie." },
-      { title: "Grandes formatos", desc: "Superficies continuas de hasta 320 × 160 cm." },
+      "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandía. Los ves y comparas antes de comprar.",
+    themeColor: "#1c1815",
+    hero: {
+      image: "azulejos-hero",
+      alt: "Salón con suelo de porcelánico travertino y vista al mar a través de una puerta corredera, imagen de referencia",
+      position: "center 58%",
+      aiImage: true,
+      title: "Azulejos",
+      subtitle: "Suelos, revestimientos y grandes formatos de los mejores fabricantes. Los ves en el showroom de Gandia; te los servimos en obra.",
+      figureValue: "+600",
+      figureLabel: "referencias de pavimento y revestimiento en exposición permanente",
+    },
+    intro: {
+      html: "Un azulejo se elige con luz natural. <b>Ven, compara piezas reales</b> y llévate el metro cuadrado calculado.",
+      note: "No hacemos la instalación: te asesoramos, calculamos las cantidades exactas y lo servimos en obra listo para tu alicatador. Si no tienes uno, te ponemos en contacto con profesionales de confianza.",
+    },
+    products: [
+      {
+        title: "Suelos porcelánicos",
+        desc: "Gran formato y formato tradicional, antideslizante para baño y cocina. Rectificado para junta mínima.",
+        brands: ["Marca", "Marca", "Marca"],
+        image: "azulejos-suelos",
+        imageAlt: "Detalle de suelo porcelánico rectificado, vista a ras de suelo, imagen de referencia",
+        aiImage: true,
+        figureValue: "180",
+        figureLabel: "referencias de suelo porcelánico",
+      },
+      {
+        title: "Revestimientos",
+        desc: "Pasta blanca y porcelánico para pared, en mate, brillo y relieve. Formatos desde 20 × 20 cm hasta gran formato.",
+        brands: ["Marca", "Marca"],
+        image: "azulejos-revestimientos",
+        imageAlt: "Revestimiento cerámico acanalado en tono madera con balda y jarrón, imagen de referencia",
+        imagePosition: "center 55%",
+        aiImage: true,
+        figureValue: "220",
+        figureLabel: "referencias de revestimiento",
+      },
+      {
+        title: "Exterior y piscina",
+        desc: "Antideslizante clase C3, apto para playa de piscina y terraza. Resistente a heladas y a la sal.",
+        brands: ["Marca", "Marca"],
+        image: "azulejos-exterior",
+        imageAlt: "Terraza con pavimento porcelánico antideslizante junto a una piscina, imagen de referencia",
+        aiImage: true,
+        figureValue: "60",
+        figureLabel: "referencias para exterior y piscina",
+      },
+      {
+        title: "Grandes formatos",
+        desc: "Piezas de hasta 320 × 160 cm para suelo continuo o revestimiento sin apenas juntas. Cortadas a medida en el showroom.",
+        brands: ["Marca", "Marca"],
+        image: "azulejos-formatos",
+        imageAlt: "Ducha revestida con una lámina de porcelánico de gran formato efecto mármol, imagen de referencia",
+        aiImage: true,
+        figureValue: "40",
+        figureLabel: "referencias en gran formato",
+      },
     ],
-    gallery: ["exterior", "house", "kitchen"],
+    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
+    steps: [
+      { title: "Nos cuentas tu proyecto", desc: "Por WhatsApp o en el showroom. Con metros aproximados o un plano, mejor; sin ellos, también." },
+      { title: "Elegimos juntos el material", desc: "Ves y tocas piezas reales, comparas con luz natural. Sales con un presupuesto cerrado." },
+      { title: "Te lo servimos en obra", desc: "Todo en una entrega, en la fecha que necesite tu alicatador." },
+    ],
+    cta: {
+      image: "banos-showroom",
+      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      position: "center 62%",
+      heading: "Ven a verlo<br>con tus ojos.",
+      primary: { label: "Visita el showroom", href: MAPS_URL, external: true },
+      secondary: { label: "Escríbenos por WhatsApp", href: WHATSAPP_URL, external: true },
+    },
   },
   {
     slug: "cocinas",
     title: "Cocinas a medida en Gandía | Xaixo Home",
     description:
-      "Diseño 3D, mobiliario a medida e instalación completa de cocinas en Gandía y la Safor. Un mismo equipo del plano al montaje.",
-    heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "COCINAS A MEDIDA, DISEÑADAS E INSTALADAS POR NOSOTROS",
-    heroImage: "kitchen",
-    heroAlt: "Cocina contemporánea de materiales naturales, referencia de inspiración",
-    intro: "Del diseño en 3D a la instalación, con el mismo equipo.",
-    cards: [
-      { title: "Mobiliario", desc: "Diseño a medida, con los acabados y la distribución que necesitas." },
-      { title: "Encimeras", desc: "Cuarzo, compacto o piedra natural, a la medida de tu cocina." },
-      { title: "Electrodomésticos", desc: "Integrados o de libre instalación, de las mejores marcas." },
+      "Cocinas diseñadas en 3D e instaladas por nuestro propio equipo en Gandía y la Safor. Mobiliario, encimeras y electrodomésticos.",
+    themeColor: "#1c1815",
+    hero: {
+      image: "cocinas-hero",
+      alt: "Cocina abierta con isla, mobiliario en tono arena y comedor con vistas al jardín, imagen de referencia",
+      position: "center 55%",
+      aiImage: true,
+      title: "Cocinas",
+      subtitle: "Diseñadas en 3D contigo e instaladas por nuestro equipo. Del plano a la última bisagra.",
+      figureValue: "+120",
+      figureLabel: "cocinas instaladas en la Safor",
+    },
+    intro: {
+      html: "Una cocina no se compra por catálogo. <b>Se mide, se dibuja contigo</b> y se instala sin sorpresas.",
+      note: "Diseño 3D, presupuesto cerrado e instalación con nuestro propio equipo, de principio a fin. Un único interlocutor durante toda la obra.",
+    },
+    products: [
+      {
+        title: "Mobiliario",
+        desc: "Módulos a medida en melamina, laminado o lacado, con herrajes de cierre suave. Despensas y columnas hasta el techo.",
+        brands: ["Marca", "Marca", "Marca"],
+        image: "cocinas-mobiliario",
+        imageAlt: "Armario despensa extraíble abierto junto a estantería de madera, imagen de referencia",
+        imagePosition: "72% center",
+        aiImage: true,
+        figureValue: "40",
+        figureLabel: "acabados de mobiliario en exposición",
+      },
+      {
+        title: "Encimeras",
+        desc: "Cuarzo, compacto y piedra natural, con canto recto o biselado. Fabricadas a medida de tu plano.",
+        brands: ["Marca", "Marca"],
+        image: "cocinas-encimeras",
+        imageAlt: "Encimera de cuarzo blanco con canto a inglete y fregadero integrado, imagen de referencia",
+        aiImage: true,
+        figureValue: "25",
+        figureLabel: "acabados de encimera en exposición",
+      },
+      {
+        title: "Electrodomésticos",
+        desc: "Integrados o de libre instalación: horno, inducción, frigorífico y lavavajillas de las mejores marcas.",
+        brands: ["Marca", "Marca", "Marca"],
+        image: "cocinas-electrodomesticos",
+        imageAlt: "Horno y microondas integrados junto a placa de inducción con campana extractora, imagen de referencia",
+        aiImage: true,
+        figureValue: "15",
+        figureLabel: "marcas de electrodomésticos",
+      },
+      {
+        title: "Instalación propia",
+        desc: "Montaje, conexión de agua y electrodomésticos, y ajustes finales con nuestro propio equipo, sin subcontratar.",
+        brands: ["Marca", "Marca"],
+        image: "cocinas-montaje",
+        imageAlt: "Instalador montando muebles altos de cocina con nivel y taladro, imagen de referencia",
+        imagePosition: "center 35%",
+        aiImage: true,
+        figureValue: "100%",
+        figureLabel: "instalación con equipo propio, sin subcontratar",
+      },
     ],
-    gallery: ["living", "exterior", "house"],
-    simulator: true,
-    installs: true,
+    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
+    steps: [
+      { title: "Medimos en tu casa", desc: "Visitamos tu cocina actual y tomamos medidas reales, sin compromiso." },
+      { title: "La diseñamos en 3D y cerramos presupuesto", desc: "Ves el resultado antes de decidir y sales con un precio cerrado." },
+      { title: "La instalamos nosotros", desc: "Un único equipo, de principio a fin, sin cambios de interlocutor." },
+    ],
+    simulator: {
+      title: "Calcula tu presupuesto orientativo",
+    },
+    cta: {
+      image: "banos-showroom",
+      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      position: "center 62%",
+      heading: "Hablemos de<br>tu cocina.",
+      primary: { label: "Pide tu presupuesto", href: "#contacto", external: false },
+      secondary: { label: "Visita el showroom", href: MAPS_URL, external: true },
+    },
   },
   {
     slug: "ventanas",
     title: "Ventanas de PVC y aluminio en Gandía | Xaixo Home",
     description:
-      "Ventanas de PVC y aluminio medidas e instaladas por Xaixo Home en Gandía. Aislamiento, seguridad y ahorro energético.",
-    heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "VENTANAS DE PVC Y ALUMINIO, MEDIDAS E INSTALADAS",
-    heroImage: "exterior",
-    heroAlt: "Cerramientos y ventanas de aluminio, imagen temporal de referencia",
-    heroPlaceholderNote:
-      "TODO: foto de referencia temporal (exterior) a falta de una fotografía real de ventanas instaladas por Xaixo Home",
-    intro: "Aislamiento, seguridad y ahorro energético para tu casa.",
-    cards: [
-      { title: "Ventanas de PVC", desc: "Máximo aislamiento térmico y acústico." },
-      { title: "Ventanas de aluminio", desc: "Perfiles esbeltos con rotura de puente térmico." },
-      { title: "Correderas y cerramientos", desc: "Grandes paños de vidrio y cerramientos de terraza." },
+      "Ventanas de PVC y aluminio medidas e instaladas por nuestro equipo en Gandía. Más aislamiento, más silencio, menos factura.",
+    themeColor: "#1c1815",
+    hero: {
+      image: "ventanas-hero",
+      alt: "Salón con gran ventanal corredero de aluminio abierto al mar, imagen de referencia",
+      position: "center 42%",
+      aiImage: true,
+      title: "Ventanas",
+      subtitle: "PVC y aluminio, medidas e instaladas por nosotros. Más aislamiento, más silencio, menos factura.",
+      figureValue: "+300",
+      figureLabel: "ventanas instaladas al año",
+    },
+    intro: {
+      html: "Cambiar las ventanas <b>es la reforma que más se nota</b> y menos se ve.",
+      note: "Medimos, fabricamos a medida e instalamos con nuestro propio equipo. Un único responsable de principio a fin.",
+    },
+    products: [
+      {
+        title: "Ventanas de PVC",
+        desc: "Perfiles multicámara con refuerzo interior. El mejor aislamiento térmico y acústico al mejor precio.",
+        brands: ["Marca", "Marca"],
+        image: "ventanas-pvc",
+        imageAlt: "Detalle de ventana de PVC oscilobatiente abierta, con manivela y perfil multicámara, imagen de referencia",
+        aiImage: true,
+        figureValue: "12",
+        figureLabel: "sistemas de PVC en showroom",
+      },
+      {
+        title: "Ventanas de aluminio",
+        desc: "Perfil con rotura de puente térmico, esbelto y resistente. Ideal para grandes paños y diseño minimalista.",
+        brands: ["Marca", "Marca"],
+        image: "ventanas-aluminio",
+        imageAlt: "Gran ventanal fijo de aluminio con vistas a un jardín de olivos, imagen de referencia",
+        aiImage: true,
+        figureValue: "10",
+        figureLabel: "sistemas de aluminio en showroom",
+      },
+      {
+        title: "Correderas y cerramientos",
+        desc: "Correderas elevables y cerramientos de terraza con grandes paños de vidrio. Máxima apertura, mínimo perfil visto.",
+        brands: ["Marca", "Marca", "Marca"],
+        image: "ventanas-correderas",
+        imageAlt: "Cerramiento corredero totalmente abierto entre cocina y terraza con vistas al mar, imagen de referencia",
+        aiImage: true,
+        figureValue: "8",
+        figureLabel: "sistemas de corredera en showroom",
+      },
+      {
+        title: "Instalación propia",
+        desc: "Retirada de la ventana antigua, sellado, ajuste y limpieza final. Todo con nuestro propio equipo instalador.",
+        brands: ["Marca", "Marca"],
+        image: "ventanas-instalacion",
+        imageAlt: "Ventana de aluminio recién instalada en un hueco de obra, con nivel y espuma de poliuretano, imagen de referencia",
+        aiImage: true,
+        figureValue: "100%",
+        figureLabel: "instalación con equipo propio, sin subcontratar",
+      },
     ],
-    gallery: ["house", "living", "kitchen"],
-    installs: true,
+    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
+    steps: [
+      { title: "Medimos en tu casa", desc: "Comprobamos huecos y el estado del cerramiento actual, sin compromiso." },
+      { title: "Elegimos sistema, vidrio y color", desc: "PVC o aluminio, vidrio de control solar o acústico, y el color que combine con tu fachada." },
+      { title: "Las instalamos nosotros", desc: "Retirada de las antiguas, montaje y sellado, con nuestro propio equipo." },
+    ],
+    cta: {
+      image: "banos-showroom",
+      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      position: "center 62%",
+      heading: "Hablemos de<br>tus ventanas.",
+      primary: { label: "Pide tu presupuesto", href: "#contacto", external: false },
+      secondary: { label: "Visita el showroom", href: MAPS_URL, external: true },
+    },
   },
-];
-
-function heroPictureMarkup(image, alt, position) {
-  const [w, h] = IMAGE_DIMS[image];
-  const srcset = [800, 1200, 1600, 2400, w]
-    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
-    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
-    .join(", ");
-  const style = position ? ` style="object-position: ${position};"` : "";
-  return `<img class="page-hero-image" src="assets/${image}.webp" srcset="${srcset}" sizes="100vw" alt="${alt}" width="${w}" height="${h}" fetchpriority="high"${style}>`;
-}
-
-function heroPreloadMarkup(image) {
-  const [w] = IMAGE_DIMS[image];
-  const srcset = [800, 1200, 1600, 2400, w]
-    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
-    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
-    .join(", ");
-  return `<link rel="preload" href="assets/${image}.webp" as="image" imagesrcset="${srcset}" imagesizes="100vw" fetchpriority="high">`;
-}
-
-function galleryImageMarkup(image) {
-  const [w, h] = IMAGE_DIMS[image];
-  const srcset = [800, 1200, w]
-    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
-    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
-    .join(", ");
-  return `<img class="reveal" src="assets/${image}.webp" srcset="${srcset}" sizes="(max-width: 700px) 45vw, 30vw" alt="Referencia visual, imagen temporal" width="${w}" height="${h}" loading="lazy" decoding="async">`;
-}
-
-function cardImageMarkup(image, alt, position) {
-  const [w, h] = IMAGE_DIMS[image];
-  const srcset = [800, 1200, w]
-    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
-    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
-    .join(", ");
-  const style = position ? ` style="object-position: ${position};"` : "";
-  return `<img class="card-image" src="assets/${image}.webp" srcset="${srcset}" sizes="(max-width: 700px) 88vw, (max-width: 1100px) 45vw, 30vw" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async"${style}>`;
-}
-
-function cardsMarkup(cards) {
-  return cards
-    .map((card, i) => {
-      const body = `<span class="cards-num">0${i + 1}</span><strong>${card.title}</strong><span class="card-desc">${card.desc}</span>`;
-      if (!card.image) return `<li class="reveal">${body}</li>`;
-      const image = cardImageMarkup(card.image, card.imageAlt, card.imagePosition);
-      return `<li class="reveal has-image">${image}<div class="card-body">${body}</div></li>`;
-    })
-    .join("");
-}
-
-function brandsMarkup(brands) {
-  return brands.map((brand) => `<li class="reveal">${brand}</li>`).join("");
-}
-
-function ctaMarkup(page) {
-  if (!page.ctaImage) {
-    return `<section class="page-cta section-pad" aria-label="Pide tu presupuesto">
-<div class="page-cta-inner reveal">
-<h2>¿EMPEZAMOS?</h2>
-<div class="page-cta-actions">
-<a class="page-cta-button" href="#contacto">PIDE TU PRESUPUESTO <span>↗</span></a>
-<a class="page-cta-button page-cta-button--ghost" href="${MAPS_URL}" target="_blank" rel="noopener">VISITA EL SHOWROOM <span>↗</span></a>
-</div>
-</div>
-</section>`;
-  }
-  const { image, alt, position } = page.ctaImage;
-  const [w, h] = IMAGE_DIMS[image];
-  const srcset = [800, 1200, 1600, w]
-    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
-    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
-    .join(", ");
-  const style = position ? ` style="object-position: ${position};"` : "";
-  return `<section class="page-cta page-cta--photo section-pad" aria-label="Pide tu presupuesto">
-<img class="page-cta-bg" src="assets/${image}.webp" srcset="${srcset}" sizes="100vw" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async"${style}>
-<div class="page-cta-shade"></div>
-<div class="page-cta-inner reveal">
-<h2>¿EMPEZAMOS?</h2>
-<div class="page-cta-actions">
-<a class="page-cta-button page-cta-button--light" href="#contacto">PIDE TU PRESUPUESTO <span>↗</span></a>
-<a class="page-cta-button page-cta-button--light page-cta-button--ghost" href="${MAPS_URL}" target="_blank" rel="noopener">VISITA EL SHOWROOM <span>↗</span></a>
-</div>
-</div>
-</section>`;
-}
-
-function renderPage(page) {
-  const cardsItems = cardsMarkup(page.cards);
-  const brandsItems = brandsMarkup(BRAND_PLACEHOLDERS);
-  const steps = page.installs ? PROCESS_STEPS_INSTALL : PROCESS_STEPS_MATERIALS;
-  const processItems = steps
-    .map((step, i) => `<li class="reveal"><span class="process-num">0${i + 1}</span><p>${step}</p></li>`)
-    .join("");
-  const galleryItems = page.gallery.map(galleryImageMarkup).join("");
-
-  const simulatorSection = page.simulator
-    ? `<section class="simulator section-pad" id="simulador">
-<div class="section-kicker reveal"><span>04 — PRESUPUESTO</span><span>SIMULADOR</span></div>
-<h2 class="section-title reveal">CALCULA TU<br><span>PRESUPUESTO ORIENTATIVO</span></h2>
-<!-- TODO: simulador interactivo de presupuesto (próxima iteración) -->
-<p class="simulator-placeholder reveal">Muy pronto podrás calcular aquí un presupuesto orientativo.</p>
-</section>
-`
-    : "";
-  const galleryNumber = page.simulator ? "05" : "04";
-  const heroImageComment = page.heroPlaceholderNote ? `<!-- ${page.heroPlaceholderNote} -->\n` : "";
-
-  return `<!doctype html>
-<html lang="es">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#eeeae3"><title>${page.title}</title>
-<meta name="description" content="${page.description}">
-<meta name="robots" content="noindex, nofollow">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
-<link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
-${heroPreloadMarkup(page.heroImage)}
-<link rel="stylesheet" href="styles.css">
-<script type="module" src="/app.js"></script>
-</head>
-<body>
-<a class="skip" href="#incluye">Saltar al contenido</a>
-${HEADER_HTML}
-<main>
-<section class="page-hero" id="inicio" aria-label="${page.heroTitle}">
-${heroImageComment}${heroPictureMarkup(page.heroImage, page.heroAlt, page.heroPosition)}
-<div class="hero-shade"></div>
-<div class="page-hero-copy"><div class="hero-eyebrow">${page.heroEyebrow}</div><h1>${page.heroTitle}</h1></div>
-</section>
-<section class="page-intro section-pad">
-<p class="reveal">${page.intro}</p>
-</section>
-<section class="includes section-pad" id="incluye">
-<div class="section-kicker reveal"><span>01 — QUÉ INCLUYE</span><span>SERVICIO COMPLETO</span></div>
-<h2 class="section-title reveal">QUÉ INCLUYE<span class="title-dot">.</span></h2>
-<ul class="cards-grid">
-${cardsItems}
-</ul>
-</section>
-<section class="brands section-pad" id="marcas">
-<div class="section-kicker reveal"><span>02 — MARCAS</span><span>CON LAS QUE TRABAJAMOS</span></div>
-<h2 class="section-title reveal">MARCAS<span class="title-dot">.</span></h2>
-<!-- TODO: sustituir estos placeholders por los logotipos reales de las marcas con las que trabaja Xaixo Home -->
-<ul class="brands-grid">
-${brandsItems}
-</ul>
-</section>
-<section class="process section-pad" id="como-trabajamos">
-<div class="section-kicker reveal"><span>03 — CÓMO TRABAJAMOS</span><span>3 PASOS</span></div>
-<h2 class="section-title reveal">CÓMO<br><span>TRABAJAMOS</span></h2>
-<ol class="process-steps">
-${processItems}
-</ol>
-</section>
-${simulatorSection}<section class="gallery section-pad" id="inspiracion">
-<div class="section-kicker reveal"><span>${galleryNumber} — INSPIRACIÓN</span><span>REFERENCIAS VISUALES</span></div>
-<h2 class="section-title reveal">INSPIRACIÓN<span class="title-dot">.</span></h2>
-<!-- TODO: sustituir estas imágenes de assets/ (fotos de referencia) por fotografías reales de proyectos de Xaixo Home -->
-<div class="gallery-grid">
-${galleryItems}
-</div>
-</section>
-${ctaMarkup(page)}
-</main>
-${FOOTER_HTML}
-${MENU_HTML}
-${WHATSAPP_HTML}
-</body>
-</html>
-`;
-}
-
-// --- Dark editorial template (banos.html today; reuse for azulejos/cocinas/
-// ventanas once they have their own photography). CSS lives in dark.css,
-// loaded alongside styles.css for the shared header/menu/footer/WhatsApp
-// button, @font-face and reveal-on-scroll system.
-const DARK_PAGES = [
   {
     slug: "banos",
     title: "Baños a medida en Gandía | Xaixo Home",
@@ -381,6 +388,8 @@ const DARK_PAGES = [
       alt: "Fachada del showroom de Xaixo Home en Gandía",
       position: "center 62%",
       heading: "Ven a verlo<br>con tus ojos.",
+      primary: { label: "Visita el showroom", href: MAPS_URL, external: true },
+      secondary: { label: "Escríbenos por WhatsApp", href: WHATSAPP_URL, external: true },
     },
   },
 ];
@@ -413,10 +422,11 @@ function darkProductMarkup(product) {
     position: product.imagePosition,
   });
   const brands = product.brands.map((brand) => `<span>${brand}</span>`).join("");
+  const imageNote = product.aiImage ? `${AI_IMAGE_NOTE}\n` : "";
   return `<article class="dk-prod">
 <div class="dk-pic" data-cursor="VER">
-<div class="dk-ph" data-px="0.12">${image}</div>
-<!-- TODO: cifra de muestra, sustituir por un dato real de Xaixo Home -->
+${imageNote}<div class="dk-ph" data-px="0.12">${image}</div>
+${SAMPLE_FIGURE_NOTE}
 <div class="dk-fig-box"><div class="dk-fig">${product.figureValue}</div><div class="dk-fig-l">${product.figureLabel}</div></div>
 </div>
 <div class="dk-txt">
@@ -439,6 +449,21 @@ function darkStepsMarkup(steps) {
   return steps.map((step) => `<div class="dk-step reveal"><strong>${step.title}</strong><p>${step.desc}</p></div>`).join("");
 }
 
+function darkSimulatorMarkup(simulator) {
+  if (!simulator) return "";
+  return `<section class="dk-sim" id="simulador">
+<h3 class="reveal">${simulator.title}</h3>
+<!-- TODO: simulador interactivo de presupuesto (próxima iteración) -->
+<p class="reveal">Muy pronto podrás calcular aquí un presupuesto orientativo.</p>
+</section>
+`;
+}
+
+function darkCtaButtonMarkup(button, modifierClass) {
+  const targetAttrs = button.external ? ` target="_blank" rel="noopener"` : "";
+  return `<a class="dk-btn ${modifierClass}" href="${button.href}"${targetAttrs}>${button.label}</a>`;
+}
+
 function darkCtaMarkup(page) {
   const { cta } = page;
   const image = darkImageMarkup(cta.image, cta.alt, {
@@ -452,8 +477,8 @@ function darkCtaMarkup(page) {
 <div>
 <h2 class="reveal">${cta.heading}</h2>
 <div class="dk-btns reveal">
-<a class="dk-btn dk-btn--pri" href="${MAPS_URL}" target="_blank" rel="noopener">Visita el showroom</a>
-<a class="dk-btn dk-btn--sec" href="${WHATSAPP_URL}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+${darkCtaButtonMarkup(cta.primary, "dk-btn--pri")}
+${darkCtaButtonMarkup(cta.secondary, "dk-btn--sec")}
 </div>
 </div>
 <div class="dk-addr reveal">
@@ -473,9 +498,11 @@ function renderDarkCategoryPage(page) {
     position: page.hero.position,
     priority: true,
   });
+  const heroImageNote = page.hero.aiImage ? `${AI_IMAGE_NOTE}\n` : "";
   const productsHtml = page.products.map(darkProductMarkup).join("\n");
   const brandsTicker = darkBrandsTickerMarkup(page.brandsTicker);
   const stepsHtml = darkStepsMarkup(page.steps);
+  const simulatorSection = darkSimulatorMarkup(page.simulator);
 
   return `<!doctype html>
 <html lang="es">
@@ -496,14 +523,14 @@ ${darkHeroPreloadMarkup(page.hero.image)}
 ${HEADER_HTML}
 <main>
 <section class="dk-hero" id="inicio" aria-label="${page.hero.title}">
-<div class="dk-ph" data-px="0.18">${heroImage}</div>
+${heroImageNote}<div class="dk-ph" data-px="0.18">${heroImage}</div>
 <div class="dk-hero-txt">
 <div>
 <h1>${page.hero.title}</h1>
 <p class="dk-hero-sub">${page.hero.subtitle}</p>
 </div>
 <div class="dk-hero-fig reveal">
-<!-- TODO: cifra de muestra, sustituir por un dato real de Xaixo Home -->
+${SAMPLE_FIGURE_NOTE}
 <div class="dk-fig">${page.hero.figureValue}</div>
 <div class="dk-fig-l">${page.hero.figureLabel}</div>
 </div>
@@ -524,7 +551,7 @@ ${brandsTicker}
 ${stepsHtml}
 </div>
 </section>
-${darkCtaMarkup(page)}
+${simulatorSection}${darkCtaMarkup(page)}
 </main>
 ${FOOTER_HTML}
 ${MENU_HTML}
@@ -614,12 +641,6 @@ ${WHATSAPP_HTML}
 </body>
 </html>
 `;
-}
-
-for (const page of PAGES) {
-  const html = renderPage(page);
-  await writeFile(`${page.slug}.html`, html);
-  console.log(`${page.slug}.html`);
 }
 
 for (const page of DARK_PAGES) {
