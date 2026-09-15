@@ -8,7 +8,13 @@ La web es un proyecto estático estándar (HTML, CSS y JavaScript) multipágina,
 
 Páginas: `index.html` (home), 4 páginas de categoría de producto — `azulejos.html`, `cocinas.html`, `banos.html`, `ventanas.html` — y 3 páginas legales — `aviso-legal.html`, `politica-privacidad.html`, `cookies.html` —, cada una con su propio `<title>`/meta description. Todas comparten cabecera, pie con datos de contacto (`id="contacto"`) y botón flotante de WhatsApp. La home además incluye un JSON-LD `HomeAndConstructionBusiness` en el `<head>`.
 
-Xaixo Home vende y asesora sobre materiales (azulejos, cocinas, baños, ventanas); **solo instala cocinas y ventanas**, azulejos y baños se sirven listos para el instalador del cliente. La sección "Cómo trabajamos" de cada página de categoría refleja esto con dos variantes de pasos (instalación propia vs. solo materiales) — ver `PROCESS_STEPS_INSTALL`/`PROCESS_STEPS_MATERIALS` y el flag `installs` en `scripts/generate-pages.mjs`. Cada página de categoría incluye además tarjetas de producto, una franja de marcas (placeholder), y una sección de inspiración con doble CTA (pedir presupuesto / visitar el showroom).
+Xaixo Home vende y asesora sobre materiales (azulejos, cocinas, baños, ventanas); **solo instala cocinas y ventanas**, azulejos y baños se sirven listos para el instalador del cliente.
+
+Las páginas de categoría usan dos plantillas distintas, ambas generadas por `scripts/generate-pages.mjs`:
+- **Plantilla clara** (`azulejos.html`, `cocinas.html`, `ventanas.html`, array `PAGES`): hero, tarjetas de producto, franja de marcas (placeholder), "Cómo trabajamos" (`PROCESS_STEPS_INSTALL`/`PROCESS_STEPS_MATERIALS` según el flag `installs`), inspiración y doble CTA. Estilos en `styles.css`.
+- **Plantilla oscura editorial** (`banos.html`, array `DARK_PAGES`): hero a pantalla completa con parallax, bloques de producto con foto sticky alternando lado, cinta de marcas en movimiento, "Así lo hacemos" y CTA final con foto de fondo, dirección y teléfono. Estilos en `dark.css` (pensada para reutilizarse en `azulejos`/`cocinas`/`ventanas` cuando tengan su propia fotografía). Las cifras destacadas (ej. "+400 referencias") están marcadas con `<!-- TODO -->`: son de muestra, pendientes de un dato real de Xaixo Home.
+
+Ambas plantillas comparten cabecera, menú móvil, pie con datos de contacto (`id="contacto"`) y botón flotante de WhatsApp, extraídos de `index.html` (comentarios `SHARED-*`). La home además incluye un JSON-LD `HomeAndConstructionBusiness` en el `<head>`.
 
 ## Requisitos
 
@@ -60,6 +66,7 @@ xaixo-home-codigo-completo/
 ├── build.mjs
 ├── cocinas.html
 ├── cookies.html
+├── dark.css
 ├── image-sources.json
 ├── index.html
 ├── package.json
@@ -74,16 +81,18 @@ xaixo-home-codigo-completo/
 ## Archivos principales
 
 - `index.html`: estructura completa de la HOME, incluye el JSON-LD `HomeAndConstructionBusiness` en el `<head>`.
-- `azulejos.html`, `cocinas.html`, `banos.html`, `ventanas.html`: páginas de cada categoría de producto (hero, intro, tarjetas de producto, marcas, cómo trabajamos, inspiración y doble CTA). `cocinas.html` incluye además el contenedor `#simulador`, pendiente del simulador de presupuesto.
+- `azulejos.html`, `cocinas.html`, `ventanas.html`: páginas de categoría con la plantilla clara (hero, intro, tarjetas de producto, marcas, cómo trabajamos, inspiración y doble CTA). `cocinas.html` incluye además el contenedor `#simulador`, pendiente del simulador de presupuesto.
+- `banos.html`: página de categoría con la plantilla oscura editorial (ver arriba). No usa `#incluye`/tarjetas ni la sección de inspiración de la plantilla clara.
 - `aviso-legal.html`, `politica-privacidad.html`, `cookies.html`: páginas legales con texto base estándar. Marcadas con `<!-- TODO -->` donde falta el nombre fiscal y el CIF reales.
 - `vite.config.js`: declara las 8 páginas como entradas de `build.rollupOptions.input` para que `vite build` las genere todas.
-- `styles.css`: diseño, responsive, animaciones, menú, hero, footer, botón de WhatsApp y estados interactivos.
-- `app.js`: animación del hero ligada al scroll, selector de ambientes, swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual. Se carga como módulo de Vite; las funciones específicas de la home se autodetectan y no se ejecutan en el resto de páginas.
+- `styles.css`: diseño, responsive, animaciones, menú, hero, footer, botón de WhatsApp, estados interactivos y el sistema `.reveal`/`.motion` (scroll reveal) que reutiliza `dark.css`.
+- `dark.css`: componentes de la plantilla oscura editorial (hero a pantalla completa, bloques de producto con foto sticky, cinta de marcas, proceso y CTA con foto de fondo). Se carga junto a `styles.css`, que sigue aportando la cabecera, el menú, el pie y el botón de WhatsApp compartidos.
+- `app.js`: animación del hero ligada al scroll, selector de ambientes, parallax genérico (`data-px`, usado por la plantilla oscura), swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual (`data-cursor`). Se carga como módulo de Vite; las funciones específicas de cada página se autodetectan y no se ejecutan en el resto.
 - `build.mjs`: genera la versión de producción con Vite y copia `image-sources.json` a `dist/`.
-- `scripts/generate-assets.mjs`: regenera `manrope.woff2`, las variantes responsive de las imágenes y `assets/logo.png` (`npm run generate:assets`) cuando cambian los archivos fuente en `assets/`.
-- `scripts/generate-pages.mjs`: regenera las 4 páginas de categoría y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script.
-- `assets/`: fotografías optimizadas (con variantes de 800/1200/1600px para `srcset`), logo y fuente Manrope (WOFF2 con fallback TTF) usados por la web.
-- `image-sources.json`: procedencia y situación de derechos de las imágenes de inspiración.
+- `scripts/generate-assets.mjs`: regenera `manrope.woff2` y las variantes responsive de las imágenes (`npm run generate:assets`); convierte automáticamente a WebP cualquier fuente `.png`/`.jpg` que aún no tenga su `.webp`.
+- `scripts/generate-pages.mjs`: regenera las 4 páginas de categoría (arrays `PAGES` y `DARK_PAGES`, una plantilla cada uno) y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script.
+- `assets/`: fotografías optimizadas (con variantes responsive para `srcset`), logo y fuente Manrope (WOFF2 con fallback TTF) usados por la web.
+- `image-sources.json`: procedencia y situación de derechos de las imágenes de inspiración de stock (no aplica a las fotografías propias de `banos-*`).
 
 ## Imágenes y derechos
 

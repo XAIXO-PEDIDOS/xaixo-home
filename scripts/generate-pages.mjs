@@ -39,6 +39,11 @@ const WHATSAPP_HTML = extractBetween(
 );
 
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Gran+Via+Castell+de+Bair%C3%A9n+20%2C+Gandia";
+const WHATSAPP_URL = "https://wa.me/34689248559?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto";
+const ADDRESS_LINE = "Gran Via Castell de Bairén, 20 · Gandia";
+const HOURS_LINE = "Lunes a viernes, 7:00 a 19:00";
+const PHONE_DISPLAY = "615 439 842";
+const PHONE_TEL = "+34615439842";
 
 // Xaixo Home only installs kitchens and windows; azulejos and baños are
 // materials sold and advised on, fitted by the client's own installer.
@@ -108,53 +113,6 @@ const PAGES = [
     gallery: ["living", "exterior", "house"],
     simulator: true,
     installs: true,
-  },
-  {
-    slug: "banos",
-    title: "Baños a medida en Gandía | Xaixo Home",
-    description:
-      "Sanitarios, muebles de baño, platos de ducha, mamparas y cerámica en Gandía. Asesoramiento y materiales de las mejores marcas en nuestro showroom.",
-    heroEyebrow: "XAIXO HOME — GANDÍA",
-    heroTitle: "BAÑOS",
-    heroImage: "banos-hero",
-    heroAlt: "Baño showroom Xaixo Home con mueble de lavabo en madera, ducha con mampara de vidrio y revestimiento de porcelánico beige",
-    heroPosition: "center 32%",
-    intro:
-      "Todo lo que necesita tu baño, elegido con criterio. Platos de ducha, mamparas, muebles, grifería y cerámica de las mejores marcas.",
-    cards: [
-      {
-        title: "Sanitarios y grifería",
-        desc: "Inodoros, lavabos y grifería de diseño y bajo consumo.",
-        image: "banos-griferia",
-        imageAlt: "Grifería de lavabo en negro mate sobre encimera de piedra clara",
-        imagePosition: "center 40%",
-      },
-      {
-        title: "Muebles de baño",
-        desc: "Muebles a medida y de catálogo, con encimeras a juego.",
-        image: "banos-muebles",
-        imageAlt: "Mueble de baño suspendido en roble con espejo redondo retroiluminado",
-      },
-      {
-        title: "Platos de ducha y mamparas",
-        desc: "Resina, mampara de vidrio templado y sistemas antical.",
-        image: "banos-platos",
-        imageAlt: "Plato de ducha de resina antracita con mampara de vidrio y grifería negra mate",
-        imagePosition: "center 78%",
-      },
-      {
-        title: "Cerámica y porcelánico",
-        desc: "Pavimento y revestimiento de las mejores marcas.",
-        image: "banos-ceramica",
-        imageAlt: "Revestimiento cerámico tipo travertino en ducha con hornacina para toallas",
-      },
-    ],
-    gallery: ["kitchen", "living", "house"],
-    ctaImage: {
-      image: "banos-showroom",
-      alt: "Fachada del showroom de Xaixo Home en Gandía",
-      position: "center 68%",
-    },
   },
   {
     slug: "ventanas",
@@ -349,6 +307,235 @@ ${WHATSAPP_HTML}
 `;
 }
 
+// --- Dark editorial template (banos.html today; reuse for azulejos/cocinas/
+// ventanas once they have their own photography). CSS lives in dark.css,
+// loaded alongside styles.css for the shared header/menu/footer/WhatsApp
+// button, @font-face and reveal-on-scroll system.
+const DARK_PAGES = [
+  {
+    slug: "banos",
+    title: "Baños a medida en Gandía | Xaixo Home",
+    description:
+      "Platos, mamparas, muebles, grifería y cerámica de baño en el showroom de Xaixo Home en Gandía. Te asesoramos y te lo servimos listo para tu instalador.",
+    themeColor: "#1c1815",
+    hero: {
+      image: "banos-hero",
+      alt: "Baño showroom Xaixo Home con mueble de lavabo en madera, ducha con mampara de vidrio y revestimiento de porcelánico beige",
+      position: "center 30%",
+      title: "Baños",
+      subtitle: "Platos, mamparas, muebles, grifería y cerámica. Los eliges en el showroom de Gandia; te los servimos en obra.",
+      figureValue: "+400",
+      figureLabel: "referencias de baño en exposición permanente",
+    },
+    intro: {
+      html: "Un baño se elige tocando. <b>Ven, compara materiales reales</b> y sal con el presupuesto cerrado.",
+      note: "No hacemos la obra: te asesoramos, preparamos todo el material y lo entregamos listo para tu instalador. Si no tienes uno, te ponemos en contacto con profesionales de confianza.",
+    },
+    products: [
+      {
+        title: "Platos de ducha y mamparas",
+        desc: "Resina, carga mineral y cerámica, cortados a la medida de tu hueco. Mamparas de vidrio templado con tratamiento antical, fijas o correderas.",
+        brands: ["Marca", "Marca", "Marca"],
+        image: "banos-platos",
+        imageAlt: "Plato de ducha de resina antracita con mampara de vidrio y grifería negra mate",
+        imagePosition: "center 65%",
+        figureValue: "120",
+        figureLabel: "platos de ducha",
+      },
+      {
+        title: "Muebles y lavabos",
+        desc: "Suspendidos, a suelo y a medida, con lavabo integrado o sobre encimera. Acabados en madera, lacado y porcelánico.",
+        brands: ["Marca", "Marca"],
+        image: "banos-muebles",
+        imageAlt: "Mueble de baño suspendido en roble con espejo redondo retroiluminado",
+        figureValue: "35",
+        figureLabel: "muebles en exposición",
+      },
+      {
+        title: "Grifería y sanitarios",
+        desc: "Monomando, termostática y empotrada, en cromo, negro mate y cepillados. Inodoros suspendidos con cisterna empotrada y tapa de caída amortiguada.",
+        brands: ["Marca", "Marca", "Marca"],
+        image: "banos-griferia",
+        imageAlt: "Grifería de lavabo en negro mate sobre encimera de piedra clara",
+        imagePosition: "center 42%",
+        figureValue: "18",
+        figureLabel: "acabados de grifería",
+      },
+      {
+        title: "Cerámica y porcelánico",
+        desc: "Grandes formatos, efecto piedra y madera, rectificados y antideslizantes para suelo de ducha. Todo en piezas reales para que lo veas con luz natural.",
+        brands: ["Marca", "Marca"],
+        image: "banos-ceramica",
+        imageAlt: "Revestimiento cerámico tipo travertino en ducha con hornacina para toallas",
+        figureValue: "300",
+        figureLabel: "modelos de cerámica",
+      },
+    ],
+    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
+    steps: [
+      { title: "Nos cuentas tu baño", desc: "Por WhatsApp o en el showroom. Con medidas o un plano, mejor; sin ellos, también." },
+      { title: "Elegimos juntos el material", desc: "Ves y tocas piezas reales. Sales con un presupuesto cerrado, sin sorpresas." },
+      { title: "Te lo servimos en obra", desc: "Todo en una entrega, en la fecha que necesite tu instalador." },
+    ],
+    cta: {
+      image: "banos-showroom",
+      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      position: "center 62%",
+      heading: "Ven a verlo<br>con tus ojos.",
+    },
+  },
+];
+
+function darkImageMarkup(image, alt, { className, sizes, position, priority } = {}) {
+  const [w, h] = IMAGE_DIMS[image];
+  const candidateWidths = priority ? [800, 1200, 1600, 2400, w] : [800, 1200, 1600, w];
+  const srcset = candidateWidths
+    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
+    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
+    .join(", ");
+  const style = position ? ` style="object-position: ${position};"` : "";
+  const loadingAttrs = priority ? ` fetchpriority="high"` : ` loading="lazy" decoding="async"`;
+  return `<img class="${className}" src="assets/${image}.webp" srcset="${srcset}" sizes="${sizes}" alt="${alt}" width="${w}" height="${h}"${loadingAttrs}${style}>`;
+}
+
+function darkHeroPreloadMarkup(image) {
+  const [w] = IMAGE_DIMS[image];
+  const srcset = [800, 1200, 1600, 2400, w]
+    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
+    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
+    .join(", ");
+  return `<link rel="preload" href="assets/${image}.webp" as="image" imagesrcset="${srcset}" imagesizes="100vw" fetchpriority="high">`;
+}
+
+function darkProductMarkup(product) {
+  const image = darkImageMarkup(product.image, product.imageAlt, {
+    className: "dk-pic-img",
+    sizes: "(max-width: 820px) 100vw, 50vw",
+    position: product.imagePosition,
+  });
+  const brands = product.brands.map((brand) => `<span>${brand}</span>`).join("");
+  return `<article class="dk-prod">
+<div class="dk-pic" data-cursor="VER">
+<div class="dk-ph" data-px="0.12">${image}</div>
+<!-- TODO: cifra de muestra, sustituir por un dato real de Xaixo Home -->
+<div class="dk-fig-box"><div class="dk-fig">${product.figureValue}</div><div class="dk-fig-l">${product.figureLabel}</div></div>
+</div>
+<div class="dk-txt">
+<h2 class="reveal">${product.title}</h2>
+<p class="reveal">${product.desc}</p>
+<div class="dk-brands reveal">${brands}</div>
+<a class="dk-more reveal" href="#contacto" aria-label="Ver la galería de ${product.title}" data-cursor="VER">Ver la galería <i aria-hidden="true">→</i></a>
+</div>
+</article>`;
+}
+
+function darkBrandsTickerMarkup(brands) {
+  const spans = brands.map((brand) => `<span>${brand}</span>`).join("");
+  return `<div class="dk-marcas" aria-label="Marcas con las que trabajamos">
+<div class="dk-row">${spans}</div><div class="dk-row" aria-hidden="true">${spans}</div>
+</div>`;
+}
+
+function darkStepsMarkup(steps) {
+  return steps.map((step) => `<div class="dk-step reveal"><strong>${step.title}</strong><p>${step.desc}</p></div>`).join("");
+}
+
+function darkCtaMarkup(page) {
+  const { cta } = page;
+  const image = darkImageMarkup(cta.image, cta.alt, {
+    className: "dk-cta-img",
+    sizes: "100vw",
+    position: cta.position,
+  });
+  return `<section class="dk-cta" id="visita">
+<div class="dk-ph" data-px="0.1">${image}</div>
+<div class="dk-cta-in">
+<div>
+<h2 class="reveal">${cta.heading}</h2>
+<div class="dk-btns reveal">
+<a class="dk-btn dk-btn--pri" href="${MAPS_URL}" target="_blank" rel="noopener">Visita el showroom</a>
+<a class="dk-btn dk-btn--sec" href="${WHATSAPP_URL}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+</div>
+</div>
+<div class="dk-addr reveal">
+<b>Showroom Xaixo Home</b>
+${ADDRESS_LINE}<br>
+${HOURS_LINE}<br>
+<a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a>
+</div>
+</div>
+</section>`;
+}
+
+function renderDarkCategoryPage(page) {
+  const heroImage = darkImageMarkup(page.hero.image, page.hero.alt, {
+    className: "dk-hero-img",
+    sizes: "100vw",
+    position: page.hero.position,
+    priority: true,
+  });
+  const productsHtml = page.products.map(darkProductMarkup).join("\n");
+  const brandsTicker = darkBrandsTickerMarkup(page.brandsTicker);
+  const stepsHtml = darkStepsMarkup(page.steps);
+
+  return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="${page.themeColor}"><title>${page.title}</title>
+<meta name="description" content="${page.description}">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/manrope.woff2" as="font" type="font/woff2" crossorigin>
+${darkHeroPreloadMarkup(page.hero.image)}
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="dark.css">
+<script type="module" src="/app.js"></script>
+</head>
+<body class="dark-page">
+<a class="skip" href="#intro">Saltar al contenido</a>
+${HEADER_HTML}
+<main>
+<section class="dk-hero" id="inicio" aria-label="${page.hero.title}">
+<div class="dk-ph" data-px="0.18">${heroImage}</div>
+<div class="dk-hero-txt">
+<div>
+<h1>${page.hero.title}</h1>
+<p class="dk-hero-sub">${page.hero.subtitle}</p>
+</div>
+<div class="dk-hero-fig reveal">
+<!-- TODO: cifra de muestra, sustituir por un dato real de Xaixo Home -->
+<div class="dk-fig">${page.hero.figureValue}</div>
+<div class="dk-fig-l">${page.hero.figureLabel}</div>
+</div>
+</div>
+<div class="dk-scroll-hint" aria-hidden="true"></div>
+</section>
+<section class="dk-intro" id="intro">
+<p class="reveal">${page.intro.html}</p>
+<small class="reveal">${page.intro.note}</small>
+</section>
+<div class="dk-products">
+${productsHtml}
+</div>
+${brandsTicker}
+<section class="dk-proc">
+<h3 class="reveal">Así lo hacemos</h3>
+<div class="dk-steps">
+${stepsHtml}
+</div>
+</section>
+${darkCtaMarkup(page)}
+</main>
+${FOOTER_HTML}
+${MENU_HTML}
+<div class="context-cursor" aria-hidden="true">VER</div>
+${WHATSAPP_HTML}
+</body>
+</html>
+`;
+}
+
 const LEGAL_PAGES = [
   {
     slug: "aviso-legal",
@@ -432,6 +619,12 @@ ${WHATSAPP_HTML}
 
 for (const page of PAGES) {
   const html = renderPage(page);
+  await writeFile(`${page.slug}.html`, html);
+  console.log(`${page.slug}.html`);
+}
+
+for (const page of DARK_PAGES) {
+  const html = renderDarkCategoryPage(page);
   await writeFile(`${page.slug}.html`, html);
   console.log(`${page.slug}.html`);
 }

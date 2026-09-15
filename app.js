@@ -29,6 +29,25 @@ if (stage) {
  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);reduced.addEventListener('change',paintHero);paintHero();
 }
 
+// --- Generic photo parallax (dark category pages: elements with data-px) ---
+const parallaxLayers=[...document.querySelectorAll('[data-px]')];
+if(parallaxLayers.length && !reduced.matches){
+ let px_ticking=false;
+ function paintParallax(){
+  px_ticking=false;
+  const vh=innerHeight;
+  parallaxLayers.forEach(layer=>{
+   const rect=layer.parentElement.getBoundingClientRect();
+   if(rect.bottom<0||rect.top>vh)return;
+   const center=(rect.top+rect.height/2-vh/2)/vh;
+   const strength=parseFloat(layer.dataset.px||'0.12');
+   layer.style.transform=`translateY(${-center*strength*vh}px)`;
+  });
+ }
+ function onParallaxScroll(){if(!px_ticking){requestAnimationFrame(paintParallax);px_ticking=true;}}
+ addEventListener('scroll',onParallaxScroll,{passive:true});addEventListener('resize',paintParallax);paintParallax();
+}
+
 // --- Scroll reveal (shared across all pages) ---
 if(!reduced.matches && 'IntersectionObserver' in window){
  document.documentElement.classList.add('motion');
