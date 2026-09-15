@@ -60,6 +60,12 @@ const IMAGE_DIMS = {
   living: [1600, 1067],
   exterior: [1600, 1067],
   house: [1600, 936],
+  "banos-hero": [1376, 768],
+  "banos-platos": [896, 1200],
+  "banos-muebles": [1200, 896],
+  "banos-griferia": [896, 1200],
+  "banos-ceramica": [1200, 896],
+  "banos-showroom": [1920, 1080],
 };
 
 const PAGES = [
@@ -110,17 +116,45 @@ const PAGES = [
       "Sanitarios, muebles de baño, platos de ducha, mamparas y cerámica en Gandía. Asesoramiento y materiales de las mejores marcas en nuestro showroom.",
     heroEyebrow: "XAIXO HOME — GANDÍA",
     heroTitle: "BAÑOS",
-    heroImage: "bathroom",
-    heroAlt: "Baño de piedra clara y luz suave, referencia de inspiración",
+    heroImage: "banos-hero",
+    heroAlt: "Baño showroom Xaixo Home con mueble de lavabo en madera, ducha con mampara de vidrio y revestimiento de porcelánico beige",
+    heroPosition: "center 32%",
     intro:
       "Todo lo que necesita tu baño, elegido con criterio. Platos de ducha, mamparas, muebles, grifería y cerámica de las mejores marcas.",
     cards: [
-      { title: "Sanitarios y grifería", desc: "Inodoros, lavabos y grifería de diseño y bajo consumo." },
-      { title: "Muebles de baño", desc: "Muebles a medida y de catálogo, con encimeras a juego." },
-      { title: "Platos de ducha y mamparas", desc: "Resina, mampara de vidrio templado y sistemas antical." },
-      { title: "Cerámica y porcelánico", desc: "Pavimento y revestimiento de las mejores marcas." },
+      {
+        title: "Sanitarios y grifería",
+        desc: "Inodoros, lavabos y grifería de diseño y bajo consumo.",
+        image: "banos-griferia",
+        imageAlt: "Grifería de lavabo en negro mate sobre encimera de piedra clara",
+        imagePosition: "center 40%",
+      },
+      {
+        title: "Muebles de baño",
+        desc: "Muebles a medida y de catálogo, con encimeras a juego.",
+        image: "banos-muebles",
+        imageAlt: "Mueble de baño suspendido en roble con espejo redondo retroiluminado",
+      },
+      {
+        title: "Platos de ducha y mamparas",
+        desc: "Resina, mampara de vidrio templado y sistemas antical.",
+        image: "banos-platos",
+        imageAlt: "Plato de ducha de resina antracita con mampara de vidrio y grifería negra mate",
+        imagePosition: "center 78%",
+      },
+      {
+        title: "Cerámica y porcelánico",
+        desc: "Pavimento y revestimiento de las mejores marcas.",
+        image: "banos-ceramica",
+        imageAlt: "Revestimiento cerámico tipo travertino en ducha con hornacina para toallas",
+      },
     ],
     gallery: ["kitchen", "living", "house"],
+    ctaImage: {
+      image: "banos-showroom",
+      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      position: "center 68%",
+    },
   },
   {
     slug: "ventanas",
@@ -144,18 +178,19 @@ const PAGES = [
   },
 ];
 
-function heroPictureMarkup(image, alt) {
+function heroPictureMarkup(image, alt, position) {
   const [w, h] = IMAGE_DIMS[image];
-  const srcset = [800, 1200, w]
+  const srcset = [800, 1200, 1600, 2400, w]
     .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
     .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
     .join(", ");
-  return `<img class="page-hero-image" src="assets/${image}.webp" srcset="${srcset}" sizes="100vw" alt="${alt}" width="${w}" height="${h}" fetchpriority="high">`;
+  const style = position ? ` style="object-position: ${position};"` : "";
+  return `<img class="page-hero-image" src="assets/${image}.webp" srcset="${srcset}" sizes="100vw" alt="${alt}" width="${w}" height="${h}" fetchpriority="high"${style}>`;
 }
 
 function heroPreloadMarkup(image) {
   const [w] = IMAGE_DIMS[image];
-  const srcset = [800, 1200, w]
+  const srcset = [800, 1200, 1600, 2400, w]
     .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
     .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
     .join(", ");
@@ -171,17 +206,61 @@ function galleryImageMarkup(image) {
   return `<img class="reveal" src="assets/${image}.webp" srcset="${srcset}" sizes="(max-width: 700px) 45vw, 30vw" alt="Referencia visual, imagen temporal" width="${w}" height="${h}" loading="lazy" decoding="async">`;
 }
 
+function cardImageMarkup(image, alt, position) {
+  const [w, h] = IMAGE_DIMS[image];
+  const srcset = [800, 1200, w]
+    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
+    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
+    .join(", ");
+  const style = position ? ` style="object-position: ${position};"` : "";
+  return `<img class="card-image" src="assets/${image}.webp" srcset="${srcset}" sizes="(max-width: 700px) 88vw, (max-width: 1100px) 45vw, 30vw" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async"${style}>`;
+}
+
 function cardsMarkup(cards) {
   return cards
-    .map(
-      (card, i) =>
-        `<li class="reveal"><span class="cards-num">0${i + 1}</span><strong>${card.title}</strong><span class="card-desc">${card.desc}</span></li>`,
-    )
+    .map((card, i) => {
+      const body = `<span class="cards-num">0${i + 1}</span><strong>${card.title}</strong><span class="card-desc">${card.desc}</span>`;
+      if (!card.image) return `<li class="reveal">${body}</li>`;
+      const image = cardImageMarkup(card.image, card.imageAlt, card.imagePosition);
+      return `<li class="reveal has-image">${image}<div class="card-body">${body}</div></li>`;
+    })
     .join("");
 }
 
 function brandsMarkup(brands) {
   return brands.map((brand) => `<li class="reveal">${brand}</li>`).join("");
+}
+
+function ctaMarkup(page) {
+  if (!page.ctaImage) {
+    return `<section class="page-cta section-pad" aria-label="Pide tu presupuesto">
+<div class="page-cta-inner reveal">
+<h2>¿EMPEZAMOS?</h2>
+<div class="page-cta-actions">
+<a class="page-cta-button" href="#contacto">PIDE TU PRESUPUESTO <span>↗</span></a>
+<a class="page-cta-button page-cta-button--ghost" href="${MAPS_URL}" target="_blank" rel="noopener">VISITA EL SHOWROOM <span>↗</span></a>
+</div>
+</div>
+</section>`;
+  }
+  const { image, alt, position } = page.ctaImage;
+  const [w, h] = IMAGE_DIMS[image];
+  const srcset = [800, 1200, 1600, w]
+    .filter((width, i, arr) => arr.indexOf(width) === i && width <= w)
+    .map((width) => (width === w ? `assets/${image}.webp ${w}w` : `assets/${image}-${width}.webp ${width}w`))
+    .join(", ");
+  const style = position ? ` style="object-position: ${position};"` : "";
+  return `<section class="page-cta page-cta--photo section-pad" aria-label="Pide tu presupuesto">
+<img class="page-cta-bg" src="assets/${image}.webp" srcset="${srcset}" sizes="100vw" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async"${style}>
+<div class="page-cta-shade"></div>
+<div class="page-cta-inner reveal">
+<h2>¿EMPEZAMOS?</h2>
+<div class="page-cta-actions">
+<a class="page-cta-button page-cta-button--light" href="#contacto">PIDE TU PRESUPUESTO <span>↗</span></a>
+<a class="page-cta-button page-cta-button--light page-cta-button--ghost" href="${MAPS_URL}" target="_blank" rel="noopener">VISITA EL SHOWROOM <span>↗</span></a>
+</div>
+</div>
+</section>`;
 }
 
 function renderPage(page) {
@@ -223,7 +302,7 @@ ${heroPreloadMarkup(page.heroImage)}
 ${HEADER_HTML}
 <main>
 <section class="page-hero" id="inicio" aria-label="${page.heroTitle}">
-${heroImageComment}${heroPictureMarkup(page.heroImage, page.heroAlt)}
+${heroImageComment}${heroPictureMarkup(page.heroImage, page.heroAlt, page.heroPosition)}
 <div class="hero-shade"></div>
 <div class="page-hero-copy"><div class="hero-eyebrow">${page.heroEyebrow}</div><h1>${page.heroTitle}</h1></div>
 </section>
@@ -260,15 +339,7 @@ ${simulatorSection}<section class="gallery section-pad" id="inspiracion">
 ${galleryItems}
 </div>
 </section>
-<section class="page-cta section-pad" aria-label="Pide tu presupuesto">
-<div class="page-cta-inner reveal">
-<h2>¿EMPEZAMOS?</h2>
-<div class="page-cta-actions">
-<a class="page-cta-button" href="#contacto">PIDE TU PRESUPUESTO <span>↗</span></a>
-<a class="page-cta-button page-cta-button--ghost" href="${MAPS_URL}" target="_blank" rel="noopener">VISITA EL SHOWROOM <span>↗</span></a>
-</div>
-</div>
-</section>
+${ctaMarkup(page)}
 </main>
 ${FOOTER_HTML}
 ${MENU_HTML}

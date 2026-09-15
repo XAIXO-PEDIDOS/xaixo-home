@@ -722,6 +722,20 @@ p {
   flex-direction: column;
   gap: 14px;
 }
+.cards-grid li.has-image {
+  padding: 0;
+}
+.card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.card-body {
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .cards-num {
   font-size: 12px;
   color: var(--muted);
@@ -812,6 +826,44 @@ p {
   .page-cta-button--ghost:hover {
     background: var(--muted);
     color: var(--paper);
+  }
+}
+.page-cta--photo {
+  position: relative;
+  overflow: hidden;
+  background: #1f1d19;
+}
+.page-cta-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.page-cta-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #14161266 0%, #0e100b8a 55%, #14161299 100%);
+}
+.page-cta--photo .page-cta-inner {
+  position: relative;
+  z-index: 1;
+}
+.page-cta--photo .page-cta-inner h2 {
+  color: var(--paper);
+}
+.page-cta-button--light {
+  border-color: var(--paper);
+  color: var(--paper);
+}
+.page-cta-button--light.page-cta-button--ghost {
+  border-color: #ffffff90;
+  color: #ffffffcc;
+}
+@media (hover: hover) and (pointer: fine) {
+  .page-cta-button--light:hover {
+    background: var(--paper);
+    color: var(--ink);
   }
 }
 
