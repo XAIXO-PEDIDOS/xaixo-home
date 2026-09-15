@@ -74,8 +74,8 @@ const IMAGE_DIMS = {
   "ventanas-hero": [1344, 752],
   "ventanas-pvc": [1344, 752],
   "ventanas-aluminio": [1168, 880],
-  "ventanas-correderas": [1168, 880],
-  "ventanas-instalacion": [1168, 880],
+  "ventanas-correderas": [880, 1168],
+  "ventanas-instalacion": [880, 1168],
 };
 
 // --- Dark editorial template, shared by all 4 category pages. CSS lives in
@@ -288,7 +288,7 @@ const DARK_PAGES = [
         desc: "Correderas elevables y cerramientos de terraza con grandes paños de vidrio. Máxima apertura, mínimo perfil visto.",
         brands: ["Marca", "Marca", "Marca"],
         image: "ventanas-correderas",
-        imageAlt: "Cerramiento corredero totalmente abierto entre cocina y terraza con vistas al mar, imagen de referencia",
+        imageAlt: "Cerramiento corredero de aluminio negro abierto en un dormitorio con vistas al mar y terraza con tumbona, imagen de referencia",
         aiImage: true,
         figureValue: "8",
         figureLabel: "sistemas de corredera en showroom",
@@ -298,7 +298,7 @@ const DARK_PAGES = [
         desc: "Retirada de la ventana antigua, sellado, ajuste y limpieza final. Todo con nuestro propio equipo instalador.",
         brands: ["Marca", "Marca"],
         image: "ventanas-instalacion",
-        imageAlt: "Ventana de aluminio recién instalada en un hueco de obra, con nivel y espuma de poliuretano, imagen de referencia",
+        imageAlt: "Instalador comprobando con un nivel una ventana de aluminio recién colocada en un hueco de obra, con vistas al mar",
         aiImage: true,
         figureValue: "100%",
         figureLabel: "instalación con equipo propio, sin subcontratar",
