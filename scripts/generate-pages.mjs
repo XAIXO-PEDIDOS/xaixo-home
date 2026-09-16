@@ -6,7 +6,7 @@
 //
 // Run with `npm run generate:pages` after editing this file, or after
 // changing the header/menu in index.html so the new pages pick it up.
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
 const indexHtml = await readFile("index.html", "utf8");
@@ -530,7 +530,6 @@ function renderDarkCategoryPage(page) {
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="${page.themeColor}"><title>${page.title}</title>
 <meta name="description" content="${page.description}">
-<meta name="robots" content="noindex, nofollow">
 ${metaMarkup({ title: page.title, description: page.description, path: `/${page.slug}.html`, ogImage: page.hero.image })}
 <link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 ${darkHeroPreloadMarkup(page.hero.image)}
@@ -633,7 +632,6 @@ function renderLegalPage(page) {
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1c1815"><title>${page.title}</title>
 <meta name="description" content="${page.description}">
-<meta name="robots" content="noindex, nofollow">
 ${metaMarkup({ title: page.title, description: page.description, path: `/${page.slug}.html`, ogImage: "home-hero" })}
 <link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
@@ -668,3 +666,16 @@ for (const page of LEGAL_PAGES) {
   await writeFile(`${page.slug}.html`, html);
   console.log(`${page.slug}.html`);
 }
+
+// sitemap.xml: the 8 URLs in the clean (no ".html") form the site is
+// published under — lives in public/ so Vite copies it to dist/ as-is,
+// same reasoning as public/favicon.ico (see generate-assets.mjs).
+const sitemapUrls = ["/", ...[...DARK_PAGES, ...LEGAL_PAGES].map((page) => `/${page.slug}`)];
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map((path) => `<url><loc>${SITE_URL}${path}</loc></url>`).join("\n")}
+</urlset>
+`;
+await mkdir("public", { recursive: true });
+await writeFile("public/sitemap.xml", sitemapXml);
+console.log("public/sitemap.xml");
