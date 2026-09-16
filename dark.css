@@ -474,6 +474,143 @@ body.dark-page {
   color: var(--stone);
 }
 
+/* Quote/contact form: lives in the shared footer (id="contacto"), so it's
+   on every page — the 4 category pages and the home, same as everywhere
+   else the footer is. */
+.footer-form {
+  padding-top: 70px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--dark-line);
+}
+.footer-form-head h2 {
+  font-weight: 300;
+  font-size: clamp(32px, 4vw, 56px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: #fff;
+}
+.footer-form-head p {
+  margin-top: 16px;
+  color: var(--stone);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 60ch;
+}
+.footer-form-head a {
+  color: var(--bone);
+  border-bottom: 1px solid var(--dark-line);
+}
+.quote-form {
+  margin-top: 40px;
+  max-width: 780px;
+}
+.quote-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 24px;
+}
+.quote-field--wide {
+  grid-column: 1 / -1;
+}
+.quote-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.quote-field label {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--stone);
+}
+.quote-field input,
+.quote-field select,
+.quote-field textarea {
+  background: var(--umber-2);
+  border: 1px solid var(--dark-line);
+  border-radius: 6px;
+  padding: 13px 14px;
+  color: var(--bone);
+  font: inherit;
+  font-size: 15px;
+}
+.quote-field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+.quote-field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--stone) 50%),
+    linear-gradient(135deg, var(--stone) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) center,
+    calc(100% - 17px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.quote-field input[type="file"] {
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--stone);
+}
+.quote-field input:focus-visible,
+.quote-field select:focus-visible,
+.quote-field textarea:focus-visible {
+  outline: 2px solid var(--salvia);
+  outline-offset: 1px;
+}
+.quote-form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.quote-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 26px;
+  font-size: 13px;
+  color: var(--stone);
+  line-height: 1.5;
+  max-width: 60ch;
+}
+.quote-consent input {
+  margin-top: 3px;
+  flex: none;
+}
+.quote-consent a {
+  color: var(--bone);
+  border-bottom: 1px solid var(--dark-line);
+}
+.quote-form-actions {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.dk-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.form-status {
+  font-size: 13px;
+  margin: 0;
+}
+.form-status--ok {
+  color: var(--salvia);
+}
+.form-status--error {
+  color: #d98a6b;
+}
+@media (max-width: 700px) {
+  .quote-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Home page (index.html): hero parallax, manifesto and "¿Qué necesitas?"
    selector reuse the layout rules in styles.css — these are color-only
    overrides for the dark background. */

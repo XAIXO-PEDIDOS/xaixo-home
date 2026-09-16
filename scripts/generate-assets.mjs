@@ -6,7 +6,7 @@
 // from the @fontsource-variable/manrope npm package — see assets/manrope-OFL.txt
 // for its license. To update it: `npm pack @fontsource-variable/manrope`,
 // extract, and copy files/manrope-latin-wght-normal.woff2 over it.
-import { access, readdir } from "node:fs/promises";
+import { access, mkdir, readdir, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 
 async function fileExists(path) {
@@ -89,6 +89,75 @@ await sharp("assets/logo-source.png")
   .png({ palette: true, compressionLevel: 9 })
   .toFile("assets/logo.png");
 console.log("assets/logo.png");
+
+// Open Graph / Twitter card images: a 1200x630 crop of each hero photo (the
+// standard OG size). `attention` picks the most "interesting" region of the
+// frame automatically rather than hardcoding a crop per photo. JPEG, not
+// WebP, since some link-preview crawlers still don't render WebP previews.
+// These live under public/, not assets/: they're referenced by an absolute
+// URL inside a <meta content> value in scripts/generate-pages.mjs, which
+// Vite's HTML plugin never rewrites (unlike <img src> or <link href>), so a
+// build wouldn't otherwise copy or fingerprint them.
+await mkdir("public/og", { recursive: true });
+const ogSources = ["home-hero", "azulejos-hero", "cocinas-hero", "banos-hero", "ventanas-hero"];
+for (const name of ogSources) {
+  const out = `public/og/${name}.jpg`;
+  await sharp(`assets/${name}.webp`)
+    .resize({ width: 1200, height: 630, fit: "cover", position: sharp.strategy.attention })
+    .jpeg({ quality: 82 })
+    .toFile(out);
+  console.log(out);
+}
+
+// Favicon + app icons: assets/logo.png is a white mark on a transparent
+// background, so it needs the brand's dark background composited behind it
+// to be visible as an icon. The logo is a wide wordmark, not a square mark,
+// so it's scaled to fit within the icon with some padding rather than
+// filling it edge to edge.
+const ICON_BG = { r: 0x1c, g: 0x18, b: 0x15, alpha: 1 };
+async function iconBuffer(size) {
+  const mark = await sharp("assets/logo.png")
+    .resize({ width: Math.round(size * 0.72) })
+    .toBuffer();
+  return sharp({ create: { width: size, height: size, channels: 4, background: ICON_BG } })
+    .composite([{ input: mark, gravity: "centre" }])
+    .png()
+    .toBuffer();
+}
+
+// Minimal single-file ICO container: a directory of PNG-compressed frames.
+// Supported by every browser since IE11/Vista, so no need for a bitmap
+// encoder or an extra dependency just for the classic favicon.ico.
+function buildIco(frames) {
+  const dirSize = 6 + 16 * frames.length;
+  const dir = Buffer.alloc(dirSize);
+  dir.writeUInt16LE(0, 0);
+  dir.writeUInt16LE(1, 2);
+  dir.writeUInt16LE(frames.length, 4);
+  let offset = dirSize;
+  frames.forEach(({ size, buffer }, i) => {
+    const entry = dir.subarray(6 + i * 16, 6 + i * 16 + 16);
+    entry.writeUInt8(size >= 256 ? 0 : size, 0);
+    entry.writeUInt8(size >= 256 ? 0 : size, 1);
+    entry.writeUInt16LE(1, 4); // color planes
+    entry.writeUInt16LE(32, 6); // bits per pixel
+    entry.writeUInt32LE(buffer.length, 8);
+    entry.writeUInt32LE(offset, 12);
+    offset += buffer.length;
+  });
+  return Buffer.concat([dir, ...frames.map((f) => f.buffer)]);
+}
+
+const icoSizes = [16, 32, 48];
+const icoFrames = await Promise.all(icoSizes.map(async (size) => ({ size, buffer: await iconBuffer(size) })));
+await mkdir("public", { recursive: true });
+await writeFile("public/favicon.ico", buildIco(icoFrames));
+console.log("public/favicon.ico");
+
+await sharp(await iconBuffer(180)).toFile("assets/apple-touch-icon.png");
+console.log("assets/apple-touch-icon.png");
+await sharp(await iconBuffer(512)).toFile("assets/icon-512.png");
+console.log("assets/icon-512.png");
 
 // Brand logos (assets/logos/, see the README there): each raw file the user
 // drops in — svg/png/jpg/webp, any colors, with or without a transparent

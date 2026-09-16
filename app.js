@@ -4,6 +4,11 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const fine = matchMedia('(hover: hover) and (pointer: fine)');
 const clamp = (n, a=0, b=1) => Math.min(b, Math.max(a,n));
 
+// TODO: create a Web3Forms access key at https://web3forms.com pointing at
+// javierxaixo@gmail.com, and paste it here. Submissions from the quote form
+// (shared footer, every page) go nowhere until this is set.
+const WEB3FORMS_ACCESS_KEY = 'TODO_WEB3FORMS_ACCESS_KEY';
+
 // --- Homepage hero parallax (only present on index.html) ---
 const stage = document.querySelector('.hero-stage');
 if (stage) {
@@ -96,6 +101,50 @@ document.querySelectorAll('a.wordmark[href="/"]').forEach(link=>{
   scrollTo({top:0,behavior:reduced.matches?'auto':'smooth'});
  });
 });
+
+// --- Quote/contact form (shared footer, present on every page) ---
+const quoteForm = document.querySelector('#quote-form');
+if (quoteForm) {
+ const MAX_FILE_BYTES = 10 * 1024 * 1024;
+ const fileInput = quoteForm.querySelector('#quote-file');
+ const statusEl = quoteForm.querySelector('#quote-form-status');
+ const submitBtn = quoteForm.querySelector('button[type="submit"]');
+ const submitLabel = submitBtn.textContent;
+
+ fileInput.addEventListener('change', () => {
+  const file = fileInput.files[0];
+  fileInput.setCustomValidity(file && file.size > MAX_FILE_BYTES ? 'El archivo pesa más de 10 MB.' : '');
+ });
+
+ quoteForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!quoteForm.reportValidity()) return;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando…';
+  statusEl.textContent = '';
+  statusEl.className = 'form-status';
+  try {
+   const formData = new FormData(quoteForm);
+   formData.set('access_key', WEB3FORMS_ACCESS_KEY);
+   const res = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: formData,
+    headers: { Accept: 'application/json' },
+   });
+   const data = await res.json();
+   if (!data.success) throw new Error(data.message || 'Envío rechazado');
+   statusEl.textContent = 'Gracias, hemos recibido tu solicitud. Te contactaremos en breve.';
+   statusEl.className = 'form-status form-status--ok';
+   quoteForm.reset();
+   submitBtn.textContent = 'Enviado ✓';
+  } catch (err) {
+   statusEl.textContent = 'No se pudo enviar el formulario. Prueba de nuevo o escríbenos por WhatsApp.';
+   statusEl.className = 'form-status form-status--error';
+   submitBtn.disabled = false;
+   submitBtn.textContent = submitLabel;
+  }
+ });
+}
 
 // --- Mobile menu dialog (shared header, present on every page) ---
 const menu=document.querySelector('#menu');

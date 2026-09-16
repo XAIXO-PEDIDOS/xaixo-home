@@ -46,10 +46,13 @@ npm run preview
 xaixo-home-codigo-completo/
 ├── assets/
 │   ├── home-hero.webp (+ variantes -800/-1200/-1600.webp)
-│   ├── logo.png (+ logo-source.png)
+│   ├── logo.png (+ logo-source.png), apple-touch-icon.png, icon-512.png
 │   ├── logos/ (logos de marca, ver el README de esa carpeta)
 │   ├── manrope-variable.woff2
 │   └── manrope-OFL.txt
+├── public/
+│   ├── favicon.ico
+│   └── og/ (imágenes Open Graph, una por página con hero propio)
 ├── scripts/
 │   ├── generate-assets.mjs
 │   └── generate-pages.mjs
@@ -81,15 +84,29 @@ xaixo-home-codigo-completo/
 - `dark.css`: el tema oscuro de todo el sitio (clase `body.dark-page`) — los componentes de la plantilla editorial de las páginas de categoría (hero a pantalla completa, bloques de producto con foto sticky, cinta de marcas, proceso, simulador y CTA con foto de fondo) y los colores oscuros de la home, el menú móvil, el pie y las páginas legales. Se carga junto a `styles.css`, que sigue aportando la cabecera, el menú, el pie y el botón de WhatsApp compartidos.
 - `app.js`: animación del hero ligada al scroll, selector de ambientes, parallax genérico (`data-px`, usado por la plantilla oscura), swipe táctil, menú fullscreen, ampliación de proyectos, reveals y cursor contextual (`data-cursor`). Se carga como módulo de Vite; las funciones específicas de cada página se autodetectan y no se ejecutan en el resto.
 - `build.mjs`: genera la versión de producción con Vite.
-- `scripts/generate-assets.mjs`: regenera las variantes responsive de las imágenes (`npm run generate:assets`); convierte automáticamente a WebP cualquier fuente `.png`/`.jpg` que aún no tenga su `.webp` **comprobando el contenido real del archivo con `sharp`, no la extensión** (alguna fuente ha llegado con extensión `.webp` conteniendo en realidad un PNG). No toca la fuente: `assets/manrope-variable.woff2` es la fuente variable (subset latin, pesos 200-800) copiada tal cual del paquete `@fontsource-variable/manrope` — ver el comentario al inicio del script para cómo actualizarla. También procesa `assets/logos/`: cualquier logo de marca que se deje ahí (en sus colores y fondo originales) se convierte en un recorte blanco sobre transparente (`<marca>-mono.png`), leyendo los píxeles reales en vez de asumir un filtro CSS — ver `assets/logos/README.md`.
-- `scripts/generate-pages.mjs`: regenera las 4 páginas de categoría (array `DARK_PAGES`) y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script. Cada entrada de `DARK_PAGES` puede marcar una imagen con `aiImage: true` para que el HTML generado incluya el TODO de "imagen generada por IA". Las marcas de la cinta y de las etiquetas de cada bloque de producto (`brands`/`brandsTicker`) se resuelven con el logo de `assets/logos/` si existe, o como texto si no.
-- `assets/`: fotografías optimizadas (con variantes responsive para `srcset`), logo, logos de marca (`logos/`) y la fuente variable Manrope (`manrope-variable.woff2`, pesos 200-800, con su licencia OFL en `manrope-OFL.txt`) usados por la web.
+- `scripts/generate-assets.mjs`: regenera las variantes responsive de las imágenes (`npm run generate:assets`); convierte automáticamente a WebP cualquier fuente `.png`/`.jpg` que aún no tenga su `.webp` **comprobando el contenido real del archivo con `sharp`, no la extensión** (alguna fuente ha llegado con extensión `.webp` conteniendo en realidad un PNG o, en el caso de `azulejos-hero`, un PNG de 3840×2160 sin comprimir — si un hero pesa varios MB tras regenerar, es probable que la fuente haya llegado así). No toca la fuente: `assets/manrope-variable.woff2` es la fuente variable (subset latin, pesos 200-800) copiada tal cual del paquete `@fontsource-variable/manrope` — ver el comentario al inicio del script para cómo actualizarla. También procesa `assets/logos/`: cualquier logo de marca que se deje ahí (en sus colores y fondo originales) se convierte en un recorte blanco sobre transparente (`<marca>-mono.png`), leyendo los píxeles reales en vez de asumir un filtro CSS — ver `assets/logos/README.md`. Y genera `public/favicon.ico`, `assets/apple-touch-icon.png` y `assets/icon-512.png` a partir de `assets/logo.png` sobre fondo `#1c1815`, más un recorte 1200×630 de cada hero en `public/og/<hero>.jpg` para Open Graph/Twitter card.
+- `scripts/generate-pages.mjs`: regenera las 4 páginas de categoría (array `DARK_PAGES`) y las 3 páginas legales (`npm run generate:pages`) a partir del header, el pie de página, el botón de WhatsApp y el menú móvil de `index.html` (delimitados por los comentarios `SHARED-*`, fuente única de verdad) y de los textos definidos en el propio script. Cada entrada de `DARK_PAGES` puede marcar una imagen con `aiImage: true` para que el HTML generado incluya el TODO de "imagen generada por IA". Las marcas de la cinta y de las etiquetas de cada bloque de producto (`brands`/`brandsTicker`) se resuelven con el logo de `assets/logos/` si existe, o como texto si no. También genera el bloque de `<meta>` Open Graph/Twitter, `canonical` y los `<link>` de favicon de cada página (constante `SITE_URL`, hoy `https://xaixohome.com`: cámbiala si el dominio final es otro y vuelve a generar).
+- `assets/`: fotografías optimizadas (con variantes responsive para `srcset`), logo, iconos, logos de marca (`logos/`) y la fuente variable Manrope (`manrope-variable.woff2`, pesos 200-800, con su licencia OFL en `manrope-OFL.txt`) usados por la web.
+- `public/`: archivos que Vite copia tal cual a la raíz de `dist/` sin procesarlos — `favicon.ico` (referenciado como `/favicon.ico`, para el caso de que un navegador lo pida directamente sin mirar los `<link>`) y `og/` (las imágenes Open Graph, referenciadas por URL absoluta en un `<meta content>`, que Vite no reescribe como sí hace con `<img src>` o `<link href>`).
 
 ## Imágenes y derechos
 
 Todas las fotografías de `assets/` (`home-hero`, `banos-*`, `azulejos-*`, `cocinas-*`, `ventanas-*`) son imágenes generadas por IA (confirmado por metadatos XMP `photoshop:Credit="Made with Google AI"` / `DigitalSourceType="trainedAlgorithmicMedia"` en varias de ellas), usadas como referencia de estilo mientras no hay fotografía propia. Cada uso en el HTML lleva un comentario `<!-- TODO: imagen generada por IA... -->` salvo las 6 de `banos-*` de la tanda anterior a esta convención, que de momento no lo llevan pero probablemente son de la misma naturaleza.
 
 Antes de publicar esta web como página comercial definitiva, todas estas imágenes deben sustituirse por fotografías propias de Xaixo Home, imágenes de stock con licencia comercial o imágenes cuya autorización se haya obtenido.
+
+## Formulario de presupuesto
+
+En el pie de página (`id="contacto"`, compartido por las 8 páginas) hay un formulario — nombre, teléfono, email, qué necesita, mensaje y un adjunto opcional (plano o foto, máx. 10&nbsp;MB) — que envía por [Web3Forms](https://web3forms.com) sin backend propio. Para activarlo:
+
+1. Crea una cuenta gratuita en Web3Forms con `javierxaixo@gmail.com` y genera un *access key* (los envíos llegan a ese email).
+2. Pega la clave en la constante `WEB3FORMS_ACCESS_KEY` al principio de `app.js` (está marcada con `TODO`). No hace falta tocar el HTML ni volver a generar las páginas.
+
+Validación nativa del navegador (`required`, tipos de campo, tamaño del adjunto) más un honeypot oculto contra spam; estados de enviando/enviado/error con un `role="status"` para lectores de pantalla. El botón flotante de WhatsApp sigue disponible como alternativa, y el propio formulario enlaza a él.
+
+## SEO y redes sociales
+
+Cada página lleva ya `canonical`, favicon/iconos y las etiquetas Open Graph y Twitter Card correspondientes (ver `scripts/generate-pages.mjs`). Mientras el sitio siga en construcción, todas las páginas mantienen `<meta name="robots" content="noindex, nofollow">`: quítalo página por página cuando esté listo para que los buscadores la indexen, o esta preparación de SEO no tendrá efecto.
 
 ## Publicación fuera de ChatGPT
 

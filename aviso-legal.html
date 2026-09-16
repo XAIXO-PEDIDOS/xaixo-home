@@ -5,7 +5,23 @@
 <meta name="theme-color" content="#1c1815"><title>Aviso Legal | Xaixo Home</title>
 <meta name="description" content="Condiciones de uso y datos identificativos del titular del sitio web de Xaixo Home.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23262421'/%3E%3Cpath d='M17 15l30 34m0-34L17 49' stroke='%23eeeae3' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://xaixohome.com/aviso-legal.html">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" href="assets/icon-512.png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Xaixo Home">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Aviso Legal | Xaixo Home">
+<meta property="og:description" content="Condiciones de uso y datos identificativos del titular del sitio web de Xaixo Home.">
+<meta property="og:url" content="https://xaixohome.com/aviso-legal.html">
+<meta property="og:image" content="https://xaixohome.com/og/home-hero.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Aviso Legal | Xaixo Home">
+<meta name="twitter:description" content="Condiciones de uso y datos identificativos del titular del sitio web de Xaixo Home.">
+<meta name="twitter:image" content="https://xaixohome.com/og/home-hero.jpg">
 <link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="dark.css">
@@ -39,6 +55,58 @@
 </section>
 </main>
 <footer class="site-footer" id="contacto">
+<div class="footer-form section-pad">
+<div class="footer-form-head">
+<h2 class="reveal">Pide tu presupuesto</h2>
+<p class="reveal">Cuéntanos qué necesitas y te respondemos en menos de 24h laborables. ¿Prefieres hablar directamente? <a href="https://wa.me/34689248559?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>.</p>
+</div>
+<form id="quote-form" class="quote-form" novalidate>
+<input type="checkbox" name="botcheck" class="quote-form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+<input type="hidden" name="subject" value="Nueva solicitud de presupuesto — Xaixo Home">
+<input type="hidden" name="from_name" value="Formulario web Xaixo Home">
+<div class="quote-form-grid">
+<div class="quote-field">
+<label for="quote-name">Nombre</label>
+<input id="quote-name" name="name" type="text" autocomplete="name" required>
+</div>
+<div class="quote-field">
+<label for="quote-phone">Teléfono</label>
+<input id="quote-phone" name="phone" type="tel" autocomplete="tel" required>
+</div>
+<div class="quote-field">
+<label for="quote-email">Email</label>
+<input id="quote-email" name="email" type="email" autocomplete="email" required>
+</div>
+<div class="quote-field">
+<label for="quote-need">Qué necesitas</label>
+<select id="quote-need" name="need" required>
+<option value="" disabled selected>Elige una opción</option>
+<option value="Azulejos">Azulejos</option>
+<option value="Cocina">Cocina</option>
+<option value="Baño">Baño</option>
+<option value="Ventanas">Ventanas</option>
+<option value="Varias cosas">Varias cosas</option>
+</select>
+</div>
+<div class="quote-field quote-field--wide">
+<label for="quote-message">Mensaje</label>
+<textarea id="quote-message" name="message" rows="4"></textarea>
+</div>
+<div class="quote-field quote-field--wide">
+<label for="quote-file">Adjunta un plano o una foto (opcional, máx. 10&nbsp;MB)</label>
+<input id="quote-file" name="attachment" type="file" accept="image/*,.pdf">
+</div>
+</div>
+<label class="quote-consent">
+<input type="checkbox" name="consent" required>
+<span>He leído y acepto la <a href="politica-privacidad.html">política de privacidad</a>.</span>
+</label>
+<div class="quote-form-actions">
+<button type="submit" class="dk-btn dk-btn--pri">Enviar solicitud</button>
+<p id="quote-form-status" class="form-status" role="status" aria-live="polite"></p>
+</div>
+</form>
+</div>
 <div class="footer-top section-pad">
 <div class="footer-brand">
 <a class="wordmark" href="index.html" aria-label="Xaixo Home, inicio"><img class="logo" src="assets/logo.png" alt="Xaixo Home" width="560" height="320"></a>
