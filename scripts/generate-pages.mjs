@@ -73,10 +73,16 @@ function slugifyBrand(name) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
-function brandMarkup(name) {
+// A brand is either a plain name, or { name, scale } when its logo reads
+// smaller than its neighbors at the shared height (e.g. a squarer mark) and
+// needs a manual bump — dark.css turns --logo-scale into a CSS transform.
+function brandMarkup(brand) {
+  const { name, scale } = typeof brand === "string" ? { name: brand, scale: undefined } : brand;
   const logo = `assets/logos/${slugifyBrand(name)}-mono.png`;
   if (!existsSync(logo)) return `<span>${name}</span>`;
-  return `<span class="dk-brand-logo"><img src="${logo}" alt="${name}" loading="lazy"></span>`;
+  const style = scale ? ` style="--logo-scale: ${scale}"` : "";
+  const dataScale = scale ? ` data-scale="${scale}"` : "";
+  return `<span class="dk-brand-logo"${dataScale}${style}><img src="${logo}" alt="${name}" loading="lazy"></span>`;
 }
 
 // width/height per source photo, from assets/*.webp real dimensions

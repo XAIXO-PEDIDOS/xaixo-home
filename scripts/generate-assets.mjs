@@ -93,11 +93,14 @@ console.log("assets/logo.png");
 // Brand logos (assets/logos/, see the README there): each raw file the user
 // drops in — svg/png/jpg/webp, any colors, with or without a transparent
 // background — is turned into assets/logos/<slug>-mono.png, a flat white
-// cutout on a transparent background. That's what dark.css's screen-reader-
-// free grayscale/invert trick can't reliably do by itself: a real logo is
-// rarely a clean black-mark-on-white bitmap, so this reads the actual
-// pixels instead of guessing from CSS. scripts/generate-pages.mjs looks for
-// this exact "-mono.png" file per brand.
+// cutout on a transparent background, cropped to its real content box (no
+// transparent margins) and normalized to the same height. That's what
+// dark.css's grayscale/invert trick alone can't do reliably: a real logo is
+// rarely a clean black-mark-on-white bitmap with no padding baked in, so
+// this reads the actual pixels instead of guessing from CSS.
+// scripts/generate-pages.mjs looks for this exact "-mono.png" file per
+// brand; dark.css displays it at half this height (2x export, for retina).
+const LOGO_HEIGHT = 80;
 const logosDir = "assets/logos";
 let logoFiles;
 try {
@@ -143,6 +146,25 @@ for (const file of logoFiles) {
     monoPixels[oo] = monoPixels[oo + 1] = monoPixels[oo + 2] = 255;
     monoPixels[oo + 3] = alpha;
   }
-  await sharp(monoPixels, { raw: { width, height, channels: 4 } }).png().toFile(out);
+
+  // Crop to the real content box (drop transparent margins baked into the
+  // source canvas) so every logo fills its own bounding box the same way,
+  // then normalize to a shared height — otherwise a logo exported on a
+  // generously padded canvas would end up tiny next to a tightly cropped
+  // one even though the marks themselves are a similar size.
+  let minX = width, minY = height, maxX = -1, maxY = -1;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (monoPixels[(y * width + x) * 4 + 3] > 10) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+  let pipeline = sharp(monoPixels, { raw: { width, height, channels: 4 } });
+  if (maxX >= 0) pipeline = pipeline.extract({ left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1 });
+  await pipeline.resize({ height: LOGO_HEIGHT }).png().toFile(out);
   console.log(out);
 }

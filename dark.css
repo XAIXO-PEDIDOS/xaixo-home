@@ -182,6 +182,7 @@ body.dark-page {
 .dk-brand-logo img {
   display: inline-block;
   opacity: 0.8;
+  transform: scale(var(--logo-scale, 1));
 }
 .dk-brands .dk-brand-logo img {
   height: 14px;
@@ -234,9 +235,16 @@ body.dark-page {
   padding-right: 64px;
   animation: dk-marquee 34s linear infinite;
 }
+.dk-marcas .dk-brand-logo {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
 .dk-marcas .dk-brand-logo img {
-  height: 26px;
+  height: 40px;
   width: auto;
+  max-width: 160px;
+  object-fit: contain;
 }
 .dk-marcas .dk-row span::before {
   content: "";
