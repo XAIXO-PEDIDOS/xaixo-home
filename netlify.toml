@@ -1,0 +1,51 @@
+# Redirige la forma con .html a la URL limpia (la que usan canonical,
+# sitemap.xml y los enlaces internos) para evitar contenido duplicado.
+# force = true porque el archivo .html existe realmente en dist/ y, si no,
+# Netlify lo serviría en vez de aplicar la redirección.
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/azulejos.html"
+  to = "/azulejos"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cocinas.html"
+  to = "/cocinas"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/banos.html"
+  to = "/banos"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ventanas.html"
+  to = "/ventanas"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/aviso-legal.html"
+  to = "/aviso-legal"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/politica-privacidad.html"
+  to = "/politica-privacidad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cookies.html"
+  to = "/cookies"
+  status = 301
+  force = true
