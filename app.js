@@ -92,14 +92,18 @@ if (tabs.length) {
  scenePanel.addEventListener('pointercancel',()=>touchStart=null);
 }
 
-// --- Wordmark (logo): on the home page, smooth-scroll to top instead of
-// reloading "/"; on every other page it's a plain link to index.html. ---
-document.querySelectorAll('a.wordmark[href="/"]').forEach(link=>{
- link.addEventListener('click',e=>{
-  e.preventDefault();
-  scrollTo({top:0,behavior:reduced.matches?'auto':'smooth'});
+// --- Wordmark (logo): every page links to "/". On the home page,
+// smooth-scroll to top instead of reloading; on every other page it's a
+// plain link and navigates there. Keyed off the current path, not the
+// href, so it still works if the href value ever changes. ---
+if (location.pathname === '/' || location.pathname === '/index.html') {
+ document.querySelectorAll('a.wordmark').forEach(link=>{
+  link.addEventListener('click',e=>{
+   e.preventDefault();
+   scrollTo({top:0,behavior:reduced.matches?'auto':'smooth'});
+  });
  });
-});
+}
 
 // --- Quote wizard (shared footer, present on every page) ---
 // One-question-per-screen flow: cards/pills auto-advance on click, the

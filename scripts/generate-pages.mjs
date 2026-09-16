@@ -39,16 +39,6 @@ const WHATSAPP_HTML = extractBetween(
   "<!-- SHARED-WHATSAPP:END -->",
 );
 
-// The wordmark links to "/" in index.html's own copy of these blocks (home,
-// scrolls to top instead of reloading — see app.js); every other generated
-// page needs it pointing at "index.html" instead.
-function forOtherPages(html) {
-  return html.replaceAll('class="wordmark" href="/"', 'class="wordmark" href="index.html"');
-}
-const HEADER_HTML_OTHER = forOtherPages(HEADER_HTML);
-const MENU_HTML_OTHER = forOtherPages(MENU_HTML);
-const FOOTER_HTML_OTHER = forOtherPages(FOOTER_HTML);
-
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Gran+Via+Castell+de+Bair%C3%A9n+20%2C+Gandia";
 const WHATSAPP_URL = "https://wa.me/34689248559?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto";
 const ADDRESS_LINE = "Gran Via Castell de Bairén, 20 · Gandia";
@@ -539,7 +529,7 @@ ${darkHeroPreloadMarkup(page.hero.image)}
 </head>
 <body class="dark-page">
 <a class="skip" href="#intro">Saltar al contenido</a>
-${HEADER_HTML_OTHER}
+${HEADER_HTML}
 <main>
 <section class="dk-hero" id="inicio" aria-label="${page.hero.title}">
 ${heroImageNote}<div class="dk-ph" data-px="0.18">${heroImage}</div>
@@ -565,8 +555,8 @@ ${stepsHtml}
 </section>
 ${simulatorSection}${darkCtaMarkup(page)}
 </main>
-${FOOTER_HTML_OTHER}
-${MENU_HTML_OTHER}
+${FOOTER_HTML}
+${MENU_HTML}
 <div class="context-cursor" aria-hidden="true">VER</div>
 ${WHATSAPP_HTML}
 </body>
@@ -640,15 +630,15 @@ ${metaMarkup({ title: page.title, description: page.description, path: `/${page.
 </head>
 <body class="dark-page">
 <a class="skip" href="#legal-content">Saltar al contenido</a>
-${HEADER_HTML_OTHER}
+${HEADER_HTML}
 <main>
 <section class="legal-page section-pad" id="legal-content">
 <h1 class="reveal">${page.heading}</h1>
 ${page.bodyHtml}
 </section>
 </main>
-${FOOTER_HTML_OTHER}
-${MENU_HTML_OTHER}
+${FOOTER_HTML}
+${MENU_HTML}
 ${WHATSAPP_HTML}
 </body>
 </html>
