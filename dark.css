@@ -257,6 +257,12 @@ body.dark-page {
   grid-template-columns: 1fr 2fr;
   gap: 40px;
 }
+/* When there's no brand ticker (no real brands yet — see darkBrandsTickerMarkup
+   in scripts/generate-pages.mjs), .dk-proc sits right after .dk-products and
+   otherwise loses the divider line the ticker would have provided. */
+.dk-products + .dk-proc {
+  border-top: 1px solid var(--dark-line);
+}
 .dk-proc h3 {
   font-weight: 300;
   font-size: clamp(28px, 3vw, 44px);
@@ -590,8 +596,6 @@ body.dark-page {
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--dark-line);
-  background-size: cover;
-  background-position: center;
   color: #fff;
   text-align: left;
   padding: 0;
@@ -599,10 +603,18 @@ body.dark-page {
     transform 0.3s var(--ease),
     border-color 0.3s;
 }
+.quote-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .quote-card::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(180deg, rgba(28, 24, 21, 0.15) 0%, rgba(28, 24, 21, 0.35) 55%, rgba(28, 24, 21, 0.88) 100%);
   transition: background 0.3s;
 }
@@ -610,7 +622,7 @@ body.dark-page {
   position: absolute;
   left: 18px;
   bottom: 16px;
-  z-index: 1;
+  z-index: 2;
   font-size: clamp(15px, 1.6vw, 19px);
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -696,7 +708,8 @@ body.dark-page {
   opacity: 0.7;
 }
 .quote-textarea:focus-visible {
-  outline: none;
+  outline: 2px solid var(--salvia);
+  outline-offset: 6px;
   border-bottom-color: var(--bone);
 }
 .quote-whatsapp-hint {
@@ -749,7 +762,8 @@ body.dark-page {
     color 9999s ease-in-out 0s;
 }
 .quote-line-input:focus-visible {
-  outline: none;
+  outline: 2px solid var(--salvia);
+  outline-offset: 3px;
   border-bottom-color: var(--bone);
 }
 .quote-line-field label {

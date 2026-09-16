@@ -150,9 +150,9 @@ const IMAGE_DIMS = {
 const DARK_PAGES = [
   {
     slug: "azulejos",
-    title: "Azulejos y porcelánico en Gandía | Xaixo Home",
+    title: "Azulejos y porcelánico en Gandia | Xaixo Home",
     description:
-      "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandía. Los ves y comparas antes de comprar.",
+      "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandia. Los ves y comparas antes de comprar.",
     themeColor: "#1c1815",
     hero: {
       image: "azulejos-hero",
@@ -209,7 +209,7 @@ const DARK_PAGES = [
     ],
     cta: {
       image: "banos-showroom",
-      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      alt: "Fachada del showroom de Xaixo Home en Gandia",
       position: "center 62%",
       heading: "Ven a verlo<br>con tus ojos.",
       primary: { label: "Visita el showroom", href: MAPS_URL, external: true },
@@ -218,9 +218,9 @@ const DARK_PAGES = [
   },
   {
     slug: "cocinas",
-    title: "Cocinas a medida en Gandía | Xaixo Home",
+    title: "Cocinas a medida en Gandia | Xaixo Home",
     description:
-      "Cocinas diseñadas en 3D e instaladas por nuestro propio equipo en Gandía y la Safor. Mobiliario, encimeras y electrodomésticos.",
+      "Cocinas diseñadas en 3D e instaladas por nuestro propio equipo en Gandia y la Safor. Mobiliario, encimeras y electrodomésticos.",
     themeColor: "#1c1815",
     hero: {
       image: "cocinas-hero",
@@ -278,7 +278,7 @@ const DARK_PAGES = [
     },
     cta: {
       image: "banos-showroom",
-      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      alt: "Fachada del showroom de Xaixo Home en Gandia",
       position: "center 62%",
       heading: "Hablemos de<br>tu cocina.",
       primary: { label: "Pide tu presupuesto", href: "#contacto", external: false },
@@ -287,9 +287,9 @@ const DARK_PAGES = [
   },
   {
     slug: "ventanas",
-    title: "Ventanas de PVC y aluminio en Gandía | Xaixo Home",
+    title: "Ventanas de PVC y aluminio en Gandia | Xaixo Home",
     description:
-      "Ventanas de PVC y aluminio medidas e instaladas por nuestro equipo en Gandía. Más aislamiento, más silencio, menos factura.",
+      "Ventanas de PVC y aluminio medidas e instaladas por nuestro equipo en Gandia. Más aislamiento, más silencio, menos factura.",
     themeColor: "#1c1815",
     hero: {
       image: "ventanas-hero",
@@ -344,7 +344,7 @@ const DARK_PAGES = [
     ],
     cta: {
       image: "banos-showroom",
-      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      alt: "Fachada del showroom de Xaixo Home en Gandia",
       position: "center 62%",
       heading: "Hablemos de<br>tus ventanas.",
       primary: { label: "Pide tu presupuesto", href: "#contacto", external: false },
@@ -353,9 +353,9 @@ const DARK_PAGES = [
   },
   {
     slug: "banos",
-    title: "Baños a medida en Gandía | Xaixo Home",
+    title: "Baños a medida en Gandia | Xaixo Home",
     description:
-      "Platos, mamparas, muebles, grifería y cerámica de baño en el showroom de Xaixo Home en Gandía. Te asesoramos y te lo servimos listo para tu instalador.",
+      "Platos, mamparas, muebles, grifería y cerámica de baño en el showroom de Xaixo Home en Gandia. Te asesoramos y te lo servimos listo para tu instalador.",
     themeColor: "#1c1815",
     hero: {
       image: "banos-hero",
@@ -395,7 +395,6 @@ const DARK_PAGES = [
         imageAlt: "Revestimiento cerámico tipo travertino en ducha con hornacina para toallas",
       },
     ],
-    brandsTicker: ["Marca uno", "Marca dos", "Marca tres", "Marca cuatro", "Marca cinco", "Marca seis"],
     steps: [
       { title: "Nos cuentas tu baño", desc: "Por WhatsApp o en el showroom. Con medidas o un plano, mejor; sin ellos, también." },
       { title: "Elegimos juntos el material", desc: "Ves y tocas piezas reales. Sales con un presupuesto cerrado, sin sorpresas." },
@@ -403,7 +402,7 @@ const DARK_PAGES = [
     ],
     cta: {
       image: "banos-showroom",
-      alt: "Fachada del showroom de Xaixo Home en Gandía",
+      alt: "Fachada del showroom de Xaixo Home en Gandia",
       position: "center 62%",
       heading: "Ven a verlo<br>con tus ojos.",
       primary: { label: "Visita el showroom", href: MAPS_URL, external: true },
@@ -455,6 +454,7 @@ ${imageNote}<div class="dk-ph" data-px="0.12">${image}</div>
 }
 
 function darkBrandsTickerMarkup(brands) {
+  if (!brands?.length) return "";
   const spans = brands.map(brandMarkup).join("");
   return `<div class="dk-marcas" aria-label="Marcas con las que trabajamos">
 <div class="dk-row">${spans}</div><div class="dk-row" aria-hidden="true">${spans}</div>
@@ -467,11 +467,15 @@ function darkStepsMarkup(steps) {
 
 function darkSimulatorMarkup(simulator) {
   if (!simulator) return "";
-  return `<section class="dk-sim" id="simulador">
+  // TODO: simulador interactivo de presupuesto, pendiente de desarrollar.
+  // Oculto (comentado) en vez de mostrar la sección con el texto de
+  // "muy pronto" hasta que exista de verdad — ver el placeholder debajo.
+  return `<!--
+<section class="dk-sim" id="simulador">
 <h3 class="reveal">${simulator.title}</h3>
-<!-- TODO: simulador interactivo de presupuesto (próxima iteración) -->
 <p class="reveal">Muy pronto podrás calcular aquí un presupuesto orientativo.</p>
 </section>
+-->
 `;
 }
 
