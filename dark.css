@@ -699,7 +699,8 @@ body.dark-page {
   padding-left: 34px;
 }
 
-/* Step 3: message + dropzone */
+/* Step 3: message + WhatsApp hint for attachments (Web3Forms' free plan
+   doesn't support file uploads at all, so there's no attachment field). */
 .quote-textarea {
   display: block;
   width: 100%;
@@ -726,59 +727,19 @@ body.dark-page {
   outline: none;
   border-bottom-color: var(--bone);
 }
-.quote-dropzone {
-  position: relative;
-  margin-top: 32px;
-  max-width: 780px;
-  border: 1px dashed var(--dark-line);
-  border-radius: 10px;
-  padding: 26px 22px;
-  cursor: pointer;
-  transition:
-    border-color 0.25s,
-    background 0.25s;
-}
-@media (hover: hover) and (pointer: fine) {
-  .quote-dropzone:hover {
-    border-color: var(--stone);
-  }
-}
-.quote-dropzone:focus-visible {
-  outline: 2px solid var(--salvia);
-  outline-offset: 3px;
-}
-.quote-dropzone.is-dragover {
-  border-color: var(--salvia);
-  background: rgba(138, 154, 142, 0.08);
-}
-.quote-dropzone-input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-.quote-dropzone-text {
+.quote-whatsapp-hint {
+  margin-top: 24px;
   font-size: 14px;
   color: var(--stone);
 }
-.quote-dropzone-text span {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-}
-.quote-file-name {
-  margin-top: 10px;
-  font-size: 13px;
+.quote-whatsapp-hint a {
   color: var(--bone);
+  border-bottom: 1px solid var(--dark-line);
 }
-.quote-file-name:empty {
-  display: none;
-}
-.quote-file-name--error {
-  color: #d98a6b;
-}
-.quote-file-name--warning {
-  color: var(--salvia);
+@media (hover: hover) and (pointer: fine) {
+  .quote-whatsapp-hint a:hover {
+    border-bottom-color: var(--bone);
+  }
 }
 
 /* Step 4: floating-label line fields */

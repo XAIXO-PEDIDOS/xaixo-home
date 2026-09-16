@@ -197,66 +197,13 @@ if (wizard) {
   });
  });
 
- // Step 3: message + drag-and-drop attachment
+ // Step 3: message (attachments aren't possible — Web3Forms' free plan
+ // doesn't support file uploads at all; see the WhatsApp hint in the
+ // markup instead)
  const textarea = steps[2].querySelector('#quote-message');
  textarea.addEventListener('input', () => {
   textarea.style.height = 'auto';
   textarea.style.height = `${textarea.scrollHeight}px`;
- });
- const MAX_FILE_BYTES = 10 * 1024 * 1024;
- // Web3Forms' free plan caps attachments well below the 10MB we validate
- // for here — this is a soft warning, not a hard block, since the exact
- // number depends on the account's plan (check the Web3Forms dashboard).
- const WARN_FILE_BYTES = 5 * 1024 * 1024;
- const dropzone = steps[2].querySelector('#quote-dropzone');
- const fileInput = steps[2].querySelector('#quote-file');
- const fileNameEl = steps[2].querySelector('#quote-file-name');
- function setFile(file) {
-  fileNameEl.classList.remove('quote-file-name--error', 'quote-file-name--warning');
-  if (!file) {
-   fileNameEl.textContent = '';
-   return;
-  }
-  if (file.size > MAX_FILE_BYTES) {
-   fileInput.value = '';
-   fileNameEl.textContent = `${file.name} pesa más de 10 MB — elige un archivo más ligero.`;
-   fileNameEl.classList.add('quote-file-name--error');
-   return;
-  }
-  if (file.size > WARN_FILE_BYTES) {
-   fileNameEl.textContent = `${file.name} — es un archivo pesado; si el envío falla, prueba sin adjunto o con uno más ligero.`;
-   fileNameEl.classList.add('quote-file-name--warning');
-   return;
-  }
-  fileNameEl.textContent = file.name;
- }
- dropzone.addEventListener('click', () => fileInput.click());
- dropzone.addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === ' ') {
-   e.preventDefault();
-   fileInput.click();
-  }
- });
- fileInput.addEventListener('change', () => setFile(fileInput.files[0]));
- ['dragenter', 'dragover'].forEach(evt =>
-  dropzone.addEventListener(evt, e => {
-   e.preventDefault();
-   dropzone.classList.add('is-dragover');
-  }),
- );
- ['dragleave', 'drop'].forEach(evt =>
-  dropzone.addEventListener(evt, e => {
-   e.preventDefault();
-   dropzone.classList.remove('is-dragover');
-  }),
- );
- dropzone.addEventListener('drop', e => {
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-  const dt = new DataTransfer();
-  dt.items.add(file);
-  fileInput.files = dt.files;
-  setFile(file);
  });
  steps[2].querySelector('.quote-next').addEventListener('click', () => {
   if (textarea.value.trim().length < 10) {
@@ -302,14 +249,12 @@ if (wizard) {
   submitBtn.classList.add('is-sending');
   submitBtn.textContent = 'Enviando…';
 
+  // No file field at all: Web3Forms' free plan doesn't support attachments
+  // (people with a plan/photo are pointed to WhatsApp instead — see step 3).
   const formData = new FormData(form);
   const summary = `Qué necesita: ${needValue.value || '—'}\nEn qué punto está: ${stageValue.value || '—'}\n\n${(formData.get('message') || '').toString().trim()}`;
   formData.set('message', summary);
   formData.set('access_key', WEB3FORMS_ACCESS_KEY);
-  // Web3Forms' multipart parser chokes on an empty file part — only send
-  // "attachment" when there's an actual file, never an empty <input>.
-  const attachedFile = fileInput.files[0];
-  if (!attachedFile) formData.delete('attachment');
 
   let res;
   try {
@@ -337,11 +282,7 @@ if (wizard) {
 
   if (!res.ok || !data?.success) {
    console.error('[quote-form] envío rechazado:', data ?? rawText);
-   if (attachedFile && attachedFile.size > WARN_FILE_BYTES) {
-    showError(steps[3], 'El envío falló y el adjunto pesa bastante — puede que supere el límite del plan de Web3Forms. Prueba de nuevo sin adjunto o escríbenos por WhatsApp.');
-   } else {
-    showError(steps[3], `El servidor rechazó el envío${data?.message ? ` (${data.message})` : ''}. Prueba de nuevo o escríbenos por WhatsApp.`);
-   }
+   showError(steps[3], `El servidor rechazó el envío${data?.message ? ` (${data.message})` : ''}. Prueba de nuevo o escríbenos por WhatsApp.`);
    resetSubmit();
    return;
   }
@@ -355,10 +296,10 @@ if (wizard) {
 
  backBtn.addEventListener('click', () => goTo(current - 1));
 
- // Enter advances — except inside the free-text message (needs newlines)
- // or the dropzone (Enter/Space there opens the file picker instead).
+ // Enter advances — except inside the free-text message, which needs
+ // newlines.
  form.addEventListener('keydown', e => {
-  if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA' || e.target.closest('.quote-dropzone')) return;
+  if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA') return;
   if (e.target.matches('.quote-card, .quote-pill')) return;
   e.preventDefault();
   if (current === 2) steps[2].querySelector('.quote-next').click();
@@ -377,8 +318,6 @@ if (wizard) {
   });
   needValue.value = '';
   stageValue.value = '';
-  fileNameEl.textContent = '';
-  fileNameEl.classList.remove('quote-file-name--error', 'quote-file-name--warning');
   textarea.style.height = 'auto';
   clearError(steps[3]);
   submitBtn.disabled = false;
