@@ -204,13 +204,17 @@ if (wizard) {
   textarea.style.height = `${textarea.scrollHeight}px`;
  });
  const MAX_FILE_BYTES = 10 * 1024 * 1024;
+ // Web3Forms' free plan caps attachments well below the 10MB we validate
+ // for here — this is a soft warning, not a hard block, since the exact
+ // number depends on the account's plan (check the Web3Forms dashboard).
+ const WARN_FILE_BYTES = 5 * 1024 * 1024;
  const dropzone = steps[2].querySelector('#quote-dropzone');
  const fileInput = steps[2].querySelector('#quote-file');
  const fileNameEl = steps[2].querySelector('#quote-file-name');
  function setFile(file) {
+  fileNameEl.classList.remove('quote-file-name--error', 'quote-file-name--warning');
   if (!file) {
    fileNameEl.textContent = '';
-   fileNameEl.classList.remove('quote-file-name--error');
    return;
   }
   if (file.size > MAX_FILE_BYTES) {
@@ -219,8 +223,12 @@ if (wizard) {
    fileNameEl.classList.add('quote-file-name--error');
    return;
   }
+  if (file.size > WARN_FILE_BYTES) {
+   fileNameEl.textContent = `${file.name} — es un archivo pesado; si el envío falla, prueba sin adjunto o con uno más ligero.`;
+   fileNameEl.classList.add('quote-file-name--warning');
+   return;
+  }
   fileNameEl.textContent = file.name;
-  fileNameEl.classList.remove('quote-file-name--error');
  }
  dropzone.addEventListener('click', () => fileInput.click());
  dropzone.addEventListener('keydown', e => {
@@ -276,6 +284,12 @@ if (wizard) {
   return null;
  }
 
+ function resetSubmit() {
+  submitBtn.disabled = false;
+  submitBtn.classList.remove('is-sending');
+  submitBtn.textContent = submitLabel;
+ }
+
  form.addEventListener('submit', async e => {
   e.preventDefault();
   const err = validateStep4();
@@ -287,29 +301,56 @@ if (wizard) {
   submitBtn.disabled = true;
   submitBtn.classList.add('is-sending');
   submitBtn.textContent = 'Enviando…';
+
+  const formData = new FormData(form);
+  const summary = `Qué necesita: ${needValue.value || '—'}\nEn qué punto está: ${stageValue.value || '—'}\n\n${(formData.get('message') || '').toString().trim()}`;
+  formData.set('message', summary);
+  formData.set('access_key', WEB3FORMS_ACCESS_KEY);
+  // Web3Forms' multipart parser chokes on an empty file part — only send
+  // "attachment" when there's an actual file, never an empty <input>.
+  const attachedFile = fileInput.files[0];
+  if (!attachedFile) formData.delete('attachment');
+
+  let res;
   try {
-   const formData = new FormData(form);
-   const summary = `Qué necesita: ${needValue.value || '—'}\nEn qué punto está: ${stageValue.value || '—'}\n\n${(formData.get('message') || '').toString().trim()}`;
-   formData.set('message', summary);
-   formData.set('access_key', WEB3FORMS_ACCESS_KEY);
-   const res = await fetch('https://api.web3forms.com/submit', {
+   res = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     body: formData,
     headers: { Accept: 'application/json' },
    });
-   const data = await res.json();
-   if (!data.success) throw new Error(data.message || 'Envío rechazado');
-   wizard.querySelector('#quote-done-name').textContent = nameInput.value.trim().split(' ')[0] || '';
-   form.hidden = true;
-   doneScreen.hidden = false;
-   liveEl.textContent = 'Solicitud enviada';
-   doneScreen.querySelector('.quote-done-actions a, .quote-done-actions button')?.focus({ preventScroll: true });
-  } catch (err2) {
-   showError(steps[3], 'No se pudo enviar el formulario. Prueba de nuevo o escríbenos por WhatsApp.');
-   submitBtn.disabled = false;
-   submitBtn.classList.remove('is-sending');
-   submitBtn.textContent = submitLabel;
+  } catch (networkErr) {
+   console.error('[quote-form] fallo de red al enviar:', networkErr);
+   showError(steps[3], 'No se pudo conectar con el servidor (revisa tu conexión). Prueba de nuevo o escríbenos por WhatsApp.');
+   resetSubmit();
+   return;
   }
+
+  const rawText = await res.text();
+  let data = null;
+  try {
+   data = JSON.parse(rawText);
+  } catch {
+   /* Web3Forms always replies with JSON; a parse failure means something
+      else answered (proxy, redirect…) — rawText below covers it. */
+  }
+  console.log('[quote-form] Web3Forms respondió', res.status, rawText);
+
+  if (!res.ok || !data?.success) {
+   console.error('[quote-form] envío rechazado:', data ?? rawText);
+   if (attachedFile && attachedFile.size > WARN_FILE_BYTES) {
+    showError(steps[3], 'El envío falló y el adjunto pesa bastante — puede que supere el límite del plan de Web3Forms. Prueba de nuevo sin adjunto o escríbenos por WhatsApp.');
+   } else {
+    showError(steps[3], `El servidor rechazó el envío${data?.message ? ` (${data.message})` : ''}. Prueba de nuevo o escríbenos por WhatsApp.`);
+   }
+   resetSubmit();
+   return;
+  }
+
+  wizard.querySelector('#quote-done-name').textContent = nameInput.value.trim().split(' ')[0] || '';
+  form.hidden = true;
+  doneScreen.hidden = false;
+  liveEl.textContent = 'Solicitud enviada';
+  doneScreen.querySelector('.quote-done-actions a, .quote-done-actions button')?.focus({ preventScroll: true });
  });
 
  backBtn.addEventListener('click', () => goTo(current - 1));
@@ -337,7 +378,7 @@ if (wizard) {
   needValue.value = '';
   stageValue.value = '';
   fileNameEl.textContent = '';
-  fileNameEl.classList.remove('quote-file-name--error');
+  fileNameEl.classList.remove('quote-file-name--error', 'quote-file-name--warning');
   textarea.style.height = 'auto';
   clearError(steps[3]);
   submitBtn.disabled = false;

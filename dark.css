@@ -484,7 +484,7 @@ body.dark-page {
 }
 .quote-wizard {
   position: relative;
-  min-height: 100svh;
+  min-height: 90svh;
   display: flex;
   flex-direction: column;
 }
@@ -507,6 +507,9 @@ body.dark-page {
   gap: 20px;
   padding-top: 26px;
   padding-bottom: 6px;
+  max-width: 1100px;
+  margin-inline: auto;
+  width: 100%;
 }
 .quote-topbar-left {
   display: flex;
@@ -533,8 +536,10 @@ body.dark-page {
   }
 }
 .quote-kicker {
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  display: inline-block;
+  background: none;
+  font-size: 12px;
+  letter-spacing: 0.075em;
   color: var(--stone);
 }
 .quote-count {
@@ -555,9 +560,12 @@ body.dark-page {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 40px;
+  justify-content: flex-start;
+  padding-top: 24px;
   padding-bottom: 60px;
+  max-width: 1100px;
+  margin-inline: auto;
+  width: 100%;
 }
 .quote-step[hidden] {
   display: none;
@@ -769,6 +777,9 @@ body.dark-page {
 .quote-file-name--error {
   color: #d98a6b;
 }
+.quote-file-name--warning {
+  color: var(--salvia);
+}
 
 /* Step 4: floating-label line fields */
 .quote-line-field {
@@ -786,6 +797,23 @@ body.dark-page {
   font: inherit;
   font-size: 19px;
   padding: 10px 0 10px;
+}
+/* Chrome/Edge paint autofilled fields with their own light blue/yellow
+   background and dark text, ignoring `background`/`color` entirely — the
+   only override that works is a huge inset box-shadow the same color as
+   the field's own background, plus -webkit-text-fill-color for the text.
+   Covers every text input in the form (name/phone/email today). */
+#quote-form input:-webkit-autofill,
+#quote-form input:-webkit-autofill:hover,
+#quote-form input:-webkit-autofill:focus,
+#quote-form input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--umber) inset !important;
+  box-shadow: 0 0 0 1000px var(--umber) inset !important;
+  -webkit-text-fill-color: var(--bone) !important;
+  caret-color: var(--bone);
+  transition:
+    background-color 9999s ease-in-out 0s,
+    color 9999s ease-in-out 0s;
 }
 .quote-line-input:focus-visible {
   outline: none;
@@ -879,9 +907,12 @@ body.dark-page {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 40px;
+  justify-content: flex-start;
+  padding-top: 24px;
   padding-bottom: 60px;
+  max-width: 1100px;
+  margin-inline: auto;
+  width: 100%;
 }
 .quote-done h2 {
   font-weight: 300;
