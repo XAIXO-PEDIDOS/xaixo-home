@@ -126,57 +126,96 @@ Lunes a viernes, 7:00 a 19:00<br>
 </section>
 </main>
 <footer class="site-footer" id="contacto">
-<div class="footer-form section-pad">
-<div class="footer-form-head">
-<h2 class="reveal">Pide tu presupuesto</h2>
-<p class="reveal">Cuéntanos qué necesitas y te respondemos en menos de 24h laborables. ¿Prefieres hablar directamente? <a href="https://wa.me/34689248559?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>.</p>
+<div class="footer-form" id="presupuesto">
+<div class="quote-wizard" id="quote-wizard">
+<div class="quote-progress" aria-hidden="true"><div class="quote-progress-bar" id="quote-progress-bar"></div></div>
+<div class="quote-topbar section-pad">
+<div class="quote-topbar-left">
+<button type="button" class="quote-back" id="quote-back" hidden><span aria-hidden="true">←</span> Atrás</button>
+<span class="quote-kicker">PIDE TU PRESUPUESTO</span>
 </div>
+<div class="quote-count" aria-hidden="true"><span id="quote-step-current">01</span> / <span id="quote-step-total">04</span></div>
+</div>
+<p class="sr-only" id="quote-live" aria-live="polite"></p>
 <form id="quote-form" class="quote-form" novalidate>
 <input type="checkbox" name="botcheck" class="quote-form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="subject" value="Nueva solicitud de presupuesto — Xaixo Home">
 <input type="hidden" name="from_name" value="Formulario web Xaixo Home">
-<div class="quote-form-grid">
-<div class="quote-field">
+<input type="hidden" name="need" id="quote-need-value">
+<input type="hidden" name="stage" id="quote-stage-value">
+
+<div class="quote-step section-pad" data-step="1">
+<h2 class="quote-step-title">¿Qué necesitas?</h2>
+<div class="quote-cards" role="radiogroup" aria-label="¿Qué necesitas?">
+<button type="button" class="quote-card" role="radio" aria-checked="false" data-value="Azulejos" style="background-image:url('assets/azulejos-hero-800.webp')"><span>Azulejos</span></button>
+<button type="button" class="quote-card" role="radio" aria-checked="false" data-value="Cocinas" style="background-image:url('assets/cocinas-hero-800.webp')"><span>Cocinas</span></button>
+<button type="button" class="quote-card" role="radio" aria-checked="false" data-value="Baños" style="background-image:url('assets/banos-hero-800.webp')"><span>Baños</span></button>
+<button type="button" class="quote-card" role="radio" aria-checked="false" data-value="Ventanas" style="background-image:url('assets/ventanas-hero-800.webp')"><span>Ventanas</span></button>
+<button type="button" class="quote-card" role="radio" aria-checked="false" data-value="Varias cosas" style="background-image:url('assets/home-hero-800.webp')"><span>Varias cosas</span></button>
+</div>
+<p class="quote-step-error" role="alert"></p>
+</div>
+
+<div class="quote-step section-pad" data-step="2" hidden>
+<h2 class="quote-step-title">¿En qué punto estás?</h2>
+<div class="quote-pills" role="radiogroup" aria-label="¿En qué punto estás?">
+<button type="button" class="quote-pill" role="radio" aria-checked="false" data-value="Solo mirando">Solo mirando</button>
+<button type="button" class="quote-pill" role="radio" aria-checked="false" data-value="Tengo medidas">Tengo medidas</button>
+<button type="button" class="quote-pill" role="radio" aria-checked="false" data-value="Tengo plano">Tengo plano</button>
+<button type="button" class="quote-pill" role="radio" aria-checked="false" data-value="La obra ya ha empezado">La obra ya ha empezado</button>
+</div>
+<p class="quote-step-error" role="alert"></p>
+</div>
+
+<div class="quote-step section-pad" data-step="3" hidden>
+<h2 class="quote-step-title">Cuéntanoslo</h2>
+<label class="sr-only" for="quote-message">Mensaje</label>
+<textarea id="quote-message" name="message" class="quote-textarea" rows="2" placeholder="Ej: quiero cambiar el suelo de un salón de 25 m², busco algo claro y sin apenas juntas…"></textarea>
+<div class="quote-dropzone" id="quote-dropzone" tabindex="0" role="button" aria-label="Adjuntar un plano o una foto, opcional, máximo 10 megabytes">
+<input id="quote-file" name="attachment" type="file" accept="image/*,.pdf" class="quote-dropzone-input" tabindex="-1" aria-hidden="true">
+<p class="quote-dropzone-text">Arrastra aquí un plano o una foto, o haz clic para elegirlo <span>(opcional, máx. 10&nbsp;MB)</span></p>
+<p class="quote-file-name" id="quote-file-name" aria-live="polite"></p>
+</div>
+<p class="quote-step-error" role="alert"></p>
+<div class="quote-step-actions">
+<button type="button" class="dk-btn dk-btn--pri quote-next">Continuar <span aria-hidden="true">→</span></button>
+</div>
+</div>
+
+<div class="quote-step section-pad" data-step="4" hidden>
+<h2 class="quote-step-title">¿Cómo te llamamos?</h2>
+<div class="quote-line-field">
+<input id="quote-name" name="name" type="text" class="quote-line-input" placeholder=" " autocomplete="name">
 <label for="quote-name">Nombre</label>
-<input id="quote-name" name="name" type="text" autocomplete="name" required>
 </div>
-<div class="quote-field">
+<div class="quote-line-field">
+<input id="quote-phone" name="phone" type="tel" class="quote-line-input" placeholder=" " autocomplete="tel">
 <label for="quote-phone">Teléfono</label>
-<input id="quote-phone" name="phone" type="tel" autocomplete="tel" required>
 </div>
-<div class="quote-field">
+<div class="quote-line-field">
+<input id="quote-email" name="email" type="email" class="quote-line-input" placeholder=" " autocomplete="email">
 <label for="quote-email">Email</label>
-<input id="quote-email" name="email" type="email" autocomplete="email" required>
-</div>
-<div class="quote-field">
-<label for="quote-need">Qué necesitas</label>
-<select id="quote-need" name="need" required>
-<option value="" disabled selected>Elige una opción</option>
-<option value="Azulejos">Azulejos</option>
-<option value="Cocina">Cocina</option>
-<option value="Baño">Baño</option>
-<option value="Ventanas">Ventanas</option>
-<option value="Varias cosas">Varias cosas</option>
-</select>
-</div>
-<div class="quote-field quote-field--wide">
-<label for="quote-message">Mensaje</label>
-<textarea id="quote-message" name="message" rows="4"></textarea>
-</div>
-<div class="quote-field quote-field--wide">
-<label for="quote-file">Adjunta un plano o una foto (opcional, máx. 10&nbsp;MB)</label>
-<input id="quote-file" name="attachment" type="file" accept="image/*,.pdf">
-</div>
 </div>
 <label class="quote-consent">
-<input type="checkbox" name="consent" required>
+<input type="checkbox" name="consent">
 <span>He leído y acepto la <a href="politica-privacidad.html">política de privacidad</a>.</span>
 </label>
-<div class="quote-form-actions">
-<button type="submit" class="dk-btn dk-btn--pri">Enviar solicitud</button>
-<p id="quote-form-status" class="form-status" role="status" aria-live="polite"></p>
+<p class="quote-step-error" role="alert"></p>
+<div class="quote-step-actions">
+<button type="submit" class="dk-btn dk-btn--pri quote-submit">Enviar solicitud</button>
+</div>
 </div>
 </form>
+
+<div class="quote-done section-pad" id="quote-done" hidden>
+<h2>Gracias, <span id="quote-done-name"></span>.</h2>
+<p>Hemos recibido tu solicitud. Te contactaremos en menos de 24h laborables.</p>
+<div class="quote-done-actions">
+<a class="dk-btn dk-btn--sec" href="https://wa.me/34689248559?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+<button type="button" class="quote-restart">Enviar otra solicitud</button>
+</div>
+</div>
+</div>
 </div>
 <div class="footer-top section-pad">
 <div class="footer-brand">

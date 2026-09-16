@@ -101,29 +101,196 @@ document.querySelectorAll('a.wordmark[href="/"]').forEach(link=>{
  });
 });
 
-// --- Quote/contact form (shared footer, present on every page) ---
-const quoteForm = document.querySelector('#quote-form');
-if (quoteForm) {
- const MAX_FILE_BYTES = 10 * 1024 * 1024;
- const fileInput = quoteForm.querySelector('#quote-file');
- const statusEl = quoteForm.querySelector('#quote-form-status');
- const submitBtn = quoteForm.querySelector('button[type="submit"]');
- const submitLabel = submitBtn.textContent;
+// --- Quote wizard (shared footer, present on every page) ---
+// One-question-per-screen flow: cards/pills auto-advance on click, the
+// message and contact steps have an explicit continue/submit button.
+// `current` is the only state that matters for navigation; `needValue`/
+// `stageValue` (hidden inputs) carry the step 1/2 picks into the FormData.
+const wizard = document.querySelector('#quote-wizard');
+if (wizard) {
+ const form = wizard.querySelector('#quote-form');
+ const steps = [...wizard.querySelectorAll('.quote-step')];
+ const total = steps.length;
+ const progressBar = wizard.querySelector('#quote-progress-bar');
+ const stepCurrentEl = wizard.querySelector('#quote-step-current');
+ const backBtn = wizard.querySelector('#quote-back');
+ const liveEl = wizard.querySelector('#quote-live');
+ const doneScreen = wizard.querySelector('#quote-done');
+ const needValue = wizard.querySelector('#quote-need-value');
+ const stageValue = wizard.querySelector('#quote-stage-value');
+ const stepTitles = steps.map(s => s.querySelector('.quote-step-title').textContent.trim());
+ let current = 0;
+ let animating = false;
 
- fileInput.addEventListener('change', () => {
-  const file = fileInput.files[0];
-  fileInput.setCustomValidity(file && file.size > MAX_FILE_BYTES ? 'El archivo pesa más de 10 MB.' : '');
+ function firstControl(step) {
+  return step.querySelector('.quote-card, .quote-pill, textarea, input:not([type="hidden"]):not([type="checkbox"])');
+ }
+ function updateChrome() {
+  progressBar.style.width = `${((current + 1) / total) * 100}%`;
+  stepCurrentEl.textContent = String(current + 1).padStart(2, '0');
+  backBtn.hidden = current === 0;
+ }
+ function showError(step, message) {
+  const el = step.querySelector('.quote-step-error');
+  if (el) el.textContent = message;
+ }
+ function clearError(step) {
+  showError(step, '');
+ }
+ function goTo(index, { focus = true } = {}) {
+  if (animating || index === current || index < 0 || index >= total) return;
+  const prevStep = steps[current];
+  const nextStep = steps[index];
+  animating = true;
+  const reveal = () => {
+   nextStep.hidden = false;
+   nextStep.classList.add('is-entering');
+   current = index;
+   updateChrome();
+   liveEl.textContent = `Paso ${index + 1} de ${total}: ${stepTitles[index]}`;
+   if (focus) firstControl(nextStep)?.focus({ preventScroll: true });
+   requestAnimationFrame(() => nextStep.classList.remove('is-entering'));
+   animating = false;
+  };
+  if (reduced.matches) {
+   prevStep.hidden = true;
+   reveal();
+  } else {
+   prevStep.classList.add('is-leaving');
+   prevStep.addEventListener(
+    'animationend',
+    () => {
+     prevStep.hidden = true;
+     prevStep.classList.remove('is-leaving');
+     reveal();
+    },
+    { once: true },
+   );
+  }
+ }
+
+ // Step 1: category cards (auto-advance)
+ const cards = [...steps[0].querySelectorAll('.quote-card')];
+ cards.forEach(card => {
+  card.addEventListener('click', () => {
+   cards.forEach(c => {
+    c.classList.toggle('is-selected', c === card);
+    c.setAttribute('aria-checked', String(c === card));
+   });
+   needValue.value = card.dataset.value;
+   clearError(steps[0]);
+   goTo(1);
+  });
  });
 
- quoteForm.addEventListener('submit', async e => {
+ // Step 2: stage pills (auto-advance)
+ const pills = [...steps[1].querySelectorAll('.quote-pill')];
+ pills.forEach(pill => {
+  pill.addEventListener('click', () => {
+   pills.forEach(p => {
+    p.classList.toggle('is-selected', p === pill);
+    p.setAttribute('aria-checked', String(p === pill));
+   });
+   stageValue.value = pill.dataset.value;
+   clearError(steps[1]);
+   goTo(2);
+  });
+ });
+
+ // Step 3: message + drag-and-drop attachment
+ const textarea = steps[2].querySelector('#quote-message');
+ textarea.addEventListener('input', () => {
+  textarea.style.height = 'auto';
+  textarea.style.height = `${textarea.scrollHeight}px`;
+ });
+ const MAX_FILE_BYTES = 10 * 1024 * 1024;
+ const dropzone = steps[2].querySelector('#quote-dropzone');
+ const fileInput = steps[2].querySelector('#quote-file');
+ const fileNameEl = steps[2].querySelector('#quote-file-name');
+ function setFile(file) {
+  if (!file) {
+   fileNameEl.textContent = '';
+   fileNameEl.classList.remove('quote-file-name--error');
+   return;
+  }
+  if (file.size > MAX_FILE_BYTES) {
+   fileInput.value = '';
+   fileNameEl.textContent = `${file.name} pesa más de 10 MB — elige un archivo más ligero.`;
+   fileNameEl.classList.add('quote-file-name--error');
+   return;
+  }
+  fileNameEl.textContent = file.name;
+  fileNameEl.classList.remove('quote-file-name--error');
+ }
+ dropzone.addEventListener('click', () => fileInput.click());
+ dropzone.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+   e.preventDefault();
+   fileInput.click();
+  }
+ });
+ fileInput.addEventListener('change', () => setFile(fileInput.files[0]));
+ ['dragenter', 'dragover'].forEach(evt =>
+  dropzone.addEventListener(evt, e => {
+   e.preventDefault();
+   dropzone.classList.add('is-dragover');
+  }),
+ );
+ ['dragleave', 'drop'].forEach(evt =>
+  dropzone.addEventListener(evt, e => {
+   e.preventDefault();
+   dropzone.classList.remove('is-dragover');
+  }),
+ );
+ dropzone.addEventListener('drop', e => {
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  fileInput.files = dt.files;
+  setFile(file);
+ });
+ steps[2].querySelector('.quote-next').addEventListener('click', () => {
+  if (textarea.value.trim().length < 10) {
+   showError(steps[2], 'Cuéntanos un poco más para poder ayudarte.');
+   textarea.focus();
+   return;
+  }
+  clearError(steps[2]);
+  goTo(3);
+ });
+
+ // Step 4: contact details + submit
+ const nameInput = steps[3].querySelector('#quote-name');
+ const phoneInput = steps[3].querySelector('#quote-phone');
+ const emailInput = steps[3].querySelector('#quote-email');
+ const consentInput = steps[3].querySelector('.quote-consent input');
+ const submitBtn = steps[3].querySelector('.quote-submit');
+ const submitLabel = submitBtn.textContent;
+ function validateStep4() {
+  if (!nameInput.value.trim() || !phoneInput.value.trim() || !emailInput.value.trim()) {
+   return 'Nos falta algún dato: nombre, teléfono y email.';
+  }
+  if (!emailInput.checkValidity()) return 'Revisa el email, no parece válido.';
+  if (!consentInput.checked) return 'Marca la casilla para poder contactarte.';
+  return null;
+ }
+
+ form.addEventListener('submit', async e => {
   e.preventDefault();
-  if (!quoteForm.reportValidity()) return;
+  const err = validateStep4();
+  if (err) {
+   showError(steps[3], err);
+   return;
+  }
+  clearError(steps[3]);
   submitBtn.disabled = true;
+  submitBtn.classList.add('is-sending');
   submitBtn.textContent = 'Enviando…';
-  statusEl.textContent = '';
-  statusEl.className = 'form-status';
   try {
-   const formData = new FormData(quoteForm);
+   const formData = new FormData(form);
+   const summary = `Qué necesita: ${needValue.value || '—'}\nEn qué punto está: ${stageValue.value || '—'}\n\n${(formData.get('message') || '').toString().trim()}`;
+   formData.set('message', summary);
    formData.set('access_key', WEB3FORMS_ACCESS_KEY);
    const res = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
@@ -132,17 +299,60 @@ if (quoteForm) {
    });
    const data = await res.json();
    if (!data.success) throw new Error(data.message || 'Envío rechazado');
-   statusEl.textContent = 'Gracias, hemos recibido tu solicitud. Te contactaremos en breve.';
-   statusEl.className = 'form-status form-status--ok';
-   quoteForm.reset();
-   submitBtn.textContent = 'Enviado ✓';
-  } catch (err) {
-   statusEl.textContent = 'No se pudo enviar el formulario. Prueba de nuevo o escríbenos por WhatsApp.';
-   statusEl.className = 'form-status form-status--error';
+   wizard.querySelector('#quote-done-name').textContent = nameInput.value.trim().split(' ')[0] || '';
+   form.hidden = true;
+   doneScreen.hidden = false;
+   liveEl.textContent = 'Solicitud enviada';
+   doneScreen.querySelector('.quote-done-actions a, .quote-done-actions button')?.focus({ preventScroll: true });
+  } catch (err2) {
+   showError(steps[3], 'No se pudo enviar el formulario. Prueba de nuevo o escríbenos por WhatsApp.');
    submitBtn.disabled = false;
+   submitBtn.classList.remove('is-sending');
    submitBtn.textContent = submitLabel;
   }
  });
+
+ backBtn.addEventListener('click', () => goTo(current - 1));
+
+ // Enter advances — except inside the free-text message (needs newlines)
+ // or the dropzone (Enter/Space there opens the file picker instead).
+ form.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA' || e.target.closest('.quote-dropzone')) return;
+  if (e.target.matches('.quote-card, .quote-pill')) return;
+  e.preventDefault();
+  if (current === 2) steps[2].querySelector('.quote-next').click();
+  else if (current === 3) submitBtn.click();
+ });
+
+ wizard.querySelector('.quote-restart').addEventListener('click', () => {
+  form.reset();
+  cards.forEach(c => {
+   c.classList.remove('is-selected');
+   c.setAttribute('aria-checked', 'false');
+  });
+  pills.forEach(p => {
+   p.classList.remove('is-selected');
+   p.setAttribute('aria-checked', 'false');
+  });
+  needValue.value = '';
+  stageValue.value = '';
+  fileNameEl.textContent = '';
+  fileNameEl.classList.remove('quote-file-name--error');
+  textarea.style.height = 'auto';
+  clearError(steps[3]);
+  submitBtn.disabled = false;
+  submitBtn.classList.remove('is-sending');
+  submitBtn.textContent = submitLabel;
+  doneScreen.hidden = true;
+  form.hidden = false;
+  steps.forEach((s, i) => (s.hidden = i !== 0));
+  current = 0;
+  updateChrome();
+  liveEl.textContent = `Paso 1 de ${total}: ${stepTitles[0]}`;
+  firstControl(steps[0])?.focus({ preventScroll: true });
+ });
+
+ updateChrome();
 }
 
 // --- Mobile menu dialog (shared header, present on every page) ---
