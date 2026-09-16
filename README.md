@@ -97,10 +97,7 @@ Antes de publicar esta web como página comercial definitiva, todas estas imáge
 
 ## Formulario de presupuesto
 
-En el pie de página (`id="contacto"`, compartido por las 8 páginas) hay un formulario — nombre, teléfono, email, qué necesita, mensaje y un adjunto opcional (plano o foto, máx. 10&nbsp;MB) — que envía por [Web3Forms](https://web3forms.com) sin backend propio. Para activarlo:
-
-1. Crea una cuenta gratuita en Web3Forms con `javierxaixo@gmail.com` y genera un *access key* (los envíos llegan a ese email).
-2. Pega la clave en la constante `WEB3FORMS_ACCESS_KEY` al principio de `app.js` (está marcada con `TODO`). No hace falta tocar el HTML ni volver a generar las páginas.
+En el pie de página (`id="contacto"`, compartido por las 8 páginas) hay un formulario — nombre, teléfono, email, qué necesita, mensaje y un adjunto opcional (plano o foto, máx. 10&nbsp;MB) — que envía por [Web3Forms](https://web3forms.com) sin backend propio, con el *access key* ya configurado en la constante `WEB3FORMS_ACCESS_KEY` al principio de `app.js` (cuenta dada de alta con `javierxaixo@gmail.com`; los envíos llegan a ese email). Para cambiar de cuenta o clave, genera una nueva en Web3Forms y sustituye ahí el valor — no hace falta tocar el HTML ni volver a generar las páginas.
 
 Validación nativa del navegador (`required`, tipos de campo, tamaño del adjunto) más un honeypot oculto contra spam; estados de enviando/enviado/error con un `role="status"` para lectores de pantalla. El botón flotante de WhatsApp sigue disponible como alternativa, y el propio formulario enlaza a él.
 

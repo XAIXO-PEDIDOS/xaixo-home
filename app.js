@@ -4,10 +4,9 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const fine = matchMedia('(hover: hover) and (pointer: fine)');
 const clamp = (n, a=0, b=1) => Math.min(b, Math.max(a,n));
 
-// TODO: create a Web3Forms access key at https://web3forms.com pointing at
-// javierxaixo@gmail.com, and paste it here. Submissions from the quote form
-// (shared footer, every page) go nowhere until this is set.
-const WEB3FORMS_ACCESS_KEY = 'TODO_WEB3FORMS_ACCESS_KEY';
+// Web3Forms access key for the quote form (shared footer, every page).
+// Submissions land at the email registered with this key on web3forms.com.
+const WEB3FORMS_ACCESS_KEY = 'd02523e1-c9f5-4689-93db-d4856dcf3040';
 
 // --- Homepage hero parallax (only present on index.html) ---
 const stage = document.querySelector('.hero-stage');
