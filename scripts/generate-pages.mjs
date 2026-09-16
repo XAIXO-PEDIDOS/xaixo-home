@@ -247,7 +247,6 @@ const DARK_PAGES = [
       {
         title: "Encimeras",
         desc: "Cuarzo, compacto y piedra natural, con canto recto o biselado. Fabricadas a medida de tu plano.",
-        brands: ["Marca", "Marca"],
         image: "cocinas-encimeras",
         imageAlt: "Encimera de cuarzo blanco con canto a inglete y fregadero integrado, imagen de referencia",
         aiImage: true,
@@ -255,7 +254,6 @@ const DARK_PAGES = [
       {
         title: "Electrodomésticos",
         desc: "Integrados o de libre instalación: horno, inducción, frigorífico y lavavajillas de las mejores marcas.",
-        brands: ["Marca", "Marca", "Marca"],
         image: "cocinas-electrodomesticos",
         imageAlt: "Horno y microondas integrados junto a placa de inducción con campana extractora, imagen de referencia",
         aiImage: true,
@@ -263,7 +261,6 @@ const DARK_PAGES = [
       {
         title: "Instalación propia",
         desc: "Montaje, conexión de agua y electrodomésticos, y ajustes finales con nuestro propio equipo, sin subcontratar.",
-        brands: ["Marca", "Marca"],
         image: "cocinas-montaje",
         imageAlt: "Instalador montando muebles altos de cocina con nivel y taladro, imagen de referencia",
         imagePosition: "center 35%",
@@ -334,7 +331,6 @@ const DARK_PAGES = [
       {
         title: "Instalación propia",
         desc: "Retirada de la ventana antigua, sellado, ajuste y limpieza final. Todo con nuestro propio equipo instalador.",
-        brands: ["Marca", "Marca"],
         image: "ventanas-instalacion",
         imageAlt: "Instalador comprobando con un nivel una ventana de aluminio recién colocada en un hueco de obra, con vistas al mar",
         aiImage: true,
@@ -376,21 +372,18 @@ const DARK_PAGES = [
       {
         title: "Platos de ducha y mamparas",
         desc: "Resina, carga mineral y cerámica, cortados a la medida de tu hueco. Mamparas de vidrio templado con tratamiento antical, fijas o correderas.",
-        brands: ["Marca", "Marca", "Marca"],
         image: "banos-platos",
         imageAlt: "Plato de ducha antracita con mampara de vidrio y marco negro, en ducha con revestimiento cerámico y hornacina para toallas",
       },
       {
         title: "Muebles y lavabos",
         desc: "Suspendidos, a suelo y a medida, con lavabo integrado o sobre encimera. Acabados en madera, lacado y porcelánico.",
-        brands: ["Marca", "Marca"],
         image: "banos-muebles",
         imageAlt: "Mueble de baño suspendido en roble con espejo redondo retroiluminado",
       },
       {
         title: "Grifería y sanitarios",
         desc: "Monomando, termostática y empotrada, en cromo, negro mate y cepillados. Inodoros suspendidos con cisterna empotrada y tapa de caída amortiguada.",
-        brands: ["Marca", "Marca", "Marca"],
         image: "banos-griferia",
         imageAlt: "Grifería de lavabo en negro mate sobre encimera de piedra clara",
         imagePosition: "center 42%",
@@ -398,7 +391,6 @@ const DARK_PAGES = [
       {
         title: "Cerámica y porcelánico",
         desc: "Grandes formatos, efecto piedra y madera, rectificados y antideslizantes para suelo de ducha. Todo en piezas reales para que lo veas con luz natural.",
-        brands: ["Marca", "Marca"],
         image: "banos-ceramica",
         imageAlt: "Revestimiento cerámico tipo travertino en ducha con hornacina para toallas",
       },
@@ -447,7 +439,9 @@ function darkProductMarkup(product) {
     sizes: "(max-width: 820px) 100vw, 50vw",
     position: product.imagePosition,
   });
-  const brands = product.brands.map(brandMarkup).join("");
+  const brandsHtml = product.brands?.length
+    ? `\n<div class="dk-brands reveal">${product.brands.map(brandMarkup).join("")}</div>`
+    : "";
   const imageNote = product.aiImage ? `${AI_IMAGE_NOTE}\n` : "";
   return `<article class="dk-prod">
 <div class="dk-pic" data-cursor="VER">
@@ -455,9 +449,7 @@ ${imageNote}<div class="dk-ph" data-px="0.12">${image}</div>
 </div>
 <div class="dk-txt">
 <h2 class="reveal">${product.title}</h2>
-<p class="reveal">${product.desc}</p>
-<div class="dk-brands reveal">${brands}</div>
-<a class="dk-more reveal" href="#contacto" aria-label="Ver la galería de ${product.title}" data-cursor="VER">Ver la galería <i aria-hidden="true">→</i></a>
+<p class="reveal">${product.desc}</p>${brandsHtml}
 </div>
 </article>`;
 }

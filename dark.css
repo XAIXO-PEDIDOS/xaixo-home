@@ -188,34 +188,6 @@ body.dark-page {
   height: 14px;
   width: auto;
 }
-.dk-more {
-  margin-top: 40px;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-}
-.dk-more i {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--dark-line);
-  display: grid;
-  place-items: center;
-  font-style: normal;
-  transition:
-    background 0.25s,
-    color 0.25s;
-}
-@media (hover: hover) and (pointer: fine) {
-  .dk-more:hover i {
-    background: var(--bone);
-    color: var(--umber);
-  }
-}
-
 /* marcas ticker */
 .dk-marcas {
   border-top: 1px solid var(--dark-line);
