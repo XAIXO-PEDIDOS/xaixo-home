@@ -39,12 +39,12 @@ const WHATSAPP_HTML = extractBetween(
   "<!-- SHARED-WHATSAPP:END -->",
 );
 
-const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Gran+Via+Castell+de+Bair%C3%A9n+20%2C+Gandia";
+const MAPS_URL = "https://share.google/IEvxZxiaf1PpbI7Nq";
 const WHATSAPP_URL = "https://wa.me/34689248559?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20proyecto";
-const ADDRESS_LINE = "Gran Via Castell de Bairén, 20 · Gandia";
+const ADDRESS_LINE = "Gran Via del Castell de Bairen, 20 · Gandia";
 const HOURS_LINE = "Lunes a viernes, 7:00 a 19:00";
-const PHONE_DISPLAY = "615 439 842";
-const PHONE_TEL = "+34615439842";
+const PHONE_DISPLAY = "689 248 559";
+const PHONE_TEL = "+34689248559";
 
 const AI_IMAGE_NOTE = "<!-- TODO: imagen generada por IA, sustituir por una fotografía real de un proyecto de Xaixo Home -->";
 const CONTACT_EMAIL = "javierxaixo@gmail.com";
@@ -571,7 +571,7 @@ const LEGAL_PAGES = [
     description: "Condiciones de uso y datos identificativos del titular del sitio web de Xaixo Home.",
     heading: "AVISO LEGAL",
     bodyHtml: `<h2 class="reveal">1. Datos identificativos</h2>
-<p class="reveal">En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de los siguientes datos: el titular de este sitio web es MATERIALES XAIXO HOME S.L. (Xaixo Home), con CIF B10533552, y domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia). Puedes contactar en ${CONTACT_EMAIL}.</p>
+<p class="reveal">En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de los siguientes datos: el titular de este sitio web es MATERIALES XAIXO HOME S.L. (Xaixo Home), con CIF B10533552, y domicilio en Gran Via del Castell de Bairen, 20, 46701 Gandia (Valencia). Puedes contactar en ${CONTACT_EMAIL}.</p>
 <h2 class="reveal">2. Objeto</h2>
 <p class="reveal">El presente sitio web tiene por objeto ofrecer información sobre los materiales y servicios de azulejos, cocinas, baños y ventanas de Xaixo Home.</p>
 <h2 class="reveal">3. Condiciones de uso</h2>
@@ -589,7 +589,7 @@ const LEGAL_PAGES = [
     description: "Cómo trata Xaixo Home los datos personales de las personas usuarias del sitio web.",
     heading: "POLÍTICA DE PRIVACIDAD",
     bodyHtml: `<h2 class="reveal">1. Responsable del tratamiento</h2>
-<p class="reveal">El responsable del tratamiento de los datos personales recabados a través de este sitio web es MATERIALES XAIXO HOME S.L. (Xaixo Home), con CIF B10533552, domicilio en Gran Via Castell de Bairén, 20, 46702 Gandia (Valencia), teléfono 615 439 842 y correo ${CONTACT_EMAIL}.</p>
+<p class="reveal">El responsable del tratamiento de los datos personales recabados a través de este sitio web es MATERIALES XAIXO HOME S.L. (Xaixo Home), con CIF B10533552, domicilio en Gran Via del Castell de Bairen, 20, 46701 Gandia (Valencia), teléfono 689 248 559 y correo ${CONTACT_EMAIL}.</p>
 <h2 class="reveal">2. Finalidad del tratamiento</h2>
 <p class="reveal">Los datos facilitados a través de los formularios de contacto o WhatsApp se utilizan para atender consultas, elaborar presupuestos y gestionar la relación comercial con la persona usuaria.</p>
 <h2 class="reveal">3. Legitimación</h2>
