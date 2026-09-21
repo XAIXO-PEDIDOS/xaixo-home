@@ -609,9 +609,12 @@ const LEGAL_PAGES = [
     bodyHtml: `<h2 class="reveal">1. Qué son las cookies</h2>
 <p class="reveal">Las cookies son pequeños archivos que se almacenan en tu navegador al visitar un sitio web. Se utilizan para recordar tus preferencias y mejorar el funcionamiento del sitio.</p>
 <h2 class="reveal">2. Cookies utilizadas en este sitio</h2>
-<p class="reveal">Este sitio web utiliza únicamente cookies técnicas necesarias para su correcto funcionamiento. <!-- TODO: actualizar este apartado si se incorporan cookies de análisis, personalización o publicidad --></p>
+<p class="reveal"><b>Técnicas (necesarias).</b> Este sitio guarda en tu navegador la elección que hagas en el aviso de cookies, para no volver a preguntarte. No requieren consentimiento y no se usan con fines estadísticos ni publicitarios.</p>
+<p class="reveal"><b>De analítica (solo si las aceptas).</b> Utilizamos Metricool, una herramienta de analítica web, con finalidad exclusivamente estadística: conocer cuántas personas visitan el sitio, qué páginas consultan y cómo llegan a él, para mejorar sus contenidos. Metricool solo se carga si pulsas «Aceptar» en el aviso de cookies; si pulsas «Rechazar», no se carga ni se recoge ningún dato con ella. Puedes consultar cómo trata Metricool la información en <a href="https://metricool.com" rel="noopener" target="_blank">metricool.com</a>.</p>
 <h2 class="reveal">3. Cómo gestionar las cookies</h2>
-<p class="reveal">Puedes permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la configuración de las opciones del navegador que utilices. Consulta la ayuda de tu navegador para más información.</p>`,
+<p class="reveal">Puedes cambiar tu elección sobre la analítica en cualquier momento con el botón siguiente. Al retirar el consentimiento la página se recarga y Metricool deja de ejecutarse.</p>
+<p class="reveal"><button type="button" class="dk-btn dk-btn--sec" data-cookie-settings>Configurar cookies</button></p>
+<p class="reveal">Además, puedes permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la configuración de tu navegador. Consulta su ayuda para más información.</p>`,
   },
 ];
 

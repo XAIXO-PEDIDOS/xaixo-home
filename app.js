@@ -8,6 +8,63 @@ const clamp = (n, a=0, b=1) => Math.min(b, Math.max(a,n));
 // Submissions land at the email registered with this key on web3forms.com.
 const WEB3FORMS_ACCESS_KEY = 'd02523e1-c9f5-4689-93db-d4856dcf3040';
 
+// --- Analytics consent (shared, every page) ---
+// Metricool is analytics, so it only loads if the visitor accepted it in the
+// cookie notice. The choice ('granted' | 'denied') lives in localStorage;
+// with no stored choice the notice shows and nothing is loaded. Any element
+// with [data-cookie-settings] (footer, cookies page) reopens the notice so
+// the choice can be changed at any time.
+const METRICOOL_SRC = 'https://tracker.metricool.com/resources/be.js';
+const METRICOOL_HASH = 'a826acd43700e2a9b228eedf90ebee1c';
+const CONSENT_KEY = 'xh-cookie-consent';
+let metricoolLoaded = false;
+
+function readConsent() {
+ try { return localStorage.getItem(CONSENT_KEY); } catch { return null; }
+}
+function saveConsent(value) {
+ try { localStorage.setItem(CONSENT_KEY, value); } catch { /* private mode: the choice just lasts this page */ }
+}
+
+function loadMetricool() {
+ if (metricoolLoaded) return;
+ metricoolLoaded = true;
+ const script = document.createElement('script');
+ script.type = 'text/javascript';
+ script.src = METRICOOL_SRC;
+ script.onload = () => window.beTracker?.t({ hash: METRICOOL_HASH });
+ document.head.appendChild(script);
+}
+
+function showCookieNotice() {
+ if (document.querySelector('.cookie-notice')) return;
+ const notice = document.createElement('section');
+ notice.className = 'cookie-notice';
+ notice.setAttribute('aria-label', 'Aviso de cookies');
+ notice.innerHTML =
+  '<p class="cookie-notice-text">Usamos <b>Metricool</b> para medir las visitas de forma estadística, y solo si lo aceptas. Puedes cambiar tu elección cuando quieras. <a href="/cookies">Más información</a></p>' +
+  '<div class="cookie-notice-actions">' +
+  '<button type="button" class="dk-btn dk-btn--sec" data-consent="denied">Rechazar</button>' +
+  '<button type="button" class="dk-btn dk-btn--sec" data-consent="granted">Aceptar</button>' +
+  '</div>';
+ notice.addEventListener('click', e => {
+  const choice = e.target.closest('[data-consent]')?.dataset.consent;
+  if (!choice) return;
+  const withdrawing = choice === 'denied' && metricoolLoaded;
+  saveConsent(choice);
+  notice.remove();
+  if (choice === 'granted') loadMetricool();
+  // The tracker can't be unloaded from a running page: withdrawing after it
+  // started means a reload so it stops for real.
+  else if (withdrawing) location.reload();
+ });
+ document.body.appendChild(notice);
+}
+
+if (readConsent() === 'granted') loadMetricool();
+else if (readConsent() !== 'denied') showCookieNotice();
+document.querySelectorAll('[data-cookie-settings]').forEach(el => el.addEventListener('click', showCookieNotice));
+
 // --- Homepage hero parallax (only present on index.html) ---
 const stage = document.querySelector('.hero-stage');
 if (stage) {

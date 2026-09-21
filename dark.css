@@ -982,3 +982,104 @@ body.dark-page {
     transform: none !important;
   }
 }
+
+/* Cookie notice (injected by app.js, every page) and the "Configurar
+   cookies" buttons that reopen it. Accept and reject are deliberately the
+   same weight. Sits above the WhatsApp button (z-index 30) but below the
+   header (150) and the menu dialog (top layer). */
+.cookie-notice {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 40;
+  width: min(440px, calc(100vw - 40px));
+  padding: 22px 24px;
+  background: var(--umber-2);
+  color: var(--bone);
+  border: 1px solid var(--dark-line);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  animation: cookie-notice-in 0.5s var(--ease) both;
+}
+.cookie-notice-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--stone);
+}
+.cookie-notice-text b {
+  font-weight: 500;
+  color: var(--bone);
+}
+.cookie-notice-text a {
+  color: var(--bone);
+  border-bottom: 1px solid var(--dark-line);
+}
+.cookie-notice-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+.cookie-notice-actions .dk-btn {
+  flex: 1;
+  justify-content: center;
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--bone);
+  cursor: pointer;
+}
+.cookie-notice-actions .dk-btn:focus-visible,
+.cookie-notice-text a:focus-visible,
+button[data-cookie-settings]:focus-visible {
+  outline: 2px solid var(--salvia);
+  outline-offset: 3px;
+}
+@keyframes cookie-notice-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .cookie-notice-actions .dk-btn:hover {
+    background: rgba(236, 230, 219, 0.1);
+  }
+}
+@media (max-width: 700px) {
+  .cookie-notice {
+    left: 14px;
+    bottom: 14px;
+    width: calc(100vw - 28px);
+    padding: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cookie-notice {
+    animation: none;
+  }
+}
+button[data-cookie-settings].footer-link {
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.055em;
+  color: #94907f;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  button[data-cookie-settings].footer-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+button.dk-btn {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--bone);
+  background: transparent;
+  cursor: pointer;
+}
+.legal-page p + p {
+  margin-top: 14px;
+}
