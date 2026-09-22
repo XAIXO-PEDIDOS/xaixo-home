@@ -1,3 +1,18 @@
+# Consolida el dominio apex (con o sin https) a www en un solo salto 301,
+# en vez de dejar que Netlify aplique primero "forzar HTTPS" y luego el
+# alias de dominio primario (dos saltos).
+[[redirects]]
+  from = "http://xaixohome.com/*"
+  to = "https://www.xaixohome.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://xaixohome.com/*"
+  to = "https://www.xaixohome.com/:splat"
+  status = 301
+  force = true
+
 # Redirige la forma con .html a la URL limpia (la que usan canonical,
 # sitemap.xml y los enlaces internos) para evitar contenido duplicado.
 # force = true porque el archivo .html existe realmente en dist/ y, si no,
@@ -49,3 +64,12 @@
   to = "/cookies"
   status = 301
   force = true
+
+# Los assets en /assets/* llevan el hash de contenido en el nombre de
+# fichero (lo añade Vite en el build), así que su URL nunca cambia sin
+# cambiar el contenido: se pueden cachear de forma larga e inmutable.
+# El HTML no lleva hash y se sirve con la caché por defecto (max-age=0).
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

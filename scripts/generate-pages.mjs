@@ -557,7 +557,7 @@ ${simulatorSection}${darkCtaMarkup(page)}
 </main>
 ${FOOTER_HTML}
 ${MENU_HTML}
-<div class="context-cursor" aria-hidden="true">VER</div>
+<div class="context-cursor" aria-hidden="true"></div>
 ${WHATSAPP_HTML}
 </body>
 </html>
