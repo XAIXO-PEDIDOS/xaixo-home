@@ -58,8 +58,21 @@ const SITE_NAME = "Xaixo Home";
 const OG_LOCALE = "es_ES";
 // @id de la entidad HomeAndConstructionBusiness definida en index.html —
 // las páginas de categoría y legales la referencian por @id en vez de
-// repetir su definición completa.
+// repetir su definición completa. La prueba de resultados enriquecidos de
+// Google valida cada página por separado (no fusiona nodos con el mismo
+// @id entre páginas distintas), así que el nodo repetido en cada categoría
+// debe llevar también sus propios campos obligatorios (name, address,
+// telephone, url, image), no solo el @id y el makesOffer de esa página.
 const BUSINESS_ID = `${SITE_URL}/#negocio`;
+const BUSINESS_NAME = "Xaixo Home";
+const BUSINESS_ADDRESS = {
+  "@type": "PostalAddress",
+  streetAddress: "Gran Via del Castell de Bairen, 20",
+  addressLocality: "Gandia",
+  postalCode: "46701",
+  addressRegion: "Valencia",
+  addressCountry: "ES",
+};
 function metaMarkup({ title, description, path, ogImage }) {
   const url = `${SITE_URL}${path}`;
   const imageUrl = `${SITE_URL}/og/${ogImage}.jpg`;
@@ -118,6 +131,11 @@ function structuredDataMarkup(page) {
     {
       "@type": "HomeAndConstructionBusiness",
       "@id": BUSINESS_ID,
+      name: BUSINESS_NAME,
+      url: SITE_URL,
+      telephone: PHONE_TEL,
+      image: `${SITE_URL}/og/${page.hero.image}.jpg`,
+      address: BUSINESS_ADDRESS,
       makesOffer: {
         "@type": "Offer",
         url,
