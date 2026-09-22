@@ -301,72 +301,153 @@ body.dark-page {
   line-height: 1.55;
 }
 
-/* Guía de contenido (texto SEO ampliado): rejilla de tarjetas, bloque
-   destacado y franja final para Azulejos/Baños; layout a dos columnas
-   para Cocinas/Ventanas. Reutiliza la paleta y los ritmos de .dk-steps y
-   .dk-proc para no introducir un lenguaje visual nuevo. */
+/* Guía de contenido (texto SEO ampliado): título fijo (sticky) a la
+   izquierda mientras se hace scroll por una lista numerada de temas a la
+   derecha — mismo lenguaje en las 4 categorías. La franja de stock con
+   foto y la fila de marcas son exclusivas de Azulejos. */
 .dk-guide {
   padding: clamp(90px, 14vh, 170px) var(--gutter);
   border-top: 1px solid var(--dark-line);
 }
-.dk-guide > h2 {
+.dk-guide-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  align-items: start;
+}
+.dk-guide-sticky {
+  position: sticky;
+  top: clamp(100px, 16vh, 190px);
+}
+.dk-guide-sticky h2 {
   font-weight: 300;
   font-size: clamp(28px, 3vw, 44px);
   letter-spacing: -0.03em;
   line-height: 1.05;
-  max-width: 20ch;
+  max-width: 16ch;
 }
-.dk-guide-grid {
-  margin-top: 48px;
+.dk-guide-list {
+  display: flex;
+  flex-direction: column;
+}
+.dk-guide-item {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 32px;
-}
-.dk-guide-card {
+  grid-template-columns: clamp(52px, 6vw, 76px) 1fr;
+  gap: 24px;
+  padding: 30px 0;
   border-top: 1px solid var(--dark-line);
-  padding-top: 22px;
+  transition: border-color 0.3s;
 }
-.dk-guide-icon {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 22px;
-  color: var(--salvia);
+.dk-guide-list .dk-guide-item:last-child {
+  border-bottom: 1px solid var(--dark-line);
 }
-.dk-guide-icon svg {
-  width: 100%;
-  height: 100%;
-  display: block;
+.dk-guide-num {
+  font-weight: 300;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--stone);
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+  transition:
+    color 0.3s,
+    opacity 0.3s;
 }
-.dk-guide-card h3 {
+.dk-guide-item h3 {
   font-weight: 500;
   font-size: 19px;
   line-height: 1.3;
   color: #fff;
 }
-.dk-guide-card p {
+.dk-guide-item p {
   margin-top: 10px;
   color: var(--stone);
   font-size: 15px;
   line-height: 1.6;
+  max-width: 60ch;
 }
-.dk-guide-feature {
-  margin-top: 40px;
-  padding: 40px clamp(24px, 4vw, 56px);
-  border: 1px solid var(--dark-line);
-  border-radius: 18px;
-  background: var(--umber-2);
+@media (hover: hover) and (pointer: fine) {
+  .dk-guide-item:hover {
+    border-top-color: var(--salvia);
+  }
+  .dk-guide-item:hover .dk-guide-num {
+    color: var(--salvia);
+    opacity: 1;
+  }
 }
-.dk-guide-feature p {
-  font-size: clamp(20px, 2.2vw, 28px);
+
+/* Franja de stock (Azulejos): foto a ancho completo con degradado y CTA
+   de WhatsApp — mismo patrón que .dk-cta, más compacta. */
+.dk-guide-stock {
+  position: relative;
+  overflow: hidden;
+  min-height: 56svh;
+  display: grid;
+  align-items: center;
+}
+.dk-guide-stock .dk-ph {
+  position: absolute;
+  inset: -10% 0;
+  will-change: transform;
+}
+.dk-guide-stock-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dk-guide-stock::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(28, 24, 21, 0.92) 0%, rgba(28, 24, 21, 0.78) 45%, rgba(28, 24, 21, 0.3) 100%);
+}
+.dk-guide-stock-in {
+  position: relative;
+  z-index: 2;
+  padding: clamp(60px, 10vh, 110px) var(--gutter);
+}
+.dk-guide-stock-in p {
+  font-size: clamp(22px, 2.6vw, 34px);
   line-height: 1.35;
   font-weight: 300;
   letter-spacing: -0.015em;
   color: var(--bone);
   max-width: 42ch;
 }
+.dk-guide-stock-in .dk-btn {
+  margin-top: 28px;
+}
+
+/* Fila de marcas (Azulejos): logos monocromos a la misma altura. */
+.dk-guide-brands {
+  padding: clamp(70px, 11vh, 130px) var(--gutter);
+  border-top: 1px solid var(--dark-line);
+}
+.dk-guide-brands-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(28px, 4vw, 56px);
+}
+.dk-guide-brands-row .dk-brand-logo img {
+  height: 32px;
+  width: auto;
+  opacity: 0.85;
+}
+.dk-guide-brands-row span:not(.dk-brand-logo) {
+  color: var(--stone);
+  font-size: 15px;
+}
+.dk-guide-brands-note {
+  margin-top: 28px;
+  color: var(--stone);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 60ch;
+}
+
 .dk-guide-strip {
-  margin-top: 40px;
-  padding-top: 32px;
+  padding: clamp(70px, 11vh, 130px) var(--gutter);
   border-top: 1px solid var(--dark-line);
 }
 .dk-guide-strip p {
@@ -375,47 +456,39 @@ body.dark-page {
   line-height: 1.7;
   max-width: 70ch;
 }
-.dk-guide-strip p + p {
-  margin-top: 12px;
-}
-.dk-guide-strip a {
+.dk-guide-strip a,
+.dk-guide-brands-note a {
   color: var(--bone);
   border-bottom: 1px solid var(--dark-line);
 }
 @media (hover: hover) and (pointer: fine) {
-  .dk-guide-strip a:hover {
+  .dk-guide-strip a:hover,
+  .dk-guide-brands-note a:hover {
     border-bottom-color: var(--bone);
   }
 }
-/* Cocinas/Ventanas: título grande a la izquierda, texto a la derecha */
-.dk-guide-split {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 40px;
-}
-.dk-guide-split h2 {
-  font-weight: 300;
-  font-size: clamp(32px, 4vw, 56px);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  max-width: 14ch;
-}
-.dk-guide-split-body p {
-  color: var(--stone);
-  font-size: clamp(16px, 1.4vw, 19px);
-  line-height: 1.65;
-  max-width: 56ch;
-}
-.dk-guide-split-body p + p {
-  margin-top: 18px;
-}
+
 @media (max-width: 820px) {
-  .dk-guide-grid {
+  .dk-guide-layout {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
-  .dk-guide-split {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .dk-guide-sticky {
+    position: static;
+  }
+  .dk-guide-item {
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    padding: 22px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dk-guide-item {
+    transition: none;
+  }
+  .dk-guide-num {
+    transition: none;
   }
 }
 
