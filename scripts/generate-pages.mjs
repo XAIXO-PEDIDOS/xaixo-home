@@ -212,6 +212,9 @@ const IMAGE_DIMS = {
   "azulejos-revestimientos": [896, 1200],
   "azulejos-exterior": [2336, 1744],
   "azulejos-formatos": [1744, 2336],
+  "azulejos-outlet-1": [1448, 1086],
+  "azulejos-outlet-2": [1448, 1086],
+  "azulejos-outlet-3": [1086, 1448],
   "cocinas-hero": [2688, 1520],
   "cocinas-mobiliario": [1168, 880],
   "cocinas-encimeras": [1168, 880],
@@ -232,7 +235,7 @@ const DARK_PAGES = [
     slug: "azulejos",
     title: "Azulejos y porcelánico en Gandia | Xaixo Home",
     description:
-      "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandia. También con zona de stock para llevar al momento.",
+      "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandia. Con outlet de cerámica para llevar al momento.",
     themeColor: "#1c1815",
     offer: {
       type: "Product",
@@ -266,14 +269,23 @@ const DARK_PAGES = [
       ],
       stock: {
         id: "stock",
-        image: "azulejos-suelos",
-        imageAlt: "Zona de stock de cerámica en el almacén de Xaixo Home, imagen provisional",
-        placeholderNote:
-          "imagen provisional (assets/azulejos-suelos.webp); sustituir por una foto real de la zona de stock en assets/azulejos-stock cuando exista",
-        text: "Además del showroom, tenemos una amplia zona de cerámica en stock, con muchos metros cuadrados disponibles para llevar al momento y a muy buen precio. Si tu obra no puede esperar a un pedido, pregúntanos por lo que tenemos en almacén.",
+        heading: "Outlet de cerámica",
+        image: "azulejos-outlet-1",
+        imageAlt: "Outlet de cerámica en Gandia, zona de stock en el almacén de Xaixo Home",
+        gallery: [
+          {
+            image: "azulejos-outlet-2",
+            alt: "Outlet de cerámica en Gandia, piezas apiladas listas para llevar",
+          },
+          {
+            image: "azulejos-outlet-3",
+            alt: "Outlet de cerámica en Gandia, estanterías con material en stock",
+          },
+        ],
+        text: "Además del showroom, tenemos una amplia zona outlet con muchos metros cuadrados en stock, para llevar al momento y a muy buen precio. Si tu obra no puede esperar a un pedido, ven a verla.",
         cta: {
-          label: "Pregunta por el stock",
-          href: `https://wa.me/34689248559?text=${encodeURIComponent("Hola, quiero saber qué cerámica tenéis en stock")}`,
+          label: "Pregunta por el outlet",
+          href: `https://wa.me/34689248559?text=${encodeURIComponent("Hola, quiero saber qué cerámica tenéis en el outlet")}`,
         },
       },
       brands: {
@@ -702,12 +714,25 @@ function darkGuideStockMarkup(stock) {
     className: "dk-guide-stock-img",
     sizes: "100vw",
   });
-  const placeholderNote = stock.placeholderNote ? `<!-- TODO: ${stock.placeholderNote} -->\n` : "";
+  const gallery = (stock.gallery ?? [])
+    .map(
+      (g) => `<div class="dk-guide-stock-thumb reveal">${darkImageMarkup(g.image, g.alt, {
+        className: "dk-guide-stock-thumb-img",
+        sizes: "(max-width: 820px) 45vw, 20vw",
+      })}</div>`,
+    )
+    .join("\n");
   return `<section class="dk-guide-stock" id="${stock.id}">
-${placeholderNote}<div class="dk-ph" data-px="0.1">${image}</div>
+<div class="dk-ph" data-px="0.1">${image}</div>
 <div class="dk-guide-stock-in">
+<div class="dk-guide-stock-text">
+<h2 class="reveal">${stock.heading}</h2>
 <p class="reveal">${stock.text}</p>
 <a class="dk-btn dk-btn--pri reveal" href="${stock.cta.href}" target="_blank" rel="noopener">${stock.cta.label}</a>
+</div>
+<div class="dk-guide-stock-gallery">
+${gallery}
+</div>
 </div>
 </section>
 `;
