@@ -167,6 +167,14 @@ ${JSON.stringify(json, null, 2)}
 </script>`;
 }
 
+// Iconos de línea inline (trazo simple, sin relleno salvo los puntos de
+// mando) para las tarjetas de la guía de Baños. currentColor hereda el
+// --salvia de .dk-guide-icon.
+const ICON_SHOWER_TRAY = `<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="9" width="24" height="18" rx="3"/><circle cx="16" cy="18" r="2.4"/><path d="M10 5h12M12 2.2h8"/></svg>`;
+const ICON_SCREEN = `<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="6" y="4" width="20" height="24" rx="1.5"/><line x1="9" y1="6" x2="23" y2="26" stroke-opacity="0.35"/><circle cx="22" cy="16" r="1.2" fill="currentColor" stroke="none"/></svg>`;
+const ICON_VANITY = `<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="16" width="24" height="10" rx="2"/><path d="M8 16c0-3 2.5-5 8-5s8 2 8 5"/><line x1="16" y1="8" x2="16" y2="11"/></svg>`;
+const ICON_TAP = `<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 26V15a5 5 0 0 1 5-5h1"/><path d="M15 10c4 0 6 2 6 5v2"/><line x1="9" y1="26" x2="13" y2="26"/><circle cx="12" cy="7" r="1.4" fill="currentColor" stroke="none"/></svg>`;
+
 // Brand tags (ticker + per-product pills): looks for assets/logos/<slug>-mono.png
 // — the flat white-on-transparent cutout scripts/generate-assets.mjs derives
 // from whatever raw logo the user drops into assets/logos/ — and falls back
@@ -240,14 +248,33 @@ const DARK_PAGES = [
     },
     extra: {
       id: "guia",
+      layout: "cards",
       heading: "Cómo elegir tu azulejo",
-      paragraphs: [
-        "El porcelánico y la cerámica no son el mismo material, aunque a veces se confundan. El porcelánico se cuece a temperaturas más altas y apenas absorbe agua, así que aguanta mejor el paso, la humedad y el frío: es lo que recomendamos para suelo, exterior y zonas de mucho tránsito. La cerámica de pasta blanca es más económica y sigue siendo una buena opción para revestir paredes de baño o cocina, donde no recibe pisadas.",
-        "El acabado rectificado tiene los cantos cortados con precisión después de la cocción, lo que permite colocar las piezas con una junta mínima y un resultado más continuo. Si buscas un suelo con apenas líneas visibles, pide piezas rectificadas.",
-        "También trabajamos grandes formatos, que reducen el número de juntas y dan sensación de continuidad, aunque necesitan una base bien nivelada y un instalador con experiencia.",
-        "Para terraza, playa de piscina o cualquier exterior, el material debe ser antideslizante: buscamos piezas con clasificación de resistencia al deslizamiento C3, la adecuada para superficies mojadas, y resistentes a heladas y a la sal.",
-        "Para calcular cuánto material necesitas, a los metros cuadrados reales del espacio conviene sumarles un margen de merma por roturas de corte, ajustes en esquinas y algún repuesto para el futuro: normalmente entre un 10 y un 15%, algo más si el formato es grande o hay muchos rincones. En el showroom te ayudamos a calcularlo sobre tu plano o tus medidas.",
+      cards: [
+        {
+          title: "Porcelánico o cerámica",
+          text: "El porcelánico y la cerámica no son el mismo material, aunque a veces se confundan. El porcelánico se cuece a temperaturas más altas y apenas absorbe agua, así que aguanta mejor el paso, la humedad y el frío: es lo que recomendamos para suelo, exterior y zonas de mucho tránsito. La cerámica de pasta blanca es más económica y sigue siendo una buena opción para revestir paredes de baño o cocina, donde no recibe pisadas.",
+        },
+        {
+          title: "Rectificado",
+          text: "El acabado rectificado tiene los cantos cortados con precisión después de la cocción, lo que permite colocar las piezas con una junta mínima y un resultado más continuo. Si buscas un suelo con apenas líneas visibles, pide piezas rectificadas.",
+        },
+        {
+          title: "Grandes formatos",
+          text: "También trabajamos grandes formatos, que reducen el número de juntas y dan sensación de continuidad, aunque necesitan una base bien nivelada y un instalador con experiencia.",
+        },
+        {
+          title: "Exterior y piscina",
+          text: "Para terraza, playa de piscina o cualquier exterior, el material debe ser antideslizante: buscamos piezas con clasificación de resistencia al deslizamiento C3, la adecuada para superficies mojadas, y resistentes a heladas y a la sal.",
+        },
+        {
+          title: "Cuánto material pedir",
+          text: "Para calcular cuánto material necesitas, a los metros cuadrados reales del espacio conviene sumarles un margen de merma por roturas de corte, ajustes en esquinas y algún repuesto para el futuro: normalmente entre un 10 y un 15%, algo más si el formato es grande o hay muchos rincones. En el showroom te ayudamos a calcularlo sobre tu plano o tus medidas.",
+        },
+      ],
+      feature:
         "Además del showroom, tenemos una amplia zona de cerámica en stock, con muchos metros cuadrados disponibles para llevar al momento y a muy buen precio. Si tu obra no puede esperar a un pedido, pregúntanos por lo que tenemos en almacén.",
+      strip: [
         "Trabajamos con Navarti, Halcón Cerámicas, KTL, Vilar Albaro, Tercocer, Alaplana y Benesol, entre otros fabricantes. Nuestro papel es vender el material y asesorarte para elegirlo bien; la colocación la realiza el alicatador de tu obra.",
         `Si tu proyecto necesita también cemento cola, mortero u otro material de construcción, lo encontrarás en <a href="https://materialesxaixo.com" target="_blank" rel="noopener">materialesxaixo.com</a>, nuestra tienda hermana especializada en material de obra.`,
       ],
@@ -328,6 +355,7 @@ const DARK_PAGES = [
     },
     extra: {
       id: "nobilia",
+      layout: "split",
       heading: "Distribuidores oficiales de Nobilia",
       paragraphs: [
         "Somos distribuidores oficiales de Nobilia, fabricante alemán de cocinas. Eso te da acceso a todo su catálogo de acabados, herrajes y módulos, con la fabricación y los controles de calidad de una de las mayores fábricas de cocinas de Europa.",
@@ -411,6 +439,7 @@ const DARK_PAGES = [
     },
     extra: {
       id: "ayudas",
+      layout: "split",
       heading: "Ayudas para cambiar tus ventanas",
       paragraphs: [
         "Como punto de venta oficial Replus, te ponemos en contacto con su oficina técnica de ayudas, que tramita la subvención por ti cuando hay convocatoria abierta. Pregúntanos por la situación actual antes de pedir presupuesto.",
@@ -489,12 +518,31 @@ const DARK_PAGES = [
     },
     extra: {
       id: "guia",
+      layout: "cards",
       heading: "Cómo elegir plato, mampara, mueble y grifería",
-      paragraphs: [
-        "El plato de ducha se elige por el material y por la medida real del hueco: la resina y la carga mineral son antideslizantes de fábrica y fáciles de limpiar; la cerámica es más económica pero exige más cuidado en el mantenimiento. Los de resina y carga mineral se cortan a la medida exacta de tu hueco; los cerámicos vienen en medidas estándar.",
-        "En la mampara, lo que más se nota en el día a día es el tratamiento antical del vidrio, que facilita mucho la limpieza, y si es fija o corredera: la corredera es la opción habitual cuando el hueco es estrecho, porque no necesita espacio para abrir hacia fuera.",
-        "El mueble de baño puede ir suspendido o a suelo. El suspendido facilita la limpieza del suelo y queda más ligero visualmente; el mueble a suelo da algo más de capacidad de almacenaje. El lavabo puede venir integrado en el mueble o montado sobre una encimera aparte, según el acabado que busques.",
-        "En grifería, la primera decisión es monomando o termostática: la termostática mantiene la temperatura del agua constante aunque cambie la presión, algo especialmente útil en la ducha. El acabado, cromo, negro mate o cepillado, es cuestión de estética y conviene que combine con el resto de la sanitaria.",
+      cards: [
+        {
+          icon: ICON_SHOWER_TRAY,
+          title: "Plato de ducha",
+          text: "El plato de ducha se elige por el material y por la medida real del hueco: la resina y la carga mineral son antideslizantes de fábrica y fáciles de limpiar; la cerámica es más económica pero exige más cuidado en el mantenimiento. Los de resina y carga mineral se cortan a la medida exacta de tu hueco; los cerámicos vienen en medidas estándar.",
+        },
+        {
+          icon: ICON_SCREEN,
+          title: "Mampara",
+          text: "En la mampara, lo que más se nota en el día a día es el tratamiento antical del vidrio, que facilita mucho la limpieza, y si es fija o corredera: la corredera es la opción habitual cuando el hueco es estrecho, porque no necesita espacio para abrir hacia fuera.",
+        },
+        {
+          icon: ICON_VANITY,
+          title: "Mueble de baño",
+          text: "El mueble de baño puede ir suspendido o a suelo. El suspendido facilita la limpieza del suelo y queda más ligero visualmente; el mueble a suelo da algo más de capacidad de almacenaje. El lavabo puede venir integrado en el mueble o montado sobre una encimera aparte, según el acabado que busques.",
+        },
+        {
+          icon: ICON_TAP,
+          title: "Grifería",
+          text: "En grifería, la primera decisión es monomando o termostática: la termostática mantiene la temperatura del agua constante aunque cambie la presión, algo especialmente útil en la ducha. El acabado, cromo, negro mate o cepillado, es cuestión de estética y conviene que combine con el resto de la sanitaria.",
+        },
+      ],
+      strip: [
         `En el showroom te enseñamos piezas reales de cada elemento y te ayudamos a calcular lo que necesitas. Vendemos el material; la instalación la realiza el profesional de tu obra. Si además necesitas cemento cola, mortero u otro material de construcción, lo encontrarás en <a href="https://materialesxaixo.com" target="_blank" rel="noopener">materialesxaixo.com</a>, nuestra tienda hermana.`,
       ],
     },
@@ -612,11 +660,44 @@ function darkStepsMarkup(steps) {
 // no tener que tocar el CSS.
 function darkExtraMarkup(extra) {
   if (!extra) return "";
-  const paragraphs = extra.paragraphs.map((p) => `<p class="reveal">${p}</p>`).join("\n");
-  return `<section class="legal-page section-pad" id="${extra.id}">
+  if (extra.layout === "split") {
+    const paragraphs = extra.paragraphs.map((p) => `<p class="reveal">${p}</p>`).join("\n");
+    return `<section class="dk-guide dk-guide--split section-pad" id="${extra.id}">
+<div class="dk-guide-split">
 <h2 class="reveal">${extra.heading}</h2>
+<div class="dk-guide-split-body">
 ${paragraphs}
+</div>
+</div>
 </section>
+`;
+  }
+  const cardsHtml = extra.cards
+    .map(
+      (card) => `<div class="dk-guide-card reveal">
+${card.icon ? `<div class="dk-guide-icon">${card.icon}</div>\n` : ""}<h3>${card.title}</h3>
+<p>${card.text}</p>
+</div>`,
+    )
+    .join("\n");
+  const featureHtml = extra.feature
+    ? `<div class="dk-guide-feature reveal">
+<p>${extra.feature}</p>
+</div>
+`
+    : "";
+  const stripHtml = extra.strip
+    ? `<div class="dk-guide-strip reveal">
+${extra.strip.map((p) => `<p>${p}</p>`).join("\n")}
+</div>
+`
+    : "";
+  return `<section class="dk-guide section-pad" id="${extra.id}">
+<h2 class="reveal">${extra.heading}</h2>
+<div class="dk-guide-grid">
+${cardsHtml}
+</div>
+${featureHtml}${stripHtml}</section>
 `;
 }
 
