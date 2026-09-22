@@ -213,12 +213,26 @@ const DARK_PAGES = [
     slug: "azulejos",
     title: "Azulejos y porcelánico en Gandia | Xaixo Home",
     description:
-      "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandia. Los ves y comparas antes de comprar.",
+      "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandia. También con zona de stock para llevar al momento.",
     themeColor: "#1c1815",
     offer: {
       type: "Product",
       name: "Azulejos y porcelánico",
       description: "Venta de material de azulejos y porcelánico; no incluye instalación.",
+    },
+    extra: {
+      id: "guia",
+      heading: "Cómo elegir tu azulejo",
+      paragraphs: [
+        "El porcelánico y la cerámica no son el mismo material, aunque a veces se confundan. El porcelánico se cuece a temperaturas más altas y apenas absorbe agua, así que aguanta mejor el paso, la humedad y el frío: es lo que recomendamos para suelo, exterior y zonas de mucho tránsito. La cerámica de pasta blanca es más económica y sigue siendo una buena opción para revestir paredes de baño o cocina, donde no recibe pisadas.",
+        "El acabado rectificado tiene los cantos cortados con precisión después de la cocción, lo que permite colocar las piezas con una junta mínima y un resultado más continuo. Si buscas un suelo con apenas líneas visibles, pide piezas rectificadas.",
+        "También trabajamos grandes formatos, que reducen el número de juntas y dan sensación de continuidad, aunque necesitan una base bien nivelada y un instalador con experiencia.",
+        "Para terraza, playa de piscina o cualquier exterior, el material debe ser antideslizante: buscamos piezas con clasificación de resistencia al deslizamiento C3, la adecuada para superficies mojadas, y resistentes a heladas y a la sal.",
+        "Para calcular cuánto material necesitas, a los metros cuadrados reales del espacio conviene sumarles un margen de merma por roturas de corte, ajustes en esquinas y algún repuesto para el futuro: normalmente entre un 10 y un 15%, algo más si el formato es grande o hay muchos rincones. En el showroom te ayudamos a calcularlo sobre tu plano o tus medidas.",
+        "Además del showroom, tenemos una amplia zona de cerámica en stock, con muchos metros cuadrados disponibles para llevar al momento y a muy buen precio. Si tu obra no puede esperar a un pedido, pregúntanos por lo que tenemos en almacén.",
+        "Trabajamos con Navarti, Halcón Cerámicas, KTL, Vilar Albaro, Tercocer, Alaplana y Benesol, entre otros fabricantes. Nuestro papel es vender el material y asesorarte para elegirlo bien; la colocación la realiza el alicatador de tu obra.",
+        `Si tu proyecto necesita también cemento cola, mortero u otro material de construcción, lo encontrarás en <a href="https://materialesxaixo.com" target="_blank" rel="noopener">materialesxaixo.com</a>, nuestra tienda hermana especializada en material de obra.`,
+      ],
     },
     hero: {
       image: "azulejos-hero",
@@ -286,13 +300,21 @@ const DARK_PAGES = [
     slug: "cocinas",
     title: "Cocinas a medida en Gandia | Xaixo Home",
     description:
-      "Cocinas diseñadas en 3D e instaladas por nuestro propio equipo en Gandia y la Safor. Mobiliario, encimeras y electrodomésticos.",
+      "Cocinas diseñadas en 3D e instaladas por nuestro propio equipo en Gandia y la Safor. Distribuidores oficiales de Nobilia, fabricante alemán.",
     themeColor: "#1c1815",
     offer: {
       type: "Service",
       name: "Cocinas a medida con instalación propia",
       brand: "Nobilia",
       description: "Diseño, suministro e instalación propia de cocinas. Distribuidor oficial de Nobilia.",
+    },
+    extra: {
+      id: "nobilia",
+      heading: "Distribuidores oficiales de Nobilia",
+      paragraphs: [
+        "Somos distribuidores oficiales de Nobilia, fabricante alemán de cocinas. Eso te da acceso a todo su catálogo de acabados, herrajes y módulos, con la fabricación y los controles de calidad de una de las mayores fábricas de cocinas de Europa.",
+        "El proceso es siempre el mismo: medimos tu cocina actual, la diseñamos contigo en 3D y te presentamos un presupuesto cerrado antes de empezar. Una vez lo apruebas, la instalación la realiza nuestro propio equipo, de principio a fin, sin subcontratar.",
+      ],
     },
     hero: {
       image: "cocinas-hero",
@@ -361,13 +383,20 @@ const DARK_PAGES = [
     slug: "ventanas",
     title: "Ventanas de PVC y aluminio en Gandia | Xaixo Home",
     description:
-      "Ventanas de PVC y aluminio medidas e instaladas por nuestro equipo en Gandia. Más aislamiento, más silencio, menos factura.",
+      "Ventanas de PVC y aluminio medidas e instaladas por nuestro equipo en Gandia. Te informamos también de las ayudas para su cambio.",
     themeColor: "#1c1815",
     offer: {
       type: "Service",
       name: "Ventanas de PVC y aluminio con instalación propia",
       brand: "Replus",
       description: "Medición, fabricación a medida e instalación propia de ventanas. Punto de venta oficial de Replus.",
+    },
+    extra: {
+      id: "ayudas",
+      heading: "Ayudas para cambiar tus ventanas",
+      paragraphs: [
+        "Como punto de venta oficial Replus, te ponemos en contacto con su oficina técnica de ayudas, que tramita la subvención por ti cuando hay convocatoria abierta. Pregúntanos por la situación actual antes de pedir presupuesto.",
+      ],
     },
     hero: {
       image: "ventanas-hero",
@@ -439,6 +468,17 @@ const DARK_PAGES = [
       type: "Product",
       name: "Material de baño: platos de ducha, mamparas, muebles, grifería y cerámica",
       description: "Venta de material de baño; no incluye instalación.",
+    },
+    extra: {
+      id: "guia",
+      heading: "Cómo elegir plato, mampara, mueble y grifería",
+      paragraphs: [
+        "El plato de ducha se elige por el material y por la medida real del hueco: la resina y la carga mineral son antideslizantes de fábrica y fáciles de limpiar; la cerámica es más económica pero exige más cuidado en el mantenimiento. Los de resina y carga mineral se cortan a la medida exacta de tu hueco; los cerámicos vienen en medidas estándar.",
+        "En la mampara, lo que más se nota en el día a día es el tratamiento antical del vidrio, que facilita mucho la limpieza, y si es fija o corredera: la corredera es la opción habitual cuando el hueco es estrecho, porque no necesita espacio para abrir hacia fuera.",
+        "El mueble de baño puede ir suspendido o a suelo. El suspendido facilita la limpieza del suelo y queda más ligero visualmente; el mueble a suelo da algo más de capacidad de almacenaje. El lavabo puede venir integrado en el mueble o montado sobre una encimera aparte, según el acabado que busques.",
+        "En grifería, la primera decisión es monomando o termostática: la termostática mantiene la temperatura del agua constante aunque cambie la presión, algo especialmente útil en la ducha. El acabado, cromo, negro mate o cepillado, es cuestión de estética y conviene que combine con el resto de la sanitaria.",
+        `En el showroom te enseñamos piezas reales de cada elemento y te ayudamos a calcular lo que necesitas. Vendemos el material; la instalación la realiza el profesional de tu obra. Si además necesitas cemento cola, mortero u otro material de construcción, lo encontrarás en <a href="https://materialesxaixo.com" target="_blank" rel="noopener">materialesxaixo.com</a>, nuestra tienda hermana.`,
+      ],
     },
     hero: {
       image: "banos-hero",
@@ -548,6 +588,20 @@ function darkStepsMarkup(steps) {
   return steps.map((step) => `<div class="dk-step reveal"><strong>${step.title}</strong><p>${step.desc}</p></div>`).join("");
 }
 
+// Bloque de texto indexable adicional (guía de compra, distribuidor
+// oficial, ayudas…), específico de cada página. Reutiliza el estilo ya
+// existente de .legal-page (mismo look que aviso-legal/cookies/etc.) para
+// no tener que tocar el CSS.
+function darkExtraMarkup(extra) {
+  if (!extra) return "";
+  const paragraphs = extra.paragraphs.map((p) => `<p class="reveal">${p}</p>`).join("\n");
+  return `<section class="legal-page section-pad" id="${extra.id}">
+<h2 class="reveal">${extra.heading}</h2>
+${paragraphs}
+</section>
+`;
+}
+
 function darkSimulatorMarkup(simulator) {
   if (!simulator) return "";
   // TODO: simulador interactivo de presupuesto, pendiente de desarrollar.
@@ -641,7 +695,7 @@ ${heroImageNote}<div class="dk-ph" data-px="0.18">${heroImage}</div>
 ${productsHtml}
 </div>
 ${brandsTicker}
-<section class="dk-proc">
+${darkExtraMarkup(page.extra)}<section class="dk-proc">
 <h3 class="reveal">Así lo hacemos</h3>
 <div class="dk-steps">
 ${stepsHtml}
