@@ -56,6 +56,10 @@ const CONTACT_EMAIL = "javierxaixo@gmail.com";
 const SITE_URL = "https://www.xaixohome.com";
 const SITE_NAME = "Xaixo Home";
 const OG_LOCALE = "es_ES";
+// @id de la entidad HomeAndConstructionBusiness definida en index.html —
+// las páginas de categoría y legales la referencian por @id en vez de
+// repetir su definición completa.
+const BUSINESS_ID = `${SITE_URL}/#negocio`;
 function metaMarkup({ title, description, path, ogImage }) {
   const url = `${SITE_URL}${path}`;
   const imageUrl = `${SITE_URL}/og/${ogImage}.jpg`;
@@ -76,6 +80,73 @@ function metaMarkup({ title, description, path, ogImage }) {
 <meta name="twitter:title" content="${title}">
 <meta name="twitter:description" content="${description}">
 <meta name="twitter:image" content="${imageUrl}">`;
+}
+
+// JSON-LD de una página de categoría: WebPage (isPartOf/about apuntan a la
+// entidad del negocio por @id), BreadcrumbList (Inicio > categoría) y la
+// oferta de esa categoría (venta de material vs venta con instalación
+// propia), colgada de un nodo con el mismo @id del negocio.
+function offerItemOfferedMarkup(offer) {
+  const base = { "@type": offer.type, name: offer.name };
+  if (offer.brand) base.brand = { "@type": "Brand", name: offer.brand };
+  if (offer.type === "Service") base.provider = { "@id": BUSINESS_ID };
+  else base.category = "Material de construcción";
+  return base;
+}
+
+function structuredDataMarkup(page) {
+  const url = `${SITE_URL}/${page.slug}`;
+  const graph = [
+    {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      url,
+      name: page.title,
+      description: page.description,
+      inLanguage: "es",
+      isPartOf: { "@id": BUSINESS_ID },
+      about: { "@id": BUSINESS_ID },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${url}#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE_URL}/` },
+        { "@type": "ListItem", position: 2, name: page.hero.title, item: url },
+      ],
+    },
+    {
+      "@type": "HomeAndConstructionBusiness",
+      "@id": BUSINESS_ID,
+      makesOffer: {
+        "@type": "Offer",
+        url,
+        itemOffered: offerItemOfferedMarkup(page.offer),
+        description: page.offer.description,
+      },
+    },
+  ];
+  return `<script type="application/ld+json">
+${JSON.stringify({ "@context": "https://schema.org", "@graph": graph }, null, 2)}
+</script>`;
+}
+
+// JSON-LD de las páginas legales: solo BreadcrumbList (Inicio > página).
+function legalBreadcrumbMarkup(page) {
+  const url = `${SITE_URL}/${page.slug}`;
+  const name = page.title.split(" | ")[0];
+  const json = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${url}#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name, item: url },
+    ],
+  };
+  return `<script type="application/ld+json">
+${JSON.stringify(json, null, 2)}
+</script>`;
 }
 
 // Brand tags (ticker + per-product pills): looks for assets/logos/<slug>-mono.png
@@ -144,6 +215,11 @@ const DARK_PAGES = [
     description:
       "Suelos porcelánicos, revestimientos, exterior y grandes formatos en el showroom de Xaixo Home en Gandia. Los ves y comparas antes de comprar.",
     themeColor: "#1c1815",
+    offer: {
+      type: "Product",
+      name: "Azulejos y porcelánico",
+      description: "Venta de material de azulejos y porcelánico; no incluye instalación.",
+    },
     hero: {
       image: "azulejos-hero",
       alt: "Salón con suelo de porcelánico travertino y vista al mar a través de una puerta corredera, imagen de referencia",
@@ -212,6 +288,12 @@ const DARK_PAGES = [
     description:
       "Cocinas diseñadas en 3D e instaladas por nuestro propio equipo en Gandia y la Safor. Mobiliario, encimeras y electrodomésticos.",
     themeColor: "#1c1815",
+    offer: {
+      type: "Service",
+      name: "Cocinas a medida con instalación propia",
+      brand: "Nobilia",
+      description: "Diseño, suministro e instalación propia de cocinas. Distribuidor oficial de Nobilia.",
+    },
     hero: {
       image: "cocinas-hero",
       alt: "Cocina abierta con isla, mobiliario en tono arena y comedor con vistas al jardín, imagen de referencia",
@@ -281,6 +363,12 @@ const DARK_PAGES = [
     description:
       "Ventanas de PVC y aluminio medidas e instaladas por nuestro equipo en Gandia. Más aislamiento, más silencio, menos factura.",
     themeColor: "#1c1815",
+    offer: {
+      type: "Service",
+      name: "Ventanas de PVC y aluminio con instalación propia",
+      brand: "Replus",
+      description: "Medición, fabricación a medida e instalación propia de ventanas. Punto de venta oficial de Replus.",
+    },
     hero: {
       image: "ventanas-hero",
       alt: "Salón con gran ventanal corredero de aluminio abierto al mar, imagen de referencia",
@@ -347,6 +435,11 @@ const DARK_PAGES = [
     description:
       "Platos, mamparas, muebles, grifería y cerámica de baño en el showroom de Xaixo Home en Gandia. Te asesoramos y te lo servimos listo para tu instalador.",
     themeColor: "#1c1815",
+    offer: {
+      type: "Product",
+      name: "Material de baño: platos de ducha, mamparas, muebles, grifería y cerámica",
+      description: "Venta de material de baño; no incluye instalación.",
+    },
     hero: {
       image: "banos-hero",
       alt: "Baño showroom Xaixo Home con mueble de lavabo en madera, ducha con mampara de vidrio y revestimiento de porcelánico beige",
@@ -526,6 +619,7 @@ ${darkHeroPreloadMarkup(page.hero.image)}
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="dark.css">
 <script type="module" src="/app.js"></script>
+${structuredDataMarkup(page)}
 </head>
 <body class="dark-page">
 <a class="skip" href="#intro">Saltar al contenido</a>
@@ -630,6 +724,7 @@ ${metaMarkup({ title: page.title, description: page.description, path: `/${page.
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="dark.css">
 <script type="module" src="/app.js"></script>
+${legalBreadcrumbMarkup(page)}
 </head>
 <body class="dark-page">
 <a class="skip" href="#legal-content">Saltar al contenido</a>
