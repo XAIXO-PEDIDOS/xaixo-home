@@ -221,7 +221,7 @@ const IMAGE_DIMS = {
   "cocinas-electrodomesticos": [1168, 880],
   "cocinas-montaje": [880, 1168],
   "ventanas-hero": [1344, 752],
-  "ventanas-pvc": [1344, 752],
+  "ventanas-pvc": [1086, 1448],
   "ventanas-aluminio": [1168, 880],
   "ventanas-correderas": [880, 1168],
   "ventanas-instalacion": [880, 1168],
@@ -651,7 +651,7 @@ function darkProductMarkup(product) {
     : "";
   const imageNote = product.aiImage ? `${AI_IMAGE_NOTE}\n` : "";
   return `<article class="dk-prod">
-<div class="dk-pic" data-cursor="VER">
+<div class="dk-pic">
 ${imageNote}<div class="dk-ph" data-px="0.12">${image}</div>
 </div>
 <div class="dk-txt">
