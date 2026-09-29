@@ -827,6 +827,7 @@ function renderDarkCategoryPage(page) {
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="${page.themeColor}"><title>${page.title}</title>
 <meta name="description" content="${page.description}">
+<meta name="google-site-verification" content="a9KvEj23jYSiARQXywK91X0ctCL_YFqY1UReDIH_ot8" />
 ${metaMarkup({ title: page.title, description: page.description, path: `/${page.slug}`, ogImage: page.hero.image })}
 <link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 ${darkHeroPreloadMarkup(page.hero.image)}
@@ -933,6 +934,7 @@ function renderLegalPage(page) {
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1c1815"><title>${page.title}</title>
 <meta name="description" content="${page.description}">
+<meta name="google-site-verification" content="a9KvEj23jYSiARQXywK91X0ctCL_YFqY1UReDIH_ot8" />
 ${metaMarkup({ title: page.title, description: page.description, path: `/${page.slug}`, ogImage: "home-hero" })}
 <link rel="preload" href="assets/manrope-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
